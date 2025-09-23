@@ -48,16 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     switch ($_REQUEST["operacion"]) {
-        case "suma":
+        case $operaciones[0]:
             $respuesta = suma($num1, $num2);
             break;
-        case "resta":
+        case $operaciones[1]:
             $respuesta = $resta($num1, $num2);
             break;
-        case "producto":
+        case $operaciones[2]:
             $respuesta = $producto($num1, $num2);
             break;
-        case "division":
+        case $operaciones[3]:
             $div = $division($num1, $num2);
             if ($div === null) {
                 $mensaje = "NO SE PUEDE DIVIDIR POR 0 !!!";
