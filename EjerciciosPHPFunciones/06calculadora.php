@@ -1,0 +1,117 @@
+<?php
+
+function suma($a, $b)
+{
+    return $a + $b;
+}
+
+$resta = function ($a, $b) {
+    return $a - $b;
+};
+
+$producto = fn($a, $b) => $a * $b;
+
+$division = function ($a, $b) {
+    if ($b == 0) {
+        return null;
+    } else {
+        return $a / $b;
+    }
+};
+
+function comprobarNumerico($num)
+{
+    if (!is_numeric($num)) {
+        return null;
+    } else {
+        return floatval($num);
+    }
+}
+
+$entrada = -1;
+while ($entrada != 0) {
+    echo "\n\n
+        Calculadora:
+
+        1. suma
+        2. resta
+        3. multiplicacion
+        4. division
+        0. salir
+
+        ingrese opcion: 
+    ";
+
+    $num1 = null;
+    $num2 = null;
+
+    # Entrada de opcion
+    $entrada = trim(fgets(STDIN));
+
+    $entrada = comprobarNumerico($entrada);
+
+    while ($entrada === null || $entrada < 0 || $entrada > 4) {
+        echo "Entrada incorrecta: \n";
+        $entrada = trim(fgets(STDIN));
+        $entrada = comprobarNumerico($entrada);
+    }
+
+    if ($entrada == 0) {
+        break;
+    }
+
+
+    # Entrada de num1
+    echo "ingrese el primer numero\n";
+    $num1 = trim(fgets(STDIN));
+    $num1 = comprobarNumerico($num1);
+
+
+    while ($num1 === null) {
+        echo "Entrada incorrecta: \n";
+        $num1 = trim(fgets(STDIN));
+        $num1 = comprobarNumerico($num1);
+    }
+
+
+    # Entrada de num2
+    echo "ingrese el segundo numero\n";
+    $num2 = trim(fgets(STDIN));
+    $num2 = comprobarNumerico($num2);
+
+    while ($num2 === null) {
+        echo "Entrada incorrecta: \n";
+        $num2 = trim(fgets(STDIN));
+        $num2 = comprobarNumerico($num2);
+    }
+
+
+    switch ($entrada) {
+        case 1:
+            echo "El resultado de la suma es: ";
+            echo suma($num1, $num2);
+            break;
+        case 2:
+            echo "El resultado de la resta es: ";
+            echo $resta($num1, $num2);
+            break;
+        case 3:
+            echo "El resultado del producto es: ";
+            echo $producto($num1, $num2);
+            break;
+        case 4:
+            $div = $division($num1, $num2);
+            if ($div === null) {
+                echo "NO SE PUEDE DIVIDIR POR 0 !!!";
+            } else {
+                echo "El resultado de la division es: ";
+                echo $div;
+            }
+
+            break;
+        default:
+            break;
+    }
+}
+
+echo "Saliendo del programa... ";
