@@ -1,5 +1,6 @@
 <?php
 
-$numeros = [23, 43, 12, 34, 54, 65];
+$numeros = [23, 43, 12, 34, 54, 65, 20, 1, 2, 6];
 
-array_filter($numeros, fn($num) => $num % 2 === 0);
+$numerosPares = array_filter($numeros, fn($num) => $num % 2 === 0);
+

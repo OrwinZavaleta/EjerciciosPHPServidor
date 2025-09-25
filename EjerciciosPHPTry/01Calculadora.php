@@ -12,11 +12,8 @@ $resta = function ($a, $b) {
 $producto = fn($a, $b) => $a * $b;
 
 $division = function ($a, $b) {
-    if ($b == 0) {
-        return null;
-    } else {
-        return $a / $b;
-    }
+    if ($b ==0) throw new Exception("No se puede dividor por 0 !!!!!!!!!");
+    return $a / $b;
 };
 
 function comprobarNumerico($num)
@@ -98,17 +95,15 @@ while ($entrada != 0) {
             echo $producto($num1, $num2);
             break;
         case 4:
-            $div = $division($num1, $num2);
-            if ($div === null) {
-                echo "NO SE PUEDE DIVIDIR POR 0 !!!";
-            } else {
-                echo "El resultado de la division es: ";
-                echo $div;
+            $div;
+            try {
+                $div = $division($num1, $num2);
+            } catch (Exception $e) {
+                echo "NO SE PUEDE DIVIDIR POR 0 !!!". $e->getMessage();
+            } finally {
+                echo "Division realizada ";
             }
-
-            break;
-        default:
-            break;
+            break;            
     }
 }
 
