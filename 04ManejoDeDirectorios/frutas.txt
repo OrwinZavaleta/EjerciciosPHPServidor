@@ -1,0 +1,6 @@
+Hola como estas
+Estas son las frutas
+Manzana
+Banana
+Sandia
+Naranja
