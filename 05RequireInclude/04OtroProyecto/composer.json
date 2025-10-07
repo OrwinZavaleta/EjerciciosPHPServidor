@@ -1,0 +1,20 @@
+{
+    "name": "orwin/proyecto2",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Orwin\\Proyecto2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "OrwinZavaleta",
+            "email": "orwinzavaleta@gmail.com"
+        }
+    ],
+    "scripts": {
+        "start": "php -S localhost:8000 -t public"
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
