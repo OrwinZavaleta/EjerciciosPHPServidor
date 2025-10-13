@@ -32,7 +32,7 @@ class HomeController
         $model = new UserModel();
         $texto = ""; // Se usa en el archivo de welcome.
 
-        $name = trim($datos["name"]);
+        $name = htmlspecialchars(trim($datos["name"]));
         if (isset($name) && !empty($name)) {
             if ($model->saveName($name)) {
                 $texto = "Bienvenido $name, todo salio bien";

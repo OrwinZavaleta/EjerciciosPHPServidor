@@ -14,10 +14,14 @@ switch ($path) {
         $controller->index();
         break;
     case '/addUser':
-        $controller->addUser($_REQUEST);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $controller->addUser($_POST);
+        }
         break;
     case '/deleteUser':
-        $controller->deleteUser($_GET);
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $controller->deleteUser($_GET);
+        }
         break;
     default:
         http_response_code(404);
