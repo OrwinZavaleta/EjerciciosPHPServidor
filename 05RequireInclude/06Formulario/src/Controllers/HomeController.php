@@ -16,7 +16,7 @@ class HomeController
     }
     public function procesar($peticion)
     {
-        $respuesta = "<ul>";
+        $respuesta = [];
         $name = $peticion["name"];
         $email = $peticion["email"];
         $password = $peticion["password"];
@@ -25,32 +25,36 @@ class HomeController
 
         if (isset($name) && !empty($name)) {
             if (!preg_match($namePattern, $name)) {
-                $respuesta .= "<li>El nombre no es valido</li>";
+                $respuesta[] = "El nombre no es valido";
             }
         } else {
-            $respuesta .= "<li>Nombre vacio</li>";
+            $respuesta[] = "Nombre vacio";
         }
 
         if (isset($email) && !empty($email)) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $respuesta .= "<li>El email no es valido</li>";
+                $respuesta[] = "El email no es valido";
             }
         } else {
-            $respuesta .= "<li>Email vacio</li>";
+            $respuesta[] = "Email vacio";
         }
 
         if (isset($password) && !empty($password)) {
             if (!preg_match($passPattern, $password)) {
-                $respuesta .= "<li>La contraseña no es valido</li>";
+                $respuesta[] = "La contraseña no es valido";
             }
         } else {
-            $respuesta .= "<li>Password vacio</li>";
+            $respuesta[] = "Password vacio";
         }
 
-        if ($respuesta == "<ul>") {
+        if (strlen(count($respuesta) == 0)) {
             echo "<h1>Bienvenido a nuestra web $name</h1>";
         } else {
-            echo $respuesta . "</ul>";
+            echo "<ul>";
+            foreach ($respuesta as $val) {
+                echo "<li>$val</li>";
+            }
+            echo "</ul>";
         }
     }
 }
