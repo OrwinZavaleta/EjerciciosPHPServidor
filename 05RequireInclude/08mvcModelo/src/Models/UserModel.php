@@ -18,6 +18,21 @@ class UserModel
         return fwrite($connection, "$name\n");
     }
 
+    public function getName($id)
+    {
+        return $this->getNames()[$id];
+    }
+
+    public function updateName($id, $newName)
+    {
+        $id = intval($id);
+        $allUsers = $this->getNames();
+
+        $allUsers[$id] = $newName . "\n";
+
+        $this->overrideUsers($allUsers);
+    }
+
     public function getNames()
     {
         /* $connection = false;
@@ -41,17 +56,21 @@ class UserModel
 
     public function delName($id)
     {
+        $id = intval($id);
         $allUsers = $this->getNames();
 
-        $name = array_splice($allUsers, $id, 1);
-        print_r($name);
+        array_splice($allUsers, $id, 1);
+        // print_r($name);
 
+        $this->overrideUsers($allUsers);
+    }
+
+    private function overrideUsers($array)
+    {
         $archivo = fopen($this->filePath, "w");
 
-        foreach ($allUsers as $name) {
+        foreach ($array as $name) {
             fwrite($archivo, "$name");
         }
-
-        return $name[0];
     }
 }

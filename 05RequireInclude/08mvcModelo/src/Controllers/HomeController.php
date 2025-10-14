@@ -49,16 +49,36 @@ class HomeController
         require __DIR__ . "/../Views/welcome.php";
         // echo ob_get_clean();
     }
-    
+
     public function deleteUser($peticion)
     {
         $id = $peticion["id"];
-        
-        $nameD = $this->model->delName($id);
-                
+
+        $nameD = $this->model->getName($id);
+        $this->model->delName($id);
+
+
         require __DIR__ . "/../Views/despedida.php";
 
         // header("location: /");
         // http_response_code(303);
+    }
+    public function formEditUser($peticion)
+    {
+        $id = $peticion["id"];
+
+        $user = $this->model->getName($id);
+
+        require __DIR__ . "/../Views/formUser.php";
+    }
+    public function editUser($peticion)
+    {
+        $id = $peticion["id"];
+
+        $name = $peticion["nombre"];
+
+        $this->model->updateName($id, $name);
+
+        require __DIR__ . "/../Views/editado.php";
     }
 }

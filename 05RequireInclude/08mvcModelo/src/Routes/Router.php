@@ -23,6 +23,16 @@ switch ($path) {
             $controller->deleteUser($_GET);
         }
         break;
+    case '/formEditUser':
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $controller->formEditUser($_GET);
+        }
+        break;
+    case '/editUser':
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $controller->editUser($_POST);
+        }
+        break;
     default:
         http_response_code(404);
         echo "Pagina no encontrada";

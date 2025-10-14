@@ -12,7 +12,11 @@
     <div>
         <ul>
             <?php foreach ($users as $id => $user): ?>
-                <li><?= $user ?><a href="/deleteUser?id=<?= $id ?>">Eliminar</a></li>
+                <li>
+                    <?= $user ?>
+                    <a href="/deleteUser?id=<?= $id ?>">Eliminar</a>
+                    <a href="/formEditUser?id=<?= $id ?>">Editar</a>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>
