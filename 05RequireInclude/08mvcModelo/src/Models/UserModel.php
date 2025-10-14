@@ -43,12 +43,15 @@ class UserModel
     {
         $allUsers = $this->getNames();
 
-        array_splice($allUsers, $id, 1);
+        $name = array_splice($allUsers, $id, 1);
+        print_r($name);
 
         $archivo = fopen($this->filePath, "w");
 
         foreach ($allUsers as $name) {
             fwrite($archivo, "$name");
         }
+
+        return $name[0];
     }
 }

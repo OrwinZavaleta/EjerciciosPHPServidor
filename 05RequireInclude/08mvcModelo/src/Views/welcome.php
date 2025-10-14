@@ -8,7 +8,13 @@
 </head>
 
 <body>
-    <h1><?= $texto ?></h1>
+    <?php if ($correcto == 1): ?>
+        <h1>Bienvenido <?= $name ?>, todo salio bien</h1>
+    <?php elseif ($correcto == 0): ?>
+        <h1>Hubo un error, no pudimos agregarle.</h1>
+    <?php else: ?>
+        <h1>Nombre no valido</h1>
+    <?php endif; ?>
     <a href="/">Regresar a la pagina principal</a>
 </body>
 

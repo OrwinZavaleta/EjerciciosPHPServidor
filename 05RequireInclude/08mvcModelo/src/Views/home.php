@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario</title>
 </head>
+
 <body>
     <h1>Lista de nombres</h1>
     <div>
-        <?= $users?>
+        <ul>
+            <?php foreach ($users as $id => $user): ?>
+                <li><?= $user ?><a href="/deleteUser?id=<?= $id ?>">Eliminar</a></li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 
     <hr>
@@ -20,4 +26,5 @@
         <input type="submit" value="Crear usuario">
     </form>
 </body>
+
 </html>
