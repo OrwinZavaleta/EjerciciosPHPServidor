@@ -13,6 +13,9 @@
             "email": "orwinzavaleta@gmail.com"
         }
     ],
+    "scripts": {
+        "start" : "php -S localhost:8000 -t public"
+    },
     "minimum-stability": "stable",
     "require": {}
 }
