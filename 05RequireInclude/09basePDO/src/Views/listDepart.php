@@ -13,8 +13,8 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>dnombre</th>
-                <th>loc</th>
+                <th>Nombre</th>
+                <th>Ubicacion</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +23,8 @@
                     <td><?= $a["depart_no"] ?></td>
                     <td><?= $a["dnombre"] ?></td>
                     <td><?= $a["loc"] ?></td>
+                    <td><a href="/updateDepartForm?id=<?= $a["depart_no"] ?>">Editar</a></td>
+                    <td><a href="/delDepart?id=<?= $a["depart_no"] ?>">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

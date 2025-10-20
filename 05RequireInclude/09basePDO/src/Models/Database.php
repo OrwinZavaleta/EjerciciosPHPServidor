@@ -23,6 +23,8 @@ class Database
             die("Error al conectar: " . $e->getMessage());
         }
     }
+
+    // Para los select que si devuelven algo
     public function query($sql, $params = [])
     {
         try {
@@ -34,8 +36,16 @@ class Database
         }
     }
 
-    public function execute() {
-
+    // Para las otras 3 que no devuelven nada
+    public function execute($sql, $params = [])
+    {
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            die("Hubo un error en la ejecucion: " . $e->getMessage());
+        }
     }
 
     public function listDepart()
@@ -48,5 +58,22 @@ class Database
     {
         $sql = "SELECT * FROM depart WHERE depart_no=:id";
         return $this->query($sql, [":id" => "$id"]);
+    }
+
+    public function insertDepart($depart_no, $dnombre, $loc)
+    {
+        $sql = "INSERT INTO depart VALUES(:depart_no, :dnombre, :loc)";
+        return $this->execute($sql, [":depart_no" => $depart_no, ":dnombre" => $dnombre, ":loc" => $loc]);
+    }
+
+    public function updateDepart($depart_no, $dnombre, $loc)
+    {
+        $sql = "UPDATE depart SET dnombre=:dnombre, loc=:loc WHERE depart_no=:depart_no";
+        return $this->execute($sql, [":depart_no" => $depart_no, ":dnombre" => $dnombre, ":loc" => $loc]);
+    }
+    public function deleteDepart($id)
+    {
+        $sql = "DELETE FROM depart WHERE depart_no=:id";
+        return $this->execute($sql, [":id" => $id]);
     }
 }
