@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Orwin\\Pdo\\' => array($baseDir . '/src'),
+    'App\\' => array($baseDir . '/src'),
 );

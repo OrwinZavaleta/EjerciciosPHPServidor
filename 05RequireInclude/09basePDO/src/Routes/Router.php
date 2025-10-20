@@ -13,6 +13,11 @@ switch ($path) {
     case '/':
         $controller->index();
         break;
+    case '/listDepart':
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $controller->listDepart();
+        }
+        break;
     default:
         # code...
         break;
