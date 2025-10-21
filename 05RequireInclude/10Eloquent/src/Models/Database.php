@@ -16,7 +16,8 @@ class Database
             $capsule->addConnection([
                 "driver" => "mysql",
                 "host" => "localhost",
-                "database" => "01pdo",
+                // "database" => "01pdo",
+                "database" => "empresa",
                 "username" => "root",
                 "password" => "",
                 "charset" => "utf8mb4",

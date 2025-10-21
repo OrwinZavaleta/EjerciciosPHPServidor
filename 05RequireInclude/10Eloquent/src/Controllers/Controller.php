@@ -14,15 +14,16 @@ class Controller
         $this->model = new Database();
     }
 
-    public function index()
-    {
-        include __DIR__ . "/../Views/home.php";
-    }
+    // public function index()
+    // {
+    //     include __DIR__ . "/../Views/home.php";
+    // }
 
     public function listDepart()
     {
         $departamentos = $this->model->listDepart();
-        include __DIR__ . "/../Views/listDepart.php";
+        $departamento = false;
+        include __DIR__ . "/../Views/home.php";
     }
     public function delDepart($request) //Funciona
     {
@@ -30,15 +31,16 @@ class Controller
 
         $this->model->delDepart($id);
 
-        header("location: /listDepart");
+        header("location: /");
     }
     public function updateDepartForm($request)
     {
         $id = $request["id"];
-        
+
+        $departamentos = $this->model->listDepart();
         $departamento = $this->model->getDepart($id);
 
-        include __DIR__ . "/../Views/updateDepartForm.php";
+        include __DIR__ . "/../Views/home.php";
     }
     public function updateDepart($request)
     {
@@ -48,12 +50,12 @@ class Controller
 
         $this->model->updateDepart($depart_no, $dnombre, $loc);
 
-        header("location: /listDepart");
+        header("location: /");
     }
-    public function createDepartForm()
-    {
-        include __DIR__ . "/../Views/createDepartForm.php";
-    }
+    // public function createDepartForm()
+    // {
+    //     include __DIR__ . "/../Views/createDepartForm.php";
+    // }
     public function createDepart($request)
     {
         $depart_no = $request["id"];
@@ -62,6 +64,6 @@ class Controller
 
         $this->model->insertDepart($depart_no, $dnombre, $loc);
 
-        header("location: /listDepart");
+        header("location: /");
     }
 }

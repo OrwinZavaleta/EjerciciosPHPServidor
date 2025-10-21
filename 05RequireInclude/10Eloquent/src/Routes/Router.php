@@ -11,13 +11,14 @@ $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH); //Para recordar.
 
 switch ($path) {
     case '/':
-        $controller->index();
+        // $controller->index();
+        $controller->listDepart($_GET);
         break;
-    case '/listDepart':
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $controller->listDepart($_GET);
-        }
-        break;
+    // case '/listDepart':
+    //     if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    //         $controller->listDepart($_GET);
+    //     }
+    //     break;
     case '/delDepart':
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $controller->delDepart($_GET);
@@ -33,11 +34,11 @@ switch ($path) {
             $controller->updateDepart($_POST);
         }
         break;
-    case '/createDepartForm':
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $controller->createDepartForm($_GET);
-        }
-        break;
+    // case '/createDepartForm':
+    //     if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    //         $controller->createDepartForm($_GET);
+    //     }
+    //     break;
     case '/createDepart':
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $controller->createDepart($_POST);
