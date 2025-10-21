@@ -13,12 +13,12 @@ class Database
 
             $capsule->addConnection([
                 "driver" => "mysql",
-                "host" => "127.0.0.1",
+                "host" => "localhost",
                 "database" => "01pdo",
                 "username" => "root",
                 "password" => "",
-                "charset" => "utf8",
-                "cllation" => "utf8_unicode_ci",
+                "charset" => "utf8mb4",
+                "collation" => "utf8mb4_general_ci",
                 "prefix" => "",
             ]);
 
