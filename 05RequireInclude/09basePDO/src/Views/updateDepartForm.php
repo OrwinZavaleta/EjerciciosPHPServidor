@@ -9,11 +9,11 @@
 
 <body>
 
-    <h3>Actualizar un departamento</h3>
+    <h3>Actualizando el departamento <?= $departamento[0]["depart_no"] ?></h3>
     <form action="/updateDepart" method="post">
 
-        <label for="id">Ingrese el id</label>
-        <input type="number" name="id" id="id" value="<?= $departamento[0]["depart_no"] ?>"> <br>
+        <!-- <label for="id">Ingrese el id</label> -->
+        <input type="hidden" name="id" id="id" value="<?= $departamento[0]["depart_no"] ?>"> <br>
         <label for="id">Ingrese el nombre</label>
         <input type="text" name="nombre" id="nombre" value="<?= $departamento[0]["dnombre"] ?>"> <br>
         <label for="id">Ingrese la ubicacion</label>

@@ -10,7 +10,7 @@
 
     <ul>
         <li><a href="/listDepart">Listado de Depatartamentos</a></li>
-        <li><a href="/createDepartForm">Crear un Depatartamentos</a></li>
+        <li><a href="/createDepartForm">Crear un Departamentos</a></li>
         <li><a href="/">Otra ruta</a></li>
     </ul>
 </body>
