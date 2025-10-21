@@ -11,6 +11,7 @@ class Controller
 
     public function __construct()
     {
+        new \App\Models\Database();
         // $this->model = new Depart();
     }
 
