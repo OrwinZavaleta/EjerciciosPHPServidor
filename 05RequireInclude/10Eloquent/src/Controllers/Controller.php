@@ -2,17 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\Depart;
+use App\Models\Database;
 
 class Controller
 {
     //Instanciar el modelo
-    // private $model;
+    private $model;
 
     public function __construct()
     {
-        new \App\Models\Database();
-        // $this->model = new Depart();
+        $this->model = new Database();
     }
 
     public function index()
@@ -22,32 +21,22 @@ class Controller
 
     public function listDepart()
     {
-        // $departamentos = $this->model->listDepart();
-        $departamentos = Depart::all();
+        $departamentos = $this->model->listDepart();
         include __DIR__ . "/../Views/listDepart.php";
     }
     public function delDepart($request) //Funciona
     {
         $id = $request["id"];
 
-        // $this->model->deleteDepart($id);
-
-        $depa = Depart::find($id);
-        if ($depa) {
-            $depa->delete();
-            error_log("Se elimino con exito");
-        } else {
-            error_log("Error al eliminar.");
-        }
-
+        $this->model->delDepart($id);
 
         header("location: /listDepart");
     }
     public function updateDepartForm($request)
     {
         $id = $request["id"];
-
-        $departamento = Depart::find($id);
+        
+        $departamento = $this->model->getDepart($id);
 
         include __DIR__ . "/../Views/updateDepartForm.php";
     }
@@ -57,18 +46,7 @@ class Controller
         $dnombre = $request["nombre"];
         $loc = $request["ubicacion"];
 
-        // $this->model->updateDepart($depart_no, $dnombre, $loc);
-
-        $depa = Depart::find($depart_no);
-        if ($depa) {
-            $depa->dnombre = $dnombre;
-            $depa->loc = $loc;
-            error_log("Actualizado con exito el departamento");
-        } else {
-            error_log("ese depart no existe.");
-        }
-
-        $depa->save();
+        $this->model->updateDepart($depart_no, $dnombre, $loc);
 
         header("location: /listDepart");
     }
@@ -82,18 +60,7 @@ class Controller
         $dnombre = $request["nombre"];
         $loc = $request["ubicacion"];
 
-        // $this->model->insertDepart($depart_no, $dnombre, $loc);
-
-        try {
-            Depart::create([
-                "depart_no" => $depart_no,
-                "dnombre" => $dnombre,
-                "loc" => $loc,
-            ]);
-            error_log("Se creo correctamente el departamento");
-        } catch (\Exception $e) {
-            error_log("Error al crear el departamento");
-        }
+        $this->model->insertDepart($depart_no, $dnombre, $loc);
 
         header("location: /listDepart");
     }
