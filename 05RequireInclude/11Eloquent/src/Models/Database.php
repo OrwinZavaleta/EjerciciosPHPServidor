@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Depart;
+use App\Models\Emple;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -16,7 +17,8 @@ class Database
             $capsule->addConnection([
                 "driver" => "mysql",
                 "host" => "localhost",
-                "database" => "01pdo",
+                // "database" => "01pdo",
+                "database" => "empresa",
                 "username" => "root",
                 "password" => "",
                 "charset" => "utf8mb4",
@@ -53,10 +55,15 @@ class Database
     public function delDepart($id)
     {
         $depa = Depart::find($id);
-        if ($depa) {
+
+        $cuantos = Emple::where("depart_no", $depa["depart_no"])->count();
+
+        if ($cuantos == 0 && $depa) {
             $depa->delete();
             error_log("Se elimino con exito");
+            return true;
         } else {
+            return false;
             error_log("Error al eliminar.");
         }
     }
@@ -76,5 +83,23 @@ class Database
         } catch (\Exception $e) {
             error_log("Error al crear el departamento");
         }
+    }
+    public function insertEmple($emple_no, $apellido, $oficio, $depart_no)
+    {
+        try {
+            Emple::create([
+                "emple_no" => $emple_no,
+                "apellido" => $apellido,
+                "oficio" => $oficio,
+                "depart_no" => $depart_no,
+            ]);
+            error_log("Se creo correctamente el departamento");
+        } catch (\Exception $e) {
+            error_log("Error al crear el departamento");
+        }
+    }
+    public function listEmple()
+    {
+        return Emple::all();
     }
 }
