@@ -18,12 +18,15 @@ class Controller
     {
         $departamentos = $this->myModel->loadDeps();
 
-        include __DIR__ . "/../Views/home.php";
+        $contenido = "listado.php";
+
+        include __DIR__ . "/../Views/plantilla.php";
     }
 
     public function createDepartForm()
     {
-        include __DIR__ . "/../Views/createDepartForm.php";
+        $contenido = "createDepartForm.php";
+        include __DIR__ . "/../Views/plantilla.php";
     }
 
     public function createDepart($request)
@@ -49,8 +52,10 @@ class Controller
         $_id = $request["depart_no"];
 
         $dep = $this->myModel->loadDep($_id);
+
+        $contenido = "updateDepartForm.php";
         // print_r($dep);
-        include __DIR__. "/../Views/updateDepartForm.php";
+        include __DIR__. "/../Views/plantilla.php";
     }
 
     public function updateDepart($request){

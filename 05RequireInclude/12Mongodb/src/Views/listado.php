@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body> -->
     <h2>Listado de departamentos</h2>
     <ul>
         <?php foreach ($departamentos as $a): ?>
@@ -15,5 +15,5 @@
     </ul>
 
     <a href="/createDepartForm">Crear nuevo departamento</a>
-</body>
-</html>
+<!-- </body>
+</html> -->
