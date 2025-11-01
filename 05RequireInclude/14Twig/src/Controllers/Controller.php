@@ -2,20 +2,36 @@
 
 namespace App\Controllers;
 
-use App\Models\Database;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Controller
 {
+    private $twig;
     //Instanciar el modelo
-    private $myModel;
 
     public function __construct()
     {
-        $this->myModel = new Database();
+        $loader = new FilesystemLoader(__DIR__ . "/../Views");
+        $this->twig = new Environment($loader);
     }
 
     public function index()
     {
-        include __DIR__ . "/../Views/home.html";
+        echo $this->twig->render("home.html.twig");
+    }
+    public function about()
+    {
+        echo $this->twig->render("about.html.twig");
+    }
+    public function lista()
+    {
+        echo $this->twig->render("lista.html.twig", [
+            "departamentos" => [
+                ["nombre" => "depa1"],
+                ["nombre" => "depa2"],
+                ["nombre" => "depa3"],
+            ]
+        ]);
     }
 }

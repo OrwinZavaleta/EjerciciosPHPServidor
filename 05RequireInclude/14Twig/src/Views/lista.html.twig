@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+	Listado
+{% endblock %}
+
+
+{% block content %}
+	<h1>Listado de departamentos</h1>
+	<ul>
+		{% for depart in departamentos %}
+			<li>{{depart.nombre}}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
