@@ -1,0 +1,11 @@
+{% import "macros/macro.html.twig" as macro %}
+<div class="col">
+	<div class="card text-bg{% if personaje.villano %}-danger {% else %}-success {% endif %}">
+		<div class="card-body text-center">
+			<h5 class="card-title">{{personaje.nombre}}</h5>
+			<p class="card-text">Pelicula:
+				{{personaje.pelicula}}</p>
+			{{macro.alert(personaje)}}
+		</div>
+	</div>
+</div>

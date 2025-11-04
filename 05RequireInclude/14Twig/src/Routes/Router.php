@@ -22,7 +22,7 @@ class Router
     {
         $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-        if (isset($this->routes[$path])) {
+        if ($this->routes[$path]) {
             $route = $this->routes[$path];
 
             $controllerClass = "\\App\\Controllers\\" . $route["controller"];

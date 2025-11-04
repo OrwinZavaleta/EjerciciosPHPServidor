@@ -1,0 +1,12 @@
+{% macro alert(personaje) %}
+	{% if personaje.villano %}
+		<div class="alert alert-danger" role="alert">
+			Villano
+		</div>
+	{% else %}
+		<div class="alert alert-success" role="alert">
+			Heroe
+		</div>
+	{% endif %}
+
+{% endmacro %}
