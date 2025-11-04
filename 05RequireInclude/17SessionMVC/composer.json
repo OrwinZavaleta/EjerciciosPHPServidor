@@ -17,5 +17,7 @@
         "start" : "php -S localhost:8000 -t public"
     },
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "twig/twig": "^3.22"
+    }
 }
