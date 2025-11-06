@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Database;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -12,7 +11,6 @@ class Controller
     private $twig;
     private $user;
     private $pass;
-    private $isLog = false;
 
     public function __construct()
     {
@@ -31,40 +29,29 @@ class Controller
             session_start();                           // es decir si se puso session_start antes o no
         }
         if (isset($_SESSION["user"])) {
-            $this->isLog = true;
-        } else {
-            $this->isLog = false;
+            $this->twig->addGlobal("name", $_SESSION["user"]);
         }
     }
 
     public function index()
     {
-        echo $this->twig->render("home.html.twig", ["isLog" => $this->isLog]);
+        echo $this->twig->render("home.html.twig");
     }
     public function loginForm()
     {
-        echo $this->twig->render("loginForm.html.twig",  ["isLog" => $this->isLog]);
+        echo $this->twig->render("loginForm.html.twig");
     }
     public function login($request)
     {
-        // $user = $request["user"];
-        // $pass = $request["password"];
-
         $user = filter_input(INPUT_POST, "user", FILTER_SANITIZE_SPECIAL_CHARS);
         $pass = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-        // $user = htmlspecialchars($user);
-        // $pass = htmlspecialchars($pass);
-
-        // $passHash = passwsord_hash($pass, PASSWORD_BCRYPT);
 
         if ($user === $this->user && password_verify($pass, $this->pass)) {
-            session_start();
             $_SESSION["user"] = $user;
             $_SESSION["pass"] = $pass;
-            $this->isLog = true;
-            echo $this->twig->render("session/success.html.twig",  ["isLog" => $this->isLog, "name" => $_SESSION["user"] = $user]);
+            echo $this->twig->render("session/success.html.twig", ["name" => $_SESSION["user"]]);
         } else {
-            echo $this->twig->render("session/fail.html.twig", ["isLog" => $this->isLog]);
+            echo $this->twig->render("session/fail.html.twig");
         }
     }
     public function logout()
@@ -75,7 +62,7 @@ class Controller
         session_unset();
         session_destroy();
         // $this->isLog = false;
-        // echo $this->twig->render("home.html.twig", ["isLog" => $this->isLog]);
+        // echo $this->twig->render("home.html.twig");
         header("location: /");
     }
 }
