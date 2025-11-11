@@ -1,0 +1,11 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+	<h1>Carrito de la Compra</h1>
+	<form method="post" action="/compra" class="row g-3 needs-validation" novalidate>
+		<div class="mb-3">
+			<textarea name="compra" class="form-control">{{compra}}</textarea>
+		</div>
+		<input type="submit" value="Actualizar Carrito" class="btn btn-primary">
+	</form>
+{% endblock %}

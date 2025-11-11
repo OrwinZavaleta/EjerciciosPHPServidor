@@ -6,7 +6,6 @@ use App\Models\Database;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-
 class Controller
 {
     //Instanciar el modelo
@@ -96,12 +95,42 @@ class Controller
 
         header("location: /");
     }
-    public function private()
+    public function compraForm()
     {
         if (session_status() != PHP_SESSION_ACTIVE) {
             session_start();
         }
 
-        echo $this->twig->render("private.html.twig", ["private" => $_SESSION["private"]]);
+        /* $user = $this->myModel->getUser($_SESSION["username"]);
+
+        echo $this->twig->render("compraForm.html.twig", ["compra" => $user->compra]); */
+        // print_r(json_decode($_COOKIE["compra"], true));
+        $compra = json_decode($_COOKIE["compra"], true)[$_SESSION["username"]] ?? "";
+        echo $this->twig->render("compraForm.html.twig", ["compra" => $compra]);
+    }
+
+    public function compra($request)
+    {
+        // $compra = filter_input(INPUT_POST, "compra", FILTER_SANITIZE_SPECIAL_CHARS); // No funciona bien
+        $compra = htmlspecialchars($request["compra"]);
+
+
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        // $this->myModel->updateUser($_SESSION["username"], $compra);
+
+        if (isset($_COOKIE["compra"])) {
+            $compras = json_decode($_COOKIE["compra"], true);
+
+            $compras[$_SESSION["username"]] = $compra;
+
+            setcookie("compra", json_encode($compras), time() + 600, "/");
+        } else {
+            setcookie("compra", json_encode([$_SESSION["username"] => $compra]), time() + 600, "/");
+        }
+
+        header("location: /");
     }
 }
