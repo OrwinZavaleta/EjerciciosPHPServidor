@@ -44,13 +44,13 @@ class MySQLSessionHandler implements SessionHandlerInterface
 
     public function destroy(string $id): bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM php_sessions WHERE id < :id");
+        $stmt = $this->pdo->prepare("DELETE FROM php_sessions WHERE id = :id");
         return $stmt->execute(["id" => $id]);
     }
 
     public function gc(int $max_lifetime): int|false
     {
-        $stmt = $this->pdo->prepare("DELETE FROM php_sessionss WHERE last_access < :time");
+        $stmt = $this->pdo->prepare("DELETE FROM php_sessions WHERE last_access < :time");
 
         return $stmt->execute(["time" => time() - $max_lifetime]) ? 1 : 0;
     }

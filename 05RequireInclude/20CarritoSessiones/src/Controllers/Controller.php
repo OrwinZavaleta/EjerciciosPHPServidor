@@ -59,7 +59,7 @@ class Controller
     {
         echo $this->twig->render("registerForm.html.twig");
     }
-    public function register($request) // No funciona
+    public function register($request)
     {
         $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -87,6 +87,7 @@ class Controller
         if (session_status() != PHP_SESSION_ACTIVE) {
             session_start();
         }
+        echo "se cerro la sesion";
 
         session_unset();
 
@@ -105,13 +106,13 @@ class Controller
 
         echo $this->twig->render("compraForm.html.twig", ["compra" => $user->compra]); */
         // print_r(json_decode($_COOKIE["compra"], true));
-        $compra = json_decode($_COOKIE["compra"], true)[$_SESSION["username"]] ?? "";
+        $compra = json_decode($_COOKIE["compra"], true)[$_SESSION["username"]] ?? ""; // La solucion de Mikel es mas facil
         echo $this->twig->render("compraForm.html.twig", ["compra" => $compra]);
     }
 
     public function compra($request)
     {
-        // $compra = filter_input(INPUT_POST, "compra", FILTER_SANITIZE_SPECIAL_CHARS); // No funciona bien
+        // $compra = filter_input(INPUT_POST, "compra", FILTER_SANITIZE_SPECIAL_CHARS); // No funciona bien // ---------------
         $compra = htmlspecialchars($request["compra"]);
 
 
