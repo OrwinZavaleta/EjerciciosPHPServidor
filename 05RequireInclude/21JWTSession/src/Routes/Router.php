@@ -14,6 +14,11 @@ class Router
     public function loadRoutes()
     {
         $this->routes["/"] = ["controller" => "Controller", "action" => "index"];
+        $this->routes["/loginForm"] = ["controller" => "Controller", "action" => "loginForm"];
+        $this->routes["/login"] = ["controller" => "Controller", "action" => "login"];
+        $this->routes["/registerForm"] = ["controller" => "Controller", "action" => "registerForm"];
+        $this->routes["/register"] = ["controller" => "Controller", "action" => "register"];
+        $this->routes["/logout"] = ["controller" => "Controller", "action" => "logout"];
     }
 
 

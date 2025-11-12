@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+	<h1>Registrarse</h1>
+	<form action="/register" method="post" class="row g-3 needs-validation" novalidate>
+		<div class="col-md-4">
+			<label for="user" class="form-label">User</label>
+			<input type="text" class="form-control" id="username" name="username" required>
+
+		</div>
+		<div class="col-md-4">
+			<label for="password" class="form-label">Password</label>
+			<input type="password" class="form-control" id="password" name="password" required>
+
+		</div>
+		<div class="col-12">
+			<button class="btn btn-primary" type="submit">Iniciar</button>
+		</div>
+	</form>
+{% endblock %}
