@@ -21,7 +21,12 @@ class Controller
         $dotenv->load();
         $loader = new FilesystemLoader(__DIR__ . "/../Views");
         $this->twig = new Environment($loader);
-        $this->myModel = new Database($_ENV["DB_HOST"], $_ENV["DB_DATABASE"], $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
+        $this->myModel = new Database(
+            $_ENV["DB_HOST"],
+            $_ENV["DB_DATABASE"],
+            $_ENV["DB_USERNAME"],
+            $_ENV["DB_PASSWORD"],
+        );
 
         $decoded = $this->comprobarJWT();
         if ($decoded !== false) {
@@ -39,14 +44,24 @@ class Controller
     }
     public function login($request)
     {
-        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        $username = filter_input(
+            INPUT_POST,
+            "username",
+            FILTER_SANITIZE_SPECIAL_CHARS,
+        );
+        $password = filter_input(
+            INPUT_POST,
+            "password",
+            FILTER_SANITIZE_SPECIAL_CHARS,
+        );
 
         $user = $this->myModel->getUser($username);
 
         if (isset($user) && password_verify($password, $user->password)) {
             $this->crearJWT($username);
-            echo $this->twig->render("session/success.html.twig", ["name" => $username]);
+            echo $this->twig->render("session/success.html.twig", [
+                "name" => $username,
+            ]);
         } else {
             echo $this->twig->render("session/fail.html.twig");
         }
@@ -57,8 +72,16 @@ class Controller
     }
     public function register($request)
     {
-        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        $username = filter_input(
+            INPUT_POST,
+            "username",
+            FILTER_SANITIZE_SPECIAL_CHARS,
+        );
+        $password = filter_input(
+            INPUT_POST,
+            "password",
+            FILTER_SANITIZE_SPECIAL_CHARS,
+        );
 
         $user = $this->myModel->getUser($username) ?? null;
 
@@ -67,7 +90,9 @@ class Controller
 
             $this->crearJWT($username);
 
-            echo $this->twig->render("session/success.html.twig", ["name" => $username]);
+            echo $this->twig->render("session/success.html.twig", [
+                "name" => $username,
+            ]);
         } else {
             echo $this->twig->render("session/fail.html.twig");
         }
