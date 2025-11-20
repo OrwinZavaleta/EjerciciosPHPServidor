@@ -2,15 +2,16 @@ GET http://localhost:8000/api/departs
 
 ###
 
-GET http://localhost:8000/api/departs/10
+GET http://localhost:8000/api/departs/30
 
 ###
 
 POST http://localhost:8000/api/departs/create
 Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJoZWVwOi8vbG9jYWxob3N0OjgwMDAiLCJhdWQiOiJoZWVwOi8vbG9jYWxob3N0OjgwMDAiLCJpYWQiOjE3NjM2NDQ0NTgsImV4cCI6MTc2MzY0ODA1OCwidXNlcl9pZCI6Ik9yd2luIn0.pgoMMV_WggQ9HlwQnP2rUKwdd2fNzrqAVSXEY2yy6LM
 
 {
-    "depart_no": 90,
+    "depart_no": 92,
     "dnombre": "depa",
     "loc": "Madrid"
 }

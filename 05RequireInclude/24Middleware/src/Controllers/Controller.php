@@ -20,8 +20,9 @@ class Controller
         error_log("conectado");
     }
 
-    public function index(){
-        include __DIR__."/../../cliente.html";
+    public function index()
+    {
+        include __DIR__ . "/../../cliente.html";
     }
 
     public function getAll()
@@ -39,18 +40,21 @@ class Controller
         $depart_no = $request["depart_no"];
         $dnombre = $request["dnombre"];
         $loc = $request["loc"];
-        echo json_encode($this->myModel->createDep($depart_no, $dnombre, $loc));
+        $this->myModel->createDep($depart_no, $dnombre, $loc);
+        echo json_encode(["response" => "Departamento creado"]);
     }
-    public function update($id) // TODO: falta terminarlo
+    public function update($id)
     {
         $request = json_decode(file_get_contents("php://input"), true);
         // $depart_no = $request["depart_no"];
         $dnombre = $request["dnombre"];
         $loc = $request["loc"];
-        echo json_encode($this->myModel->updateDep($id, $dnombre, $loc));
+        $this->myModel->updateDep($id, $dnombre, $loc);
+        echo json_encode(["response" => "Departamento actualizado"]);
     }
     public function delete($id)
     {
-        echo json_encode($this->myModel->deleteDep($id));
+        $this->myModel->deleteDep($id);
+        echo json_encode(["response" => "Departamento eliminado"]);
     }
 }

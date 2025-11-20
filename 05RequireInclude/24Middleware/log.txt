@@ -1,0 +1,15 @@
+localhost:800014:34:54 - localhost:8000Usuario NOO Autenticado - 14:35:05 - localhost:8000Usuario NOO Autenticado - 
+14:35:07 - localhost:8000Usuario NOO Autenticado - 
+14:35:10 - localhost:8000Usuario Autenticado - 22:18:49 - GETlocalhost:8000Usuario NOO Autenticado - 
+22:18:53 - GETlocalhost:8000Usuario NOO Autenticado - 
+22:18:57 - GETlocalhost:8000Usuario NOO Autenticado - 
+22:19:02 - POSTlocalhost:8000Usuario Autenticado - 
+22:19:05 - PUTlocalhost:8000Usuario NOO Autenticado - 
+22:19:07 - DELETElocalhost:8000Usuario NOO Autenticado - 
+22:20:11 - GET - localhost:8000Usuario NOO Autenticado - 
+22:20:37 - GET - localhost:8000 - Usuario NOO Autenticado - 
+22:20:50 - GET - localhost:8000 - Usuario NOO Autenticado - 
+22:20:54 - POST - localhost:8000 - Usuario Autenticado - 
+22:20:54 - PUT - localhost:8000 - Usuario NOO Autenticado - 
+22:20:54 - DELETE - localhost:8000 - Usuario NOO Autenticado - 
+22:21:34 - GET - localhost:8000 - Usuario NOO Autenticado - 
