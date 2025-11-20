@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Peticion a api</h1>
+    <hr>
+    <h2>Pedit todo</h2>
+    <button type="button" id="boton">Pedir datos</button>
+    <hr>
+
+    <h2>Pedir un valor</h2>
+    <form method="get" id="formId">
+        <input type="number" name="iddepa" id="iddepa">
+
+        <button type="submit">Solicitar</button>
+    </form>
+    <hr>
+
+    <h2>Crear un departamento</h2>
+    <form method="post" id="formCreate">
+        <label for="depart_no">Depart No</label>
+        <input type="number" name="depart_no" id="depart_no">
+        <label for="dnombre">Nombre del Departamento</label>
+        <input type="text" name="dnombre" id="dnombre">
+        <label for="loc">Localizacion</label>
+        <input type="text" name="loc" id="loc">
+
+        <button type="submit">Crear</button>
+    </form>
+    <hr>
+    <h2>Actualizar un departamento</h2>
+    <form method="post" id="formUpdate">
+        <label for="depart_no">Depart No</label>
+        <input type="number" name="depart_no">
+        <button type="button" id="pedirDatos">Pedir datos</button>
+
+        <label for="dnombre">Nombre del Departamento</label>
+        <input type="text" name="dnombre">
+        <label for="loc">Localizacion</label>
+        <input type="text" name="loc">
+
+        <button type="submit">Actualizar</button>
+    </form>
+
+    <hr>
+    <h2>Borrar un departamento</h2>
+    <form method="get" id="deleteForm">
+        <input type="number" name="depart_no">
+
+        <button type="submit">Borrar</button>
+    </form>
+    <hr>
+    <div id="departamentos_mostrar">
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            /* PEDIR TODOS LOS DEPARTAMENTOS */
+            document.querySelector("#boton").addEventListener("click", function () {
+                fetch("http://localhost:8000/api/departs")
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        let lista = "<ul>"
+                        // document.querySelector("#departamentos_mostrar").innerHTML = data;
+
+                        data.forEach((depa, index) => {
+                            lista += `<li>Elemento ${index}: <ul>`;
+
+                            for (const key in depa) {
+                                lista += `<li>${key} : ${depa[key]}</li>`
+                            }
+                            lista += "</ul></li>";
+                        });
+                        lista += "</ul>";
+
+                        document.querySelector("#departamentos_mostrar").innerHTML = lista;
+                    });
+            });
+
+            /* PEDIR UN UNICO DEPARTAMENTO */
+            document.querySelector("#formId").addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                fetch("http://localhost:8000/api/departs/" + this.iddepa.value)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        let lista = "<ul>"
+                        // document.querySelector("#departamentos_mostrar").innerHTML = data;
+
+                        data.forEach((depa, index) => {
+                            lista += `<li>Elemento ${index}: <ul>`;
+
+                            for (const key in depa) {
+                                lista += `<li>${key} : ${depa[key]}</li>`
+                            }
+                            lista += "</ul></li>";
+                        });
+                        lista += "</ul>";
+
+                        document.querySelector("#departamentos_mostrar").innerHTML = lista;
+                    });
+            })
+
+            /* CREAR FORMULARIO */
+            document.querySelector("#formCreate").addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                let cuerpo = {
+                    "depart_no": this.depart_no.value,
+                    "dnombre": this.dnombre.value,
+                    "loc": this.loc.value,
+                };
+
+                fetch("http://localhost:8000/api/departs/create", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(cuerpo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        document.querySelector("#departamentos_mostrar").innerHTML = "departamento creado";
+                    });
+            })
+
+            /* PEDIR LOS DATOS ANTES DE LA ACTUALIZACION */
+
+            document.querySelector("#pedirDatos").addEventListener("click", function () {
+                const formulario = document.querySelector("#formUpdate");
+                // console.log("http://localhost:8000/api/departs/" + formulario.depart_no.value);
+                fetch("http://localhost:8000/api/departs/" + formulario.depart_no.value)
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+                        formulario.dnombre.value = data[0].dnombre;
+                        formulario.loc.value = data[0].loc;
+
+                        // document.querySelector("#departamentos_mostrar").innerHTML = lista;
+                    });
+            })
+
+            /* ACTUALIZAR DEPARTAMENTO */
+            document.querySelector("#formUpdate").addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                let cuerpo = {
+                    // "depart_no": this.depart_no.value,
+                    "dnombre": this.dnombre.value,
+                    "loc": this.loc.value,
+                };
+                console.log(cuerpo);
+
+
+                fetch("http://localhost:8000/api/departs/" + this.depart_no.value, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(cuerpo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        document.querySelector("#departamentos_mostrar").innerHTML = "departamento actualizado";
+                    });
+            })
+
+
+
+            /* BORRAR DEPARTAMENTO */
+            document.querySelector("#deleteForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                console.log("http://localhost:8000/api/departs/" + this.depart_no.value);
+
+                fetch("http://localhost:8000/api/departs/" + this.depart_no.value, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        document.querySelector("#departamentos_mostrar").innerHTML = "departamento borrado";
+                    });
+            })
+        });
+    </script>
+</body>
+
+</html>
