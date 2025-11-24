@@ -49,18 +49,18 @@ class Router
             error_log(" controller $controllerClass , action $action");
 
             /* Comprobacion del middleware */
-            
+
+            /* Middleware del log */
             $headers = getallheaders();
             $logMidleware = new LogMiddleware();
             $logMidleware->handle($headers);
 
-
+            /* Middleware de auth */
             if (isset($route["auth"]) && $route["auth"] === true) {
                 $authMiddleware = new AuthMiddleware();
 
                 $userData = $authMiddleware->handle($headers);
             }
-
             /* Fin de middleware */
 
             if (class_exists($controllerClass) && method_exists($controllerClass, $action)) {
