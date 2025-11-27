@@ -10,9 +10,13 @@
 
 <body>
     <h2>Listado de usuarios</h2>
-    @foreach ($usuarios as $u)
-        <p>{{ $u->nombre }}</p>
-    @endforeach
+    <ul>
+        @foreach ($usuarios as $u)
+            <li>{{ $u['id'] }}. {{ $u['nombre'] }} - {{ $u['email'] }}</li>
+        @endforeach
+    </ul>
+
+    <a href="/create">Crear un nuevo ususario</a>
 </body>
 
 </html>

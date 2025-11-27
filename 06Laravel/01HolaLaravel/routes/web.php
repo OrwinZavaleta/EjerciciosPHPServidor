@@ -9,9 +9,14 @@ Route::get('/', function () {
 
 Route::get("/estatico", function () {
     $contenido = file_get_contents(public_path("static.html"));
-    echo $contenido;
     // return response()->file();
+    echo $contenido;
 });
+Route::get("/html", function () {
+    return "<h1>hola mundo</h1>";
+});
+
+
 
 // Route::get("/estatico/vista", function () {
 //     return view("prueba.static", ["nombre" => "juan"]);

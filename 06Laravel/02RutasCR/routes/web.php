@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return view('welcome');
-    return redirect("/usuarios");
+    return redirect("/index");
 });
 
-Route::get("/usuarios", [UserController::class, "index"]);
-Route::get("/usuarios/create", [UserController::class, "create"]);
-Route::post("/usuarios", [UserController::class, "store"]);
+Route::get("/index", [UserController::class, "index"]);
+Route::get("/create", [UserController::class, "create"]);
+Route::post("/store", [UserController::class, "store"]);
