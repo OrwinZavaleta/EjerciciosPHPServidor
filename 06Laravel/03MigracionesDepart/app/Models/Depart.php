@@ -9,6 +9,7 @@ class Depart extends Model
     // protected $table = "departs2";
     public $incrementing = false;
     protected $primaryKey = "depart_no";
+    public $timestamps = false;
     protected $fillable = [
         "depart_no",
         "dnombre",

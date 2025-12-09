@@ -19,9 +19,9 @@ return new class extends Migration
             $table->date("fecha_alt");
             $table->decimal("salario", 6, 2);
             $table->decimal("comision", 6, 2)->nullable();
-            $table->integer("depart_id");
+            $table->integer("depart_no");
             // $table->timestamps();
-            $table->foreign("depart_id")->references("depart_no")->on("departs");
+            $table->foreign("depart_no")->references("depart_no")->on("departs");
             $table->foreign("dir")->references("emple_no")->on("emples");
         });
     }

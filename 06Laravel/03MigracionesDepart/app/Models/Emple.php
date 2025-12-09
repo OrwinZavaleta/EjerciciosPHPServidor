@@ -8,6 +8,7 @@ class Emple extends Model
 {
     public $incrementing = false;
     protected $primaryKey = "emple_no";
+    public $timestamps = false;
     protected $fillable = [
         "emple_no",
         "apellido",
