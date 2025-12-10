@@ -9,13 +9,17 @@
 </head>
 
 <body>
-    <header> Aplicacion de manejo de departamentos</header>
+    <header>
+       @include('partials.header')
+    </header>
     <hr>
     <main>
         @yield('content')
     </main>
     <hr>
-    <footer>&copy;</footer>
+    <footer>
+        @include('partials.footer')
+    </footer>
 </body>
 
 </html>

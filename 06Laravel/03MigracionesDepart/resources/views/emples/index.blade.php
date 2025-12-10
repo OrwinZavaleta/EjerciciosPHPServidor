@@ -24,11 +24,11 @@
                     <td>{{ $e->emple_no }}</td>
                     <td>{{ $e->apellido }}</td>
                     <td>{{ $e->oficio }}</td>
-                    <td>{{ $e->dir }}</td>
+                    <td>{{ $e->director->apellido ?? '-Sin Director-' }}</td>
                     <td>{{ $e->fecha_alt }}</td>
                     <td>{{ $e->salario }}</td>
                     <td>{{ $e->comision }}</td>
-                    <td>{{ $e->depart_no }}</td>
+                    <td>{{ $e->depart->dnombre ?? '-Sin Departamento-' }}</td>
                     <td><a href="{{ route('emples.edit', $e->emple_no) }}">Editar</a></td>
                     <td>
                         <form action="{{ route('emples.destroy', $e->emple_no) }}" method="post"
@@ -42,6 +42,14 @@
             @endforeach
         </tbody>
     </table>
+    @if (session('error'))
+        <br>
+        <h3>{{ session('error') }}</h3>
+    {{-- @elseif (session('success'))
+        <br>
+        <h3>{{ session('sucess') }}</h3> --}}
+    @endif
+    <h4></h4>
     <br>
     <a href="{{ route('emples.create') }}">Crear un empleado</a>
 @endsection

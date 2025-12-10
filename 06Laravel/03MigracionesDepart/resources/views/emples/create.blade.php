@@ -14,7 +14,8 @@
             <input type="text" name="oficio" id="oficio" required>
         </label>
         <label for="dir">Director
-            <select name="dir" id="dir" required>
+            <select name="dir" id="dir">
+                <option value="">No tiene director</option>
                 @foreach ($directores as $d)
                     <option value="{{ $d->emple_no }}">{{ $d->emple_no }} - {{ $d->apellido }}</option>
                 @endforeach

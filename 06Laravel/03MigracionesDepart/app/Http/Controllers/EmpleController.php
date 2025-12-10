@@ -10,7 +10,9 @@ class EmpleController extends Controller
 {
     public function index()
     {
-        $emples = Emple::all();
+        $emples = Emple::with(["depart", "director"])->get();
+        // dd($emples->first()->director);
+        // dd($emples);
         return view("emples.index", compact("emples"));
     }
     public function create()
@@ -25,7 +27,7 @@ class EmpleController extends Controller
             "emple_no" => "required|integer",
             "apellido" => "required|string",
             "oficio" => "required|string",
-            "dir" => "required|integer|exists:emples,emple_no",
+            "dir" => "integer|exists:emples,emple_no|nullable",
             "fecha_alt" => "required|date",
             "salario" => "required|numeric",
             "comision" => "required|numeric",
@@ -48,25 +50,42 @@ class EmpleController extends Controller
     public function show($id) {}
     public function edit($id)
     {
+        $departs = Depart::all();
+        $directores = Emple::all();
         $emple = Emple::find($id);
-        return view("emples.edit", compact("emple"));
+        return view("emples.edit", compact("departs", "directores", "emple"));
     }
     public function update($id, Request $request)
     {
         $request->validate([
-            "dnombre" => "required|string",
-            "loc" => "required|string"
+            "apellido" => "required|string",
+            "oficio" => "required|string",
+            "dir" => "integer|exists:emples,emple_no",
+            "fecha_alt" => "required|date",
+            "salario" => "required|numeric",
+            "comision" => "required|numeric",
+            "depart_no" => "required|integer|exists:departs,depart_no"
         ]);
 
         Emple::find($id)->update([
-            "dnombre" => $request["dnombre"],
-            "loc" => $request["loc"],
+            "apellido" => $request["apellido"],
+            "oficio" => $request["oficio"],
+            "dir" => $request["dir"],
+            "fecha_alt" => $request["fecha_alt"],
+            "salario" => $request["salario"],
+            "comision" => $request["comision"],
+            "depart_no" => $request["depart_no"],
         ]);
         return redirect()->route("emples.index");
     }
     public function destroy($id)
     {
-        Emple::findOrFail($id)->delete();
-        return redirect()->route("emples.index");
+        try {
+            Emple::findOrFail($id)->delete();
+            return redirect()->route("emples.index");
+        } catch (\Exception $e) {
+            error_log("error al borrar " . $e->getMessage());
+            return redirect()->route("emples.index")->with("error", "el usuario no se pudo borrar");
+        }
     }
 }

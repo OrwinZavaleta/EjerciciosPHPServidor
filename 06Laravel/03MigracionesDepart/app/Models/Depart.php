@@ -18,6 +18,6 @@ class Depart extends Model
 
     public function emple()
     {
-        return $this->hasMany(Emple::class);
+        return $this->hasMany(Emple::class, "depart_no");
     }
 }

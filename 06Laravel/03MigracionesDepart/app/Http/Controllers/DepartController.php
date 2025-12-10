@@ -53,7 +53,12 @@ class DepartController extends Controller
     }
     public function destroy($id)
     {
-        Depart::findOrFail($id)->delete();
-        return redirect()->route("departs.index");
+        try {
+            Depart::findOrFail($id)->delete();
+            return redirect()->route("departs.index");
+        } catch (\Exception $e) {
+            error_log("error al borrar " . $e->getMessage());
+            return redirect()->route("departs.index")->with("error", "el departamento no se pudo borrar");
+        }
     }
 }

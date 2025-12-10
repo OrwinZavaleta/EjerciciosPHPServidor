@@ -8,11 +8,15 @@
                 <a href="{{ route('departs.edit', $d->depart_no) }}">Editar</a>
                 <form action="{{ route('departs.destroy', $d->depart_no) }}" method="post" style="display: inline-block; ">
                     @csrf
-                    @method("DELETE")
+                    @method('DELETE')
                     <input type="submit" value="Borrar">
                 </form>
             </li>
         @endforeach
     </ul>
+    @if (session('error'))
+        <br>
+        <h3>{{ session('error') }}</h3>
+    @endif
     <a href="{{ route('departs.create') }}">Crear un departamento</a>
 @endsection
