@@ -10,9 +10,7 @@ class EmpleController extends Controller
 {
     public function index()
     {
-        $emples = Emple::with(["depart", "director"])->get();
-        // dd($emples->first()->director);
-        // dd($emples);
+        $emples = Emple::with("depart")->with("director")->get();
         return view("emples.index", compact("emples"));
     }
     public function create()
@@ -45,7 +43,7 @@ class EmpleController extends Controller
             "comision" => $request["comision"],
             "depart_no" => $request["depart_no"],
         ]);
-        return redirect()->route("emples.index");
+        return redirect()->route("emples.index")->with("success", "usuario creado con exito");
     }
     public function show($id) {}
     public function edit($id)
@@ -60,7 +58,7 @@ class EmpleController extends Controller
         $request->validate([
             "apellido" => "required|string",
             "oficio" => "required|string",
-            "dir" => "integer|exists:emples,emple_no",
+            "dir" => "integer|exists:emples,emple_no|nullable",
             "fecha_alt" => "required|date",
             "salario" => "required|numeric",
             "comision" => "required|numeric",
@@ -76,13 +74,13 @@ class EmpleController extends Controller
             "comision" => $request["comision"],
             "depart_no" => $request["depart_no"],
         ]);
-        return redirect()->route("emples.index");
+        return redirect()->route("emples.index")->with("success", "usuario actualizado con exito");
     }
     public function destroy($id)
     {
         try {
             Emple::findOrFail($id)->delete();
-            return redirect()->route("emples.index");
+            return redirect()->route("emples.index")->with("success", "usuario borrado con exito");
         } catch (\Exception $e) {
             error_log("error al borrar " . $e->getMessage());
             return redirect()->route("emples.index")->with("error", "el usuario no se pudo borrar");

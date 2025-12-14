@@ -30,7 +30,7 @@ class DepartController extends Controller
         $depart->dnombre = $request["dnombre"];
         $depart->loc = $request["loc"];
         $depart->save();
-        return redirect()->route("departs.index");
+        return redirect()->route("departs.index")->with("success", "departamento creado con exito");;
     }
     public function show($id) {}
     public function edit($id)
@@ -49,13 +49,13 @@ class DepartController extends Controller
             "dnombre" => $request["dnombre"],
             "loc" => $request["loc"],
         ]);
-        return redirect()->route("departs.index");
+        return redirect()->route("departs.index")->with("success", "departamento actualizado con exito");;
     }
     public function destroy($id)
     {
         try {
             Depart::findOrFail($id)->delete();
-            return redirect()->route("departs.index");
+            return redirect()->route("departs.index")->with("success", "departamento borrado con exito");
         } catch (\Exception $e) {
             error_log("error al borrar " . $e->getMessage());
             return redirect()->route("departs.index")->with("error", "el departamento no se pudo borrar");

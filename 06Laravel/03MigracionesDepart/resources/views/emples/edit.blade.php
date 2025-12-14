@@ -1,45 +1,68 @@
 @extends('layout')
 
 @section('content')
-    <h1>Crear un departamentos</h1>
-    <form action="{{ route('emples.update', $emple->emple_no) }}" method="post">
+    <h1>Crear un empleado</h1>
+    <form action="{{ route('emples.update', $emple->emple_no) }}" method="post" class="row g-3">
         @csrf
         @method('PUT')
-        <label for="emple_no">Num Emple
-            <input type="number" name="emple_no" id="emple_no" value="{{ $emple->emple_no }}" disabled>
-        </label>
-        <label for="apellido">Apellido
-            <input type="text" name="apellido" id="apellido" value="{{ $emple->apellido }}" required>
-        </label>
-        <label for="oficio">Oficio
-            <input type="text" name="oficio" id="oficio" value="{{ $emple->oficio }}" required>
-        </label>
-        <label for="dir">Director
-            <select name="dir" id="dir" required>
+        <div class="col-md-4">
+            <label class="form-label" for="emple_no">Num Emple</label>
+            <input class="form-control" type="number" name="emple_no" id="emple_no" value="{{ $emple->emple_no }}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="apellido">Apellido</label>
+            <input class="form-control" type="text" name="apellido" id="apellido" maxlength="10"
+                value="{{ $emple->apellido }}" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="oficio">Oficio</label>
+            <input class="form-control" type="text" name="oficio" id="oficio" maxlength="10"
+                value="{{ $emple->oficio }}" required>
+        </div>
+        <div class="col-md-4">
+            <label for="dir" class="form-label">Director</label>
+            <select class="form-select" name="dir" id="dir">
                 <option value="">No tiene director</option>
                 @foreach ($directores as $d)
                     <option value="{{ $d->emple_no }}" {{ $d->emple_no == $emple->dir ? 'selected' : '' }}>
                         {{ $d->emple_no }} - {{ $d->apellido }}</option>
                 @endforeach
             </select>
-        </label>
-        <label for="fecha_alt">Fecha de alta
-            <input type="date" name="fecha_alt" id="fecha_alt" value="{{ $emple->fecha_alt }}" required>
-        </label>
-        <label for="salario">Salario
-            <input type="number" name="salario" id="salario" value="{{ $emple->salario }}" required>
-        </label>
-        <label for="comision">Comision
-            <input type="number" name="comision" id="comision" value="{{ $emple->comision }}" required>
-        </label>
-        <label for="depart_no">Departamento
-            <select name="depart_no" id="depart_no" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="fecha_alt">Fecha de alta</label>
+            <input class="form-control" type="date" name="fecha_alt" id="fecha_alt" value="{{ $emple->fecha_alt }}"
+                required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="salario">Salario</label>
+            <input class="form-control" type="number" name="salario" id="salario" value="{{ $emple->salario }}" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="comision">Comision</label>
+            <input class="form-control" type="number" name="comision" id="comision" value="{{ $emple->comision }}">
+        </div>
+        <div class="col-md-4">
+            <label for="depart_no" class="form-label">Departamento</label>
+            <select class="form-select" name="depart_no" id="depart_no" required>
                 @foreach ($departs as $d)
-                    <option value="{{ $d->depart_no }}" {{ $d->depart_no == $emple->depart_no ? 'selected' : '' }}>{{ $d->dnombre }}</option>
+                    <option value="{{ $d->depart_no }}" {{ $d->depart_no == $emple->depart_no ? 'selected' : '' }}>
+                        {{ $d->dnombre }}</option>
                 @endforeach
             </select>
-        </label>
+        </div>
 
-        <input type="submit" value="Actualizar">
+        <div class="col-md-12">
+            <input type="submit" value="Actualizar" class="btn btn-primary px-3">
+        </div>
     </form>
+
+    @error('emple_no'){{ $message }}@enderror
+    @error('apellido'){{ $message }}@enderror
+    @error('oficio'){{ $message }}@enderror
+    @error('dir'){{ $message }}@enderror
+    @error('fecha_alt'){{ $message }}@enderror
+    @error('salario'){{ $message }}@enderror
+    @error('comision'){{ $message }}@enderror
+    @error('depart_no'){{ $message }}@enderror
 @endsection

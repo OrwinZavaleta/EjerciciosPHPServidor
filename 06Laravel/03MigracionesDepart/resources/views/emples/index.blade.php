@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-    <h1>Listado de departamentos</h1>
-    <table>
+    <h1>Listado de empleados</h1>
+    <table class="table">
         <thead>
             <tr>
                 <th>emple_no</th>
@@ -29,13 +29,13 @@
                     <td>{{ $e->salario }}</td>
                     <td>{{ $e->comision }}</td>
                     <td>{{ $e->depart->dnombre ?? '-Sin Departamento-' }}</td>
-                    <td><a href="{{ route('emples.edit', $e->emple_no) }}">Editar</a></td>
+                    <td><a href="{{ route('emples.edit', $e->emple_no) }}" class="btn btn-warning">Editar</a></td>
                     <td>
                         <form action="{{ route('emples.destroy', $e->emple_no) }}" method="post"
                             style="display: inline-block; ">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" value="Borrar">
+                            <input type="submit" value="Borrar" class="btn btn-danger">
                         </form>
                     </td>
                 </tr>
@@ -44,12 +44,13 @@
     </table>
     @if (session('error'))
         <br>
-        <h3>{{ session('error') }}</h3>
-    {{-- @elseif (session('success'))
+        <div class="alert alert-danger">
+            {{ session('error') }}</div>
+    @elseif (session('success'))
         <br>
-        <h3>{{ session('sucess') }}</h3> --}}
+        <div class="alert alert-success">
+            {{ session('success') }}</div>
     @endif
-    <h4></h4>
     <br>
-    <a href="{{ route('emples.create') }}">Crear un empleado</a>
+    <a class="btn btn-primary mt-3" href="{{ route('emples.create') }}">Crear un empleado</a>
 @endsection

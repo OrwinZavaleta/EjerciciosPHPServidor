@@ -2,17 +2,23 @@
 
 @section('content')
     <h1>Crear un departamentos</h1>
-    <form action="{{ route('departs.store') }}" method="post">
+    <form action="{{ route('departs.store') }}" method="post" class="row g-3">
         @csrf
-        <label for="depart_no">Num Depart
-            <input type="number" name="depart_no" id="depart_no" required>
-        </label>
-        <label for="dnombre">Nombre del Departamento
-            <input type="text" name="dnombre" id="dnombre" required>
-        </label>
-        <label for="loc">Localizacion
-            <input type="text" name="loc" id="loc" required>
-        </label>
-        <input type="submit" value="Crear">
+        <div class="col-md-4">
+            <label class="form-label" for="depart_no">Num Depart</label>
+            <input class="form-control" type="number" name="depart_no" id="depart_no" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="dnombre">Nombre del Departamento</label>
+            <input class="form-control" type="text" maxlength="20" name="dnombre" id="dnombre" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="loc">Localizacion</label>
+            <input class="form-control" type="text" maxlength="20" name="loc" id="loc" required>
+        </div>
+
+        <div class="col-md-12 mt-3">
+            <input type="submit" class="btn btn-primary px-3" value="Crear">
+        </div>
     </form>
 @endsection
