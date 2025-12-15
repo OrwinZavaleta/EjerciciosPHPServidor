@@ -20,6 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::resource("emples", EmpleController::class);
 });
 
+Route::get("/saludo/{nombre}", [DepartController::class, "saludo"])->where("nombre", "[a-zA-Z]+");
+Route::get("/saludo2/{nombre?}", [DepartController::class, "saludo2"])->where("nombre", "[a-zA-Z]+");
+Route::get("/saludo3/{depart}", [DepartController::class, "saludo3"]);
 Route::resource("departs", DepartController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Crear un empleado</h1>
-    <form action="{{ route('emples.store') }}" method="post" class="row g-3">
+    <form action="{{ route('emples.store') }}" method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
         @csrf
         <div class="col-md-4">
             <label class="form-label" for="emple_no">Num Emple</label>
@@ -45,9 +45,18 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-md-4">
+            <label class="form-label" for="avatar">Avatar</label>
+            <input class="form-control" type="file" name="avatar" id="avatar">
+        </div>
 
         <div class="col-md-12">
             <input type="submit" value="Crear" class="btn btn-primary px-3">
         </div>
     </form>
+    @if ($errors->any())
+        @foreach ($errors->all() as $err)
+            <div class="alert alert-danger mt-3">{{ $err }}</div>
+        @endforeach
+    @endif
 @endsection

@@ -13,6 +13,7 @@
                 <th>salario</th>
                 <th>comision</th>
                 <th>depart_no</th>
+                <th>avatar</th>
                 <th>editar</th>
                 <th>eliminar</th>
             </tr>
@@ -29,6 +30,13 @@
                     <td>{{ $e->salario }}</td>
                     <td>{{ $e->comision }}</td>
                     <td>{{ $e->depart->dnombre ?? '-Sin Departamento-' }}</td>
+                    <td>
+                        @empty($e->avatar)
+                            -No tiene imagen-
+                        @else
+                            <img src="{{ asset('storage/' . $e->avatar) }}" alt="{{ $e->apellido }}" width="125">
+                        @endempty
+                    </td>
                     <td><a href="{{ route('emples.edit', $e->emple_no) }}" class="btn btn-warning">Editar</a></td>
                     <td>
                         <form action="{{ route('emples.destroy', $e->emple_no) }}" method="post"

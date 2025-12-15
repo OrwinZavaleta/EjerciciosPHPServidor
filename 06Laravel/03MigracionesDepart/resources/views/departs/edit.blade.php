@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Actualizar un departamentos</h1>
-    <form action="{{ route('departs.update', $depart->depart_no) }}" class="row g-3" method="post">
+    <form action="{{ route('departs.update', $depart->depart_no) }}" class="row g-3 needs-validation" method="post" novalidate>
         @csrf
         @method('PUT')
         <div class="col-md-4">
@@ -23,4 +23,9 @@
             <input type="submit" class="btn btn-primary px-3" value="Actualizar">
         </div>
     </form>
+    @if ($errors->any())
+        @foreach ($errors->all() as $err)
+            <div class="alert alert-danger mt-3">{{ $err }}</div>
+        @endforeach
+    @endif
 @endsection
