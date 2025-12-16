@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Emple;
 use App\Models\Depart;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class EmpleController extends Controller
@@ -81,6 +82,7 @@ class EmpleController extends Controller
         $pathAvatar = null;
         if ($request->has("avatar")) {
             $avatar = $request->file("avatar");
+            Storage::disk("public")->delete(Emple::find($id)->avatar);
             $pathAvatar = $avatar->store("fotos", "public");
         }
 
