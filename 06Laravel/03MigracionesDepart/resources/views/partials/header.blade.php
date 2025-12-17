@@ -1,65 +1,58 @@
- {{-- <a href="{{ route('departs.index') }}">Departamentos</a>
- @auth
-     <a href="{{ route('emples.index') }}">Empleados</a>
-     <form method="POST" action="http://127.0.0.1:8000/logout" style="display: inline-block">
-         @csrf
-         <a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();this.closest('form').submit();">LogOut</a>
-     </form>
-
-     ({{ auth()->user()->name }})
-     </a>
-     <p>Autenticado</p>
- @else
-     <a href="{{ route('login') }}">
-         Log in
-     </a>
-     <a href="{{ route('register') }}">
-         Register
-     </a>
- @endauth
- --}}
-
- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-     <div class="container-fluid">
-         <a class="navbar-brand" href="{{route("home")}}">Home</a>
-         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-             <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarNav">
-             <ul class="navbar-nav">
-                 <li class="nav-item">
-                     <a href="{{ route('departs.index') }}" class="nav-link">Departamentos</a>
-                 </li>
-                 @auth
-
-                     <li class="nav-item">
-                         <a href="{{ route('emples.index') }}" class="nav-link">Empleados</a>
-                     </li>
-                     <li class="nav-item">
-                         <form method="POST" action="http://127.0.0.1:8000/logout" style="display: inline-block">
-                             @csrf
-                             <a href="http://127.0.0.1:8000/logout"
-                                 onclick="event.preventDefault();this.closest('form').submit();" class="nav-link">LogOut</a>
-                         </form>
-                     </li>
-                     <li class="nav-item">
-                         <span class="nav-link">({{ auth()->user()->name }})</span>
-                     </li>
-                 @else
-                     <li class="nav-item">
-                         <a href="{{ route('login') }}" class="nav-link">
-                             Log in
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="{{ route('register') }}" class="nav-link">
-                             Register
-                         </a>
-                     </li>
-                 @endauth
-
-             </ul>
-         </div>
-     </div>
- </nav>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <i class="bi bi-buildings-fill"></i>
+            GestiónEmp
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a href="{{ route('departs.index') }}"
+                        class="nav-link {{ request()->routeIs('departs.*') ? 'active' : '' }}">Departamentos</a>
+                </li>
+                @auth
+                    <li class="nav-item">
+                        <a href="{{ route('emples.index') }}"
+                            class="nav-link {{ request()->routeIs('emples.*') ? 'active' : '' }}">Empleados</a>
+                    </li>
+                @endauth
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">
+                            <i class="bi bi-box-arrow-in-right"></i> Log in
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}"
+                            class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">
+                            <i class="bi bi-person-plus-fill"></i> Register
+                        </a>
+                    </li>
+                @endauth
+            </ul>
+        </div>
+    </div>
+</nav>
