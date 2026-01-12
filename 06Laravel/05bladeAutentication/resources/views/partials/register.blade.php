@@ -44,7 +44,7 @@
                             <!-- Password -->
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                                    name="password" placeholder="Contraseña" required>
+                                    name="password" placeholder="Contraseña" minlength="8" required>
                                 <label for="password" class="text-muted">Contraseña</label>
                                 <div class="invalid-feedback">
                                     La contraseña es obligatoria.
@@ -57,7 +57,7 @@
                             <!-- Confirm Password -->
                             <div class="form-floating mb-4">
                                 <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    id="password_confirmation" name="password_confirmation" placeholder="Confirmar" required>
+                                    id="password_confirmation" name="password_confirmation" placeholder="Confirmar" minlength="8" required>
                                 <label for="password_confirmation" class="text-muted">Confirmar Contraseña</label>
                                 <div class="invalid-feedback">
                                     Por favor confirma tu contraseña.

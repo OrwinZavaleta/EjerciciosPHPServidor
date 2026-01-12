@@ -1,0 +1,17 @@
+.nav-icon {
+    width: 3.5rem;
+}
+
+#products {
+    --bs-nav-pills-link-active-bg: var(--bs-success);
+    --bs-nav-link-color: var(--bs-success-text-emphasis);
+}
+
+#products .nav-link:hover:not(.active) {
+    background-color: var(--bs-success-bg-subtle);
+    color: var(--bs-success-text-emphasis);
+}
+
+.img-16-9 {
+    aspect-ratio: 16/9;
+}
