@@ -7,7 +7,7 @@
             <h5 class="card-title">{{ $product->name }}</h5>
             <p class="card-text">{{ $product->description }}</p>
             @auth
-                <form action="#" method="post">
+                <form action="{{ route("cart.add", $product->id) }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-success">Añadir al carrito</button>
                 </form>

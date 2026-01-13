@@ -11,7 +11,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Contacto</a>
+                    <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
+                            class="bi bi-cart2 me-2"></i>Carrito</a>
                 </li>
                 @auth
                     <li class="nav-item ms-lg-3">
@@ -20,16 +21,18 @@
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm ms-lg-2"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button>
+                            <button type="submit" class="btn btn-outline-light btn-sm ms-lg-2"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button>
                         </form>
                     </li>
                 @else
                     <li class="nav-item ms-lg-3">
-                        <a class="btn btn-outline-light btn-sm px-3" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a>
+                        <a class="btn btn-outline-light btn-sm px-3" href="{{ route('login') }}"><i
+                                class="bi bi-box-arrow-in-right me-2"></i>Login</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a class="btn btn-light btn-sm px-3 text-success fw-bold"
-                            href="{{ route('register') }}"><i class="bi bi-person-plus me-2"></i>Regístrate</a>
+                        <a class="btn btn-light btn-sm px-3 text-success fw-bold" href="{{ route('register') }}"><i
+                                class="bi bi-person-plus me-2"></i>Regístrate</a>
                     </li>
                 @endauth
             </ul>
