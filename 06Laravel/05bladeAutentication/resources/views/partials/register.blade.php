@@ -14,50 +14,57 @@
                     <div class="card-body p-4">
                         <form method="POST" action="{{ route('register') }}" class="needs-validation" novalidate>
                             @csrf
-                            
+
                             <!-- Nombre -->
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                                    placeholder="Tu Nombre" value="{{ old('name') }}" required autofocus>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" placeholder="Tu Nombre" value="{{ old('name') }}"
+                                    required autofocus>
                                 <label for="name" class="text-muted">Nombre Completo</label>
                                 <div class="invalid-feedback">
-                                    Por favor ingresa tu nombre.
+                                    @error('name')
+                                        {{ $message }}
+                                    @else
+                                        Por favor ingresa tu nombre.
+                                    @enderror
                                 </div>
-                                @error('name')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <!-- Email -->
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                    name="email" placeholder="nombre@ejemplo.com" value="{{ old('email') }}" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="nombre@ejemplo.com"
+                                    value="{{ old('email') }}" required>
                                 <label for="email" class="text-muted">Correo Electrónico</label>
                                 <div class="invalid-feedback">
-                                    Ingresa un email válido.
+                                    @error('email')
+                                        {{ $message }}
+                                    @else
+                                        Ingresa un email válido.
+                                    @enderror
                                 </div>
-                                @error('email')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <!-- Password -->
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                                    name="password" placeholder="Contraseña" minlength="8" required>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    id="password" name="password" placeholder="Contraseña" minlength="8" required>
                                 <label for="password" class="text-muted">Contraseña</label>
                                 <div class="invalid-feedback">
-                                    La contraseña es obligatoria.
+                                    @error('password')
+                                        {{ $message }}
+                                    @else
+                                        La contraseña es obligatoria.
+                                    @enderror
                                 </div>
-                                @error('password')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <!-- Confirm Password -->
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    id="password_confirmation" name="password_confirmation" placeholder="Confirmar" minlength="8" required>
+                                <input type="password"
+                                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                                    id="password_confirmation" name="password_confirmation" placeholder="Confirmar"
+                                    minlength="8" required>
                                 <label for="password_confirmation" class="text-muted">Confirmar Contraseña</label>
                                 <div class="invalid-feedback">
                                     Por favor confirma tu contraseña.
@@ -70,7 +77,8 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <p class="small text-muted mb-0">¿Ya tienes cuenta? <a href="{{ route('login') }}" class="text-success fw-bold text-decoration-none">Inicia Sesión</a></p>
+                                <p class="small text-muted mb-0">¿Ya tienes cuenta? <a href="{{ route('login') }}"
+                                        class="text-success fw-bold text-decoration-none">Inicia Sesión</a></p>
                             </div>
                         </form>
                     </div>

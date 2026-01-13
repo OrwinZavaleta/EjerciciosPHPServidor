@@ -14,24 +14,26 @@
                     <div class="card-body p-4">
                         <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
                             @csrf
-                            
+
                             <!-- Email -->
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
-                                    placeholder="nombre@ejemplo.com" value="{{ old('email') }}" required autofocus>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="nombre@ejemplo.com"
+                                    value="{{ old('email') }}" required autofocus>
                                 <label for="email" class="text-muted">Correo Electrónico</label>
-                                <div class="invalid-feedback">
-                                    Por favor ingresa un email válido.
-                                </div>
                                 @error('email')
                                     <div class="text-danger small mt-1">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa un email válido.
+                                    </div>
                                 @enderror
                             </div>
 
                             <!-- Password -->
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                                    name="password" placeholder="Contraseña" required>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    id="password" name="password" placeholder="Contraseña" required>
                                 <label for="password" class="text-muted">Contraseña</label>
                                 <div class="invalid-feedback">
                                     Por favor ingresa tu contraseña.
@@ -52,7 +54,8 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <p class="small text-muted mb-0">¿No tienes cuenta? <a href="{{ route('register') }}" class="text-success fw-bold text-decoration-none">Regístrate aquí</a></p>
+                                <p class="small text-muted mb-0">¿No tienes cuenta? <a href="{{ route('register') }}"
+                                        class="text-success fw-bold text-decoration-none">Regístrate aquí</a></p>
                             </div>
                         </form>
                     </div>
