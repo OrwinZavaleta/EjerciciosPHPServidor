@@ -27,20 +27,16 @@
                                     <form action="{{ route('cart.decrease', $id) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary"> - </button>
                                     </form>
-                                    -
-                                    </button>
 
                                     <span class="mx-3">{{ $item['quantity'] }}</span>
 
                                     <form action="{{ route('cart.increase', $id) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary"> + </button>
                                     </form>
-                                    +
-                                    </button>
                             </td>
                             <td>{{ $item['price'] }}</td>
                             <td>{{ $item['price'] * $item['quantity'] }}</td>
