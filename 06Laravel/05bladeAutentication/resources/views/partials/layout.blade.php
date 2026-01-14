@@ -20,6 +20,31 @@
     </header>
 
     <main class="flex-grow-1">
+        @session('success')
+            <div class="container py-3">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endsession
+        @session('error')
+            <div class="container py-3">
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endsession
+        @session('info')
+            <div class="container py-3">
+                <div class="alert alert-info" role="alert">
+                    {{ session('info') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endsession
+        </div>
         @yield('content')
     </main>
 
@@ -31,7 +56,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
-    <!-- Aquí se inyectarán los scripts específicos de cada vista --> @stack('scripts')
+    <!-- Aquí se inyectarán los scripts específicos de cada vista -->
+    @stack('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const alert = document.querySelector(".alert");
+            if (alert) {
+                setTimeout(() => {
+                    const alert = bootstrap.Alert.getOrCreateInstance('.alert');
+                    alert.close();
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 
 </html>

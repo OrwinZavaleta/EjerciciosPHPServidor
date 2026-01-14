@@ -12,6 +12,15 @@
     color: var(--bs-success-text-emphasis);
 }
 
-.img-16-9 {
+.img-16-9, .img-table {
     aspect-ratio: 16/9;
+}
+
+.img-table{
+    width: 17.5rem;
+    border-radius: 15px;
+}
+
+.table-transparente {
+  --bs-table-bg: transparent;
 }
