@@ -20,7 +20,7 @@
                 <tbody>
                     @forelse ($cart as $id => $item)
                         <tr>
-                            <td><img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="img-table"></td>
+                            <td><img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="img-table" loading="lazy"></td>
                             <td>{{ $item['name'] }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
