@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\Order_Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private $LIMITE_RESERVA_POR_PRODUCTO = 5;
+
     public function index()
     {
         $cart = session()->get("cart", []);
@@ -71,7 +76,7 @@ class CartController extends Controller
 
         $productId = (int) $id;
 
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] >= 1) {
+        if (isset($cart[$productId]) && $cart[$productId]["quantity"] < $this->LIMITE_RESERVA_POR_PRODUCTO) {
             $cart[$productId]["quantity"]++;
         }
 
@@ -85,7 +90,7 @@ class CartController extends Controller
 
         $productId = (int) $id;
 
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] <= 5) {
+        if (isset($cart[$productId]) && $cart[$productId]["quantity"] > 1) {
             $cart[$productId]["quantity"]--;
         }
 
@@ -93,5 +98,28 @@ class CartController extends Controller
 
         return redirect()->route("cart.index");
     }
-    // Increase si es 1 no se puede decrementar
+
+    public function order(Request $request)
+    {
+        $cart = session()->get("cart", []);
+
+        session()->forget("cart");
+
+        $order = Order::create([
+            "user_id" => Auth::id(),
+            "status" => "pendiente",
+            "total" => 123, // TODO: calcular el total
+        ]);
+
+        foreach ($cart as $key => $product) {
+            Order_Item::create([
+                "order_id" => $order->id,
+                "product_id" => $key,
+                "quantity" => $product["quantity"],
+                "unit_price" => $product["quantity"] * $product["price"],
+            ]);
+        }
+
+        return redirect()->route("home")->with("success", "Su orden se realizó correctamente.");
+    }
 }
