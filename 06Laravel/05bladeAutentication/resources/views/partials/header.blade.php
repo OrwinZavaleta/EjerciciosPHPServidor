@@ -12,7 +12,7 @@
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
-                            class="bi bi-cart2 me-2"></i>Carrito</a>
+                            class="bi bi-calendar3 me-2"></i>Reserva</a>
                 </li>
                 @auth
                     <li class="nav-item ms-lg-3">

@@ -20,14 +20,16 @@
                 <tbody>
                     @forelse ($cart as $id => $item)
                         <tr>
-                            <td><img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="img-table" loading="lazy"></td>
+                            <td><img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="img-table" loading="lazy">
+                            </td>
                             <td>{{ $item['name'] }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <form action="{{ route('cart.decrease', $id) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary"> - </button>
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                            @if ($item['quantity'] === 1) disabled @endif> - </button>
                                     </form>
 
                                     <span class="mx-3">{{ $item['quantity'] }}</span>
@@ -35,7 +37,8 @@
                                     <form action="{{ route('cart.increase', $id) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary"> + </button>
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                            @if ($item['quantity'] === 5) disabled @endif> + </button>
                                     </form>
                             </td>
                             <td>{{ $item['price'] }}</td>
@@ -57,10 +60,22 @@
                 </tbody>
             </table>
         </div>
-        <form action="{{ route('cart.destroy') }}" method="post">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger">Vacear el carrito</button>
-        </form>
+        {{-- TODO: desabilitar cuando no hay productos --}}
+        <div class="d-flex gap-3">
+            <form action="{{ route('cart.destroy') }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" @if (count($cart) === 0) disabled @endif>Vaciar el
+                    carrito</button>
+            </form>
+            <form action="{{ route('cart.order') }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-success px-4"
+                    @if (count($cart) === 0) disabled @endif>Reservar</button>
+            </form>
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+@endpush
