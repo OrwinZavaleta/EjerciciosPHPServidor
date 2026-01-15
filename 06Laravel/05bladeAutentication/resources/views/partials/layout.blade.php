@@ -21,24 +21,24 @@
 
     <main class="flex-grow-1">
         @session('success')
-            <div class="container py-3">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="container">
+                <div class="alert alert-success my-3 alert-dismissible fade show" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
         @endsession
         @session('error')
-            <div class="container py-3">
-                <div class="alert alert-danger" role="alert">
+            <div class="container">
+                <div class="alert alert-danger my-3" role="alert">
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
         @endsession
         @session('info')
-            <div class="container py-3">
-                <div class="alert alert-info" role="alert">
+            <div class="container">
+                <div class="alert alert-info my-3" role="alert">
                     {{ session('info') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

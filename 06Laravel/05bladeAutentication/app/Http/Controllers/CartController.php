@@ -59,14 +59,14 @@ class CartController extends Controller
 
         session()->put("cart", $cart);
 
-        return back()->with("success", "Se eilimino el producto correctamente de su carrito.");
+        return back()->with("success", "Se eliminó el producto correctamente de su carrito.");
     }
 
     public function destroy()
     {
         session()->forget("cart");
 
-        return back()->with("success", "Se vaceó correctamente el carrito.");
+        return back()->with("success", "Se vació correctamente el carrito.");
     }
 
     // Quiza esto es mejor hacerlo con js. Habrian muchos recargos de página.
@@ -99,7 +99,7 @@ class CartController extends Controller
         return redirect()->route("cart.index");
     }
 
-    public function order(Request $request)
+    public function order()
     {
         $cart = session()->get("cart", []);
 
@@ -108,10 +108,13 @@ class CartController extends Controller
         $order = Order::create([
             "user_id" => Auth::id(),
             "status" => "pendiente",
-            "total" => 123, // TODO: calcular el total
+            "total" => 0,
         ]);
 
+        $precioTotal = 0;
+
         foreach ($cart as $key => $product) {
+            $precioTotal += $product["quantity"] * $product["price"];
             Order_Item::create([
                 "order_id" => $order->id,
                 "product_id" => $key,
@@ -120,6 +123,9 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route("home")->with("success", "Su orden se realizó correctamente.");
+        $order->total = $precioTotal;
+        $order->save();
+
+        return redirect()->route("home")->with("success", "Su reserva se realizó correctamente.");
     }
 }

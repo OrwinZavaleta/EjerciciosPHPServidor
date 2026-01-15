@@ -18,9 +18,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $precioTotal = 0;
+                    @endphp
                     @forelse ($cart as $id => $item)
                         <tr>
-                            <td><img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="img-table" loading="lazy">
+                            <td><img src="{{ $item['image'] ?? '/img/unknown-dish.png' }}" alt="{{ $item['name'] }}"
+                                    class="img-table" loading="lazy">
                             </td>
                             <td>{{ $item['name'] }}</td>
                             <td>
@@ -42,6 +46,9 @@
                                     </form>
                             </td>
                             <td>{{ $item['price'] }}</td>
+                            @php
+                                $precioTotal += $item['price'] * $item['quantity'];
+                            @endphp
                             <td>{{ $item['price'] * $item['quantity'] }}</td>
                             <td>
                                 <form action="{{ route('cart.delete', $id) }}" method="post">
@@ -60,8 +67,10 @@
                 </tbody>
             </table>
         </div>
-        {{-- TODO: desabilitar cuando no hay productos --}}
-        <div class="d-flex gap-3">
+        <div class="text-end pb-3 fs-4 fw-bold @if (count($cart) === 0) d-none @endif">
+            Total: <span>{{$precioTotal}}</span> €
+        </div>
+        <div class="d-flex gap-3 justify-content-end">
             <form action="{{ route('cart.destroy') }}" method="post">
                 @csrf
                 @method('DELETE')

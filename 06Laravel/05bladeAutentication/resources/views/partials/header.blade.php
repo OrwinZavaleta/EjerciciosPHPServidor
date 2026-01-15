@@ -10,11 +10,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
-                            class="bi bi-calendar3 me-2"></i>Reserva</a>
-                </li>
                 @auth
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
+                                class="bi bi-calendar3 me-2"></i>Reserva</a>
+                    </li>
                     <li class="nav-item ms-lg-3">
                         <span class="nav-link text-white-50">Hola, {{ auth()->user()->name }}</span>
                     </li>
