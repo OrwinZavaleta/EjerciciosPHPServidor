@@ -24,5 +24,7 @@ class ProductSeeder extends Seeder
         DB::insert("INSERT INTO products(id, name, description, price, available, product_type, image, time, date, created_at, updated_at) VALUES (5, 'Menu Noviembre 11', 'Un menu con muchas cosas', 123.00, TRUE, 'menu', '/storage/img/menu11Nov2025.png', '12:32', '2025-11-11', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
 
         DB::insert("INSERT INTO products(id, name, description, price, available, product_type, image, time, date, created_at, updated_at) VALUES (6, 'Menu Noviembre 25', 'Un menu con muchas cosas', 32.43, TRUE, 'menu', '/storage/img/menu25Nov2025.png', '12:32', '2025-11-25', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
+
+        DB::insert("INSERT INTO products(id, name, description, price, available, product_type, image, time, date, created_at, updated_at) VALUES (7, 'Menu Enero 20', 'Un menu con muchas cosas', 3.12, TRUE, 'menu', '/storage/img/20Enero.png', '12:32', '2026-01-20', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
     }
 }

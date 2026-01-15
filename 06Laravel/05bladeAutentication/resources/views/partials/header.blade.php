@@ -15,15 +15,21 @@
                         <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
                                 class="bi bi-calendar3 me-2"></i>Reserva</a>
                     </li>
-                    <li class="nav-item ms-lg-3">
-                        <span class="nav-link text-white-50">Hola, {{ auth()->user()->name }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="post" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm ms-lg-2"><i
-                                    class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button>
-                        </form>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle  btn btn-outline-light text-uppercase" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Mis Reservas</a></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item ms-lg-2"><i
+                                            class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 @else
                     <li class="nav-item ms-lg-3">
