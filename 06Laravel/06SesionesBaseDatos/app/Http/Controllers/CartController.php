@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\Cart;
 use App\Models\Order_Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -14,57 +15,50 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = session()->get("cart", []);
+        $cart = Cart::where("user_id", Auth::id())->with("product")->get();
         return view("auth.cart", compact("cart"));
     }
 
     public function add($id)
     {
-        $product = null;
         try {
-            $product = Product::findOrFail($id);
+            Product::findOrFail($id); // Si no lo encuentra va al catch
+
+            $productId = (int) $id;
+
+            $productCart = Cart::where("user_id", Auth::id())->where("product_id", $productId)->first();
+
+            if (!$productCart) {
+                Cart::create([
+                    "user_id" => Auth::id(),
+                    "product_id" => $productId,
+                    "quantity" => 1,
+                ]);
+            } else {
+                $productCart->quantity++;
+                $productCart->save();
+            }
+
+            return redirect()->route("cart.index");
         } catch (\Exception $e) {
             return back()->with("error", "No se encontro el producto.");
         }
-
-        $cart = session()->get("cart", []);
-
-        $productId = (int) $id;
-
-        if (!isset($cart[$productId])) {
-            $cart[$product->id] = [
-                "name" => $product->name,
-                "price" => $product->price,
-                "quantity" => 1,
-                "image" => $product->image,
-            ];
-        } else {
-            $cart[$productId]["quantity"]++;
-        }
-        session()->put("cart", $cart);
-
-        // return view("auth.cart", compact("cart"));
-        return redirect()->route("cart.index");
     }
 
     public function delete($id)
     {
-        $cart = session()->get("cart", []);
+        $productoAeliminar = Cart::where("user_id", Auth::id())->where("product_id", $id)->first();
 
-        $productId = (int) $id;
+        if (!$productoAeliminar) return back()->with("error", "No se encontro el producto.");
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
-        }
-
-        session()->put("cart", $cart);
+        $productoAeliminar->delete();
 
         return back()->with("success", "Se eliminó el producto correctamente de su carrito.");
     }
 
     public function destroy()
     {
-        session()->forget("cart");
+        Cart::where("user_id", Auth::id())->delete();
 
         return back()->with("success", "Se vació correctamente el carrito.");
     }
@@ -72,38 +66,34 @@ class CartController extends Controller
     // Quiza esto es mejor hacerlo con js. Habrian muchos recargos de página.
     public function increase($id)
     {
-        $cart = session()->get("cart", []);
+        $productEncontrado = Cart::where("user_id", Auth::id())->where("product_id", $id)->first();
 
-        $productId = (int) $id;
-
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] < $this->LIMITE_RESERVA_POR_PRODUCTO) {
-            $cart[$productId]["quantity"]++;
+        if ($productEncontrado && $productEncontrado->quantity < $this->LIMITE_RESERVA_POR_PRODUCTO) {
+            $productEncontrado->quantity++;
         }
 
-        session()->put("cart", $cart);
+        $productEncontrado->save();
 
         return redirect()->route("cart.index");
     }
     public function decrease($id)
     {
-        $cart = session()->get("cart", []);
+        $productEncontrado = Cart::where("user_id", Auth::id())->where("product_id", $id)->first();
 
-        $productId = (int) $id;
-
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] > 1) {
-            $cart[$productId]["quantity"]--;
+        if ($productEncontrado && $productEncontrado->quantity > 1) {
+            $productEncontrado->quantity--;
         }
 
-        session()->put("cart", $cart);
+        $productEncontrado->save();
 
         return redirect()->route("cart.index");
     }
 
     public function order()
     {
-        $cart = session()->get("cart", []);
+        $cart = Cart::where("user_id", Auth::id())->with("product")->get();
 
-        session()->forget("cart");
+        Cart::where("user_id", Auth::id())->delete();
 
         $order = Order::create([
             "user_id" => Auth::id(),
@@ -113,13 +103,13 @@ class CartController extends Controller
 
         $precioTotal = 0;
 
-        foreach ($cart as $key => $product) {
-            $precioTotal += $product["quantity"] * $product["price"];
+        foreach ($cart as $c) {
+            $precioTotal += $c->quantity * $c->product->price;
             Order_Item::create([
                 "order_id" => $order->id,
-                "product_id" => $key,
-                "quantity" => $product["quantity"],
-                "unit_price" => $product["quantity"] * $product["price"],
+                "product_id" => $c->product->id,
+                "quantity" => $c->quantity,
+                "unit_price" => $c->quantity * $c->product->price,
             ]);
         }
 

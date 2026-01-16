@@ -16,16 +16,17 @@
                                 class="bi bi-calendar3 me-2"></i>Reserva</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle  btn btn-outline-light text-uppercase" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link dropdown-toggle  btn btn-outline-light text-uppercase" href="#"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Mis Reservas</a></li>
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-journal-text me-2"></i>Mis Reservas</a>
+                            </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="dropdown-item ms-lg-2"><i
+                                    <button type="submit" class="dropdown-item"><i
                                             class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</button>
                                 </form>
                             </li>

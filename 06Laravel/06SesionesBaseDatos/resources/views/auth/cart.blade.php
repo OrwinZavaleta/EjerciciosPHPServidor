@@ -21,37 +21,37 @@
                     @php
                         $precioTotal = 0;
                     @endphp
-                    @forelse ($cart as $id => $item)
+                    @forelse ($cart as $c)
                         <tr>
-                            <td><img src="{{ $item['image'] ?? '/img/unknown-dish.png' }}" alt="{{ $item['name'] }}"
+                            <td><img src="{{ $c->product->image ?? '/img/unknown-dish.png' }}" alt="{{ $c->product->name }}"
                                     class="img-table" loading="lazy">
                             </td>
-                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $c->product->id }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <form action="{{ route('cart.decrease', $id) }}" method="post">
+                                    <form action="{{ route('cart.decrease', $c->product->id) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                            @if ($item['quantity'] === 1) disabled @endif> - </button>
+                                            @if ($c->quantity === 1) disabled @endif> - </button>
                                     </form>
 
-                                    <span class="mx-3">{{ $item['quantity'] }}</span>
+                                    <span class="mx-3">{{ $c->quantity }}</span>
 
-                                    <form action="{{ route('cart.increase', $id) }}" method="post">
+                                    <form action="{{ route('cart.increase', $c->product->id) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                            @if ($item['quantity'] === 5) disabled @endif> + </button>
+                                            @if ($c->quantity === 5) disabled @endif> + </button>
                                     </form>
                             </td>
-                            <td>{{ $item['price'] }}</td>
+                            <td>{{ $c->product->price }}</td>
                             @php
-                                $precioTotal += $item['price'] * $item['quantity'];
+                                $precioTotal += $c->product->price * $c->quantity;
                             @endphp
-                            <td>{{ $item['price'] * $item['quantity'] }}</td>
+                            <td>{{ $c->product->price * $c->quantity }}</td>
                             <td>
-                                <form action="{{ route('cart.delete', $id) }}" method="post">
+                                <form action="{{ route('cart.delete', $c->product->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -68,7 +68,7 @@
             </table>
         </div>
         <div class="text-end pb-3 fs-4 fw-bold @if (count($cart) === 0) d-none @endif">
-            Total: <span>{{$precioTotal}}</span> €
+            Total: <span>{{ $precioTotal }}</span> €
         </div>
         <div class="d-flex gap-3 justify-content-end">
             <form action="{{ route('cart.destroy') }}" method="post">
@@ -85,6 +85,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-@endpush

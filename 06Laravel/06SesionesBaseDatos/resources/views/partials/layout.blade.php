@@ -30,7 +30,7 @@
         @endsession
         @session('error')
             <div class="container">
-                <div class="alert alert-danger my-3" role="alert">
+                <div class="alert alert-danger my-3 alert-dismissible fade show" role="alert">
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -38,7 +38,7 @@
         @endsession
         @session('info')
             <div class="container">
-                <div class="alert alert-info my-3" role="alert">
+                <div class="alert alert-info my-3 alert-dismissible fade show" role="alert">
                     {{ session('info') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
