@@ -12,15 +12,27 @@
     color: var(--bs-success-text-emphasis);
 }
 
-.img-16-9, .img-table {
+.img-16-9,
+.img-table {
     aspect-ratio: 16/9;
 }
 
-.img-table{
+.img-table {
     width: 17.5rem;
     border-radius: 15px;
 }
 
 .table-transparente {
-  --bs-table-bg: transparent;
+    --bs-table-bg: transparent;
+}
+
+.order-items-container {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.quantity-circle {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
 }

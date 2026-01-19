@@ -37,7 +37,7 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"> <i class="bi bi-journal-text me-2"></i>Mis
+                            <li><a class="dropdown-item" href="{{ route("order.index") }}"> <i class="bi bi-journal-text me-2"></i>Mis
                                     Reservas</a>
                             </li>
                             <li>

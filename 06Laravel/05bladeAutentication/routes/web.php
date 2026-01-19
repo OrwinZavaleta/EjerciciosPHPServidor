@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/order', [CartController::class, 'order'])->name('cart.order');
     Route::put('/cart/increase/{i}', [CartController::class, 'increase'])->name('cart.increase');
     Route::put('/cart/decrease/{i}', [CartController::class, 'decrease'])->name('cart.decrease');
+
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 });
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
