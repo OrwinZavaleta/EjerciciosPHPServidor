@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
@@ -25,5 +26,12 @@ Route::middleware('auth')->group(function () {
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
+
+Route::middleware('auth', "isAdmin")
+    ->prefix("admin")
+    ->name("admin.")
+    ->group(function () {
+        Route::resource("products", AdminController::class);
+    });
 
 require __DIR__ . '/auth.php';
