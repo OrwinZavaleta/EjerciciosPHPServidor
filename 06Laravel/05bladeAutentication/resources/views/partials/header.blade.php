@@ -19,17 +19,23 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="">Productos</a>
+                                    <a class="dropdown-item" href="{{ route("admin.products.index") }}">Productos</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Reservas</a>
+                                    <a class="dropdown-item" href="{{ route("admin.orders.index") }}">Reservas</a>
                                 </li>
                             </ul>
                         </li>
                     @endadmin
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('cart.index') }}"><i
-                                class="bi bi-calendar3 me-2"></i>Reserva</a>
+                        <a class="nav-link text-white" href="{{ route('cart.index') }}">
+                            @if (count(session()->get('cart', [])) === 0)
+                                <i class="bi bi-cart me-2"></i>
+                            @else
+                                <i class="bi bi-cart-fill me-2"></i>
+                            @endif
+                            Carrito
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase" href="#" role="button"
@@ -37,7 +43,8 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route("order.index") }}"> <i class="bi bi-journal-text me-2"></i>Mis
+                            <li><a class="dropdown-item" href="{{ route('order.index') }}"> <i
+                                        class="bi bi-journal-text me-2"></i>Mis
                                     Reservas</a>
                             </li>
                             <li>

@@ -16,11 +16,7 @@ return new class extends Migration
             $table->string("name", 100);
             $table->text("description")->nullable();
             $table->decimal("price", 10, 2);
-            $table->boolean("available")->default(true);
-            $table->string("product_type", 10);
             $table->string("image", 100)->nullable();
-            $table->string("time", 100)->nullable();
-            $table->date("date");
             $table->timestamps();
         });
     }

@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class AdminOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $orders = Order::with("order_items.product")->get()->reverse(); // TODO: hacer que solo se muestren los de esta semana
+        return view("admin.orders", compact("orders"));
     }
 
     /**

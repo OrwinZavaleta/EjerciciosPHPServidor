@@ -42,21 +42,24 @@
             <div class="tab-pane fade show active" id="menus-pill-pane" role="tabpanel" aria-labelledby="menus-pill"
                 tabindex="0">
                 <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
-                    @foreach ($menus as $m)
+                    @forelse ($menus as $m)
                         <x-card-product :product="$m" />
-                    @endforeach
+                    @empty
+                        <h2 class="text-center mx-auto">En este momento no hay menús disponibles, por favor regrese en unos días.
+                        </h2>
+                    @endforelse
                 </div>
             </div>
             <div class="tab-pane fade" id="platos-pill-pane" role="tabpanel" aria-labelledby="platos-pill" tabindex="0">
                 <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
-                    @foreach ($dishes as $d)
+                    @forelse ($dishes as $d)
                         <x-card-product :product="$d" />
-                    @endforeach
+                    @empty
+                        <h2 class="text-center mx-auto">En este momento no hay platos disponibles, por favor regrese en unos días.
+                        </h2>
+                    @endforelse
                 </div>
             </div>
         </div>
-
-
-
     </div>
 @endsection

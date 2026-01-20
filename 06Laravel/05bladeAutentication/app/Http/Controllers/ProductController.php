@@ -10,8 +10,9 @@ class ProductController extends Controller
 {
     public function home()
     {
-        $menus = Product::where("product_type", "menu")->where("date", ">", new DateTime())->get();
-        $dishes = Product::where("product_type", "dish")->get();
+        $menus = Product::where("product_type", "menu")->where("date", ">", new DateTime())->get() ?? [];
+        $dishes = Product::where("product_type", "dish")->get() ?? [];
+
         return view("home", compact("menus", "dishes"));
     }
 }

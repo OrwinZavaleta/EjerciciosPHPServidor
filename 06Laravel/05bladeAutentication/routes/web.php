@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\Auth\AdminOrderController;
+use App\Http\Controllers\Auth\AdminProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, "home"])->name("home");
@@ -34,7 +34,8 @@ Route::middleware(['auth', 'isAdmin'])
     ->prefix("admin")
     ->name("admin.")
     ->group(function () {
-        Route::resource("products", AdminController::class);
+        Route::resource("orders", AdminOrderController::class);
+        Route::resource("products", AdminProductController::class);
     });
 
 require __DIR__ . '/auth.php';
