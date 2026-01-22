@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        @if ($products->isEmpty())
+        @if ($orders->isEmpty())
             @admin
                 <div class="card border-0 shadow-sm rounded-4 py-5">
                     <div class="card-body text-center py-5">
@@ -28,7 +28,7 @@
             @endadmin
         @else
             <div class="row">
-                @foreach ($products as $p)
+                @foreach ($orders as $o)
                     @admin
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
@@ -38,16 +38,16 @@
                                         <div>
                                             <span
                                                 class="badge bg-success bg-opacity-10 text-success mb-2 px-3 py-2 rounded-pill small fw-bold">
-                                                Reserva #{{ $p->id }}
+                                                Reserva #{{ $o->id }}
                                             </span>
                                             <div class="text-muted small mt-1">
                                                 <i class="bi bi-calendar-check me-1"></i>
-                                                {{ $p->created_at->format('d/m/Y H:i') }}
+                                                {{ $o->created_at->format('d/m/Y H:i') }}
                                             </div>
                                         </div>
                                         <div class="text-end">
                                             <span class="text-muted small d-block">Total</span>
-                                            <span class="fw-bold fs-4 text-success">{{ number_format($p->total, 2) }}€</span>
+                                            <span class="fw-bold fs-4 text-success">{{ number_format($o->total, 2) }}€</span>
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                     </h6>
                                     <div class="order-items-container">
                                         @php $totalPlatos = 0; @endphp
-                                        @foreach ($p->order_items as $item)
+                                        @foreach ($o->order_items as $item)
                                             @php $totalPlatos += $item->quantity; @endphp
                                             <div
                                                 class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">

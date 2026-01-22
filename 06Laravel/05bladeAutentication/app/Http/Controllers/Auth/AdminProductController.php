@@ -13,9 +13,10 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where("date", ">", new \DateTime())->get() ?? [];
+        // $products = Product::where("date", ">", new \DateTime())->get() ?? [];
+        $products = Product::with("offers")->get()->reverse() ?? [];
 
-        return view("admin.orders", compact("products"));
+        return view("admin.products", compact("products"));
     }
 
     /**

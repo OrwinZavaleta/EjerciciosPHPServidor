@@ -22,44 +22,13 @@
 
     <!-- Features Section -->
     <div class="container py-3">
-        <ul class="nav nav-pills justify-content-center py-3" id="products" role="tablist">
-            {{-- <li class="nav-item px-3 fw-semibold">
-                <a class="nav-link bg-success active" aria-current="page" href="#">Menús</a>
-            </li>
-            <li class="nav-item px-3 fw-semibold">
-                <a class="nav-link text-success" href="#">Platos</a>
-            </li> --}}
-            <li class="nav-item px-3 fw-semibold" role="presentation">
-                <button class="nav-link active" id="menus-pill" data-bs-toggle="pill" data-bs-target="#menus-pill-pane"
-                    type="button" role="pill" aria-controls="menus-pill-pane" aria-selected="true">Menús</button>
-            </li>
-            <li class="nav-item px-3 fw-semibold" role="presentation">
-                <button class="nav-link" id="platos-pill" data-bs-toggle="pill" data-bs-target="#platos-pill-pane"
-                    type="button" role="pill" aria-controls="platos-pill-pane" aria-selected="false">Platos</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="productsContent">
-            <div class="tab-pane fade show active" id="menus-pill-pane" role="tabpanel" aria-labelledby="menus-pill"
-                tabindex="0">
-                <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
-                    @forelse ($menus as $m)
-                        <x-card-product :product="$m" />
-                    @empty
-                        <h2 class="text-center mx-auto">En este momento no hay menús disponibles, por favor regrese en unos días.
-                        </h2>
-                    @endforelse
-                </div>
-            </div>
-            <div class="tab-pane fade" id="platos-pill-pane" role="tabpanel" aria-labelledby="platos-pill" tabindex="0">
-                <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
-                    @forelse ($dishes as $d)
-                        <x-card-product :product="$d" />
-                    @empty
-                        <h2 class="text-center mx-auto">En este momento no hay platos disponibles, por favor regrese en unos días.
-                        </h2>
-                    @endforelse
-                </div>
-            </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
+            @forelse ($dishes as $d)
+                <x-card-product :product="$d" :offers="$d->offers" />
+            @empty
+                <h2 class="text-center mx-auto">En este momento no hay platos disponibles, por favor regrese en unos días.
+                </h2>
+            @endforelse
         </div>
     </div>
 @endsection

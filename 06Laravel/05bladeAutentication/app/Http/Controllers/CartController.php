@@ -107,12 +107,10 @@ class CartController extends Controller
 
         $order = Order::create([
             "user_id" => Auth::id(),
-            "status" => "pendiente",
             "total" => 0,
         ]);
 
         $precioTotal = 0;
-
         foreach ($cart as $key => $product) {
             $precioTotal += $product["quantity"] * $product["price"];
             Order_Item::create([
