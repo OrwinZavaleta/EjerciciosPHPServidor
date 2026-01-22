@@ -15,6 +15,7 @@
 .img-16-9,
 .img-table {
     aspect-ratio: 16/9;
+    object-fit: cover;
 }
 
 .img-table {
