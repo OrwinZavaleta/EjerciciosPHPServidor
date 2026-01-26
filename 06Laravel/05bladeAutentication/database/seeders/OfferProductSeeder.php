@@ -13,12 +13,12 @@ class OfferProductSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (1,1,2, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (2,1,1, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (3,2,3, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (4,2,1, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (5,4,5, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (6,4,6, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offer_product (id, offer_id, product_id, created_at, updated_at) VALUES (7,4,7, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (1,1,2,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (2,1,1,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (3,2,3,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (4,2,1,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (5,4,5,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (6,4,6,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::insert("INSERT INTO product_offers (id, offer_id, product_id, price, created_at, updated_at) VALUES (7,4,7,12.32, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
     }
 }

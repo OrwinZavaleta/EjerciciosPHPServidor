@@ -14,7 +14,7 @@ class AdminProductController extends Controller
     public function index()
     {
         // $products = Product::where("date", ">", new \DateTime())->get() ?? [];
-        $products = Product::with("offers")->get()->reverse() ?? [];
+        $products = Product::all()->reverse() ?? [];
 
         return view("admin.products", compact("products"));
     }
@@ -24,7 +24,7 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.createProduct");
     }
 
     /**
@@ -32,7 +32,24 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nombre" => "required|string",
+            "precio" => "required|numeric",
+            "descripcion" => "required|string",
+            "imagen" => "image|mimes:jpeg,png,jpg,gif|max:2048"
+        ]);
+        if ($request->hasFile("imagen")) {
+            $path = $request->file("imagen")->store("img", "public");
+        }
+
+        Product::create([
+            "name" => $request->nombre,
+            "description" => $request->descripcion,
+            "price" => $request->precio,
+            "image" => $path ?? null,
+        ]);
+
+        return redirect()->route("admin.products.index")->with("success", "Se creó el producto exitosamente");
     }
 
     /**
@@ -48,7 +65,12 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            $plato = Product::findOrFail($id);
+            return view("admin.editProduct", compact("plato"));
+        } catch (\Exception $e) {
+            return back()->with("error", "El producto seleccionado no existe.");
+        }
     }
 
     /**
@@ -56,7 +78,25 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //TODO: recibir y guardar los datos --- Terminarlo
+        $request->validate([
+            "nombre" => "required|string",
+            "precio" => "required|numeric",
+            "descripcion" => "required|string",
+            "imagen" => "image|mimes:jpeg,png,jpg,gif|max:2048"
+        ]);
+        if ($request->hasFile("imagen")) {
+            $path = $request->file("imagen")->store("img", "public");
+        }
+
+        $plato = Product::find($id);
+
+        $plato->name = $request->nombre;
+        $plato->description = $request->descripcion;
+        $plato->price = $request->precio;
+        $plato->image = $path ?? null;
+
+        return redirect()->route("admin.products.index")->with("success", "Se creó el producto exitosamente");
     }
 
     /**
@@ -64,6 +104,7 @@ class AdminProductController extends Controller
      */
     public function destroy(string $id)
     {
-        // Product::
+        Product::destroy($id);
+        return back()->with("success", "Se borro el producto exitosamente");
     }
 }

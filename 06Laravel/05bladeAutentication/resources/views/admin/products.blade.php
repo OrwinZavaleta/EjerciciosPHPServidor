@@ -14,7 +14,7 @@
                 </h2>
             </div>
             <div class="col-md-4 text-end">
-                <a href="#" class="btn btn-success">
+                <a href="{{ route("admin.products.create") }}" class="btn btn-success">
                     <i class="bi bi-plus-lg me-2"></i>
                     Crear nuevo producto
                 </a>
