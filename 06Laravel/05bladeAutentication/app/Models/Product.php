@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ["name", "description", "price", "image"];
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'image'
+    ];
 
-    public function order_items()
+    public function productsOffer()
     {
-        return $this->hasMany(Order_Item::class);
-    }
-
-    public function offers()
-    {
-        return $this->belongsToMany(Offer::class);
+        return $this->hasMany(ProductOffer::class);
     }
 }

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId("order_id")->constrained();
-            $table->foreignId("product_id")->constrained();
-            $table->integer("quantity")->default(1);
+        Schema::create('products', function (Blueprint $table) {
+            $table->id(); 
+            $table->string('name', 100);
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->string('image',100)->nullable(); // BYTEA en PostgreSQL
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('products');
     }
 };

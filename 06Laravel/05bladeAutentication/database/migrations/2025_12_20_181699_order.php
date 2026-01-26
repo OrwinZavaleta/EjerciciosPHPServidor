@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offer_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId("offer_id")->constrained();
-            $table->foreignId("product_id")->constrained();
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id(); // 👈 autoincremental en PostgreSQL
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('offer_product');
+        Schema::dropIfExists('orders');
     }
 };
