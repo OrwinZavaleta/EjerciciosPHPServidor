@@ -22,6 +22,7 @@
 
     <!-- Features Section -->
     <div class="container py-3">
+        <h2 class="fw-bold text-success py-2"><i class="bi bi-cup-hot-fill me-2"></i>Ofertas de esta Semana</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
             @forelse ($dishes as $d)
                 <x-card-product :product="$d" :offers="$d->offers" />

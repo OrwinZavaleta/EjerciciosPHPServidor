@@ -24,6 +24,9 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ route("admin.orders.index") }}">Reservas</a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route("admin.offers.index") }}">Ofertas</a>
+                                </li>
                             </ul>
                         </li>
                     @endadmin

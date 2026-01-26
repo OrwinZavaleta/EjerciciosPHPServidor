@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AdminOrderController;
 use App\Http\Controllers\Auth\AdminProductController;
+use App\Http\Controllers\Auth\AdminOffersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'isAdmin'])
     ->group(function () {
         Route::resource("orders", AdminOrderController::class);
         Route::resource("products", AdminProductController::class);
+        Route::resource("offers", AdminOffersController::class);
     });
 
 require __DIR__ . '/auth.php';

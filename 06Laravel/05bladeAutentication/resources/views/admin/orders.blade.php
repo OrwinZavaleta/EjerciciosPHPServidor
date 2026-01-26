@@ -7,8 +7,8 @@
         <div class="row mb-4 align-items-center">
             <div class="col-md-8">
                 <h2 class="fw-bold text-success mb-1">
-                    <i class="bi bi-journal-text me-2"></i>
                     @admin
+                        <i class="bi bi-journal-text me-2"></i>
                         Todas las Reservas
                     @endadmin
                 </h2>

@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 
-class AdminProductController extends Controller
+class AdminOffersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $products = Product::where("date", ">", new \DateTime())->get() ?? [];
-        $products = Product::with("offers")->get()->reverse() ?? [];
+        $offers = Offer::with("products")->get()->reverse() ?? [];
 
-        return view("admin.products", compact("products"));
+        return view("admin.offers", compact("offers"));
     }
 
     /**
@@ -64,6 +63,6 @@ class AdminProductController extends Controller
      */
     public function destroy(string $id)
     {
-        // Product::
+        //
     }
 }
