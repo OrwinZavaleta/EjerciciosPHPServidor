@@ -96,6 +96,8 @@ class AdminProductController extends Controller
         $plato->price = $request->precio;
         $plato->image = $path ?? null;
 
+        $plato->save();
+
         return redirect()->route("admin.products.index")->with("success", "Se creó el producto exitosamente");
     }
 

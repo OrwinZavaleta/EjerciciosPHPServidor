@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-12 pb-3">
-                <button class="btn btn-primary" type="submit">Crear Producto</button>
+                <button class="btn btn-primary" type="submit">Actualizar Producto</button>
             </div>
         </form>
     </div>
