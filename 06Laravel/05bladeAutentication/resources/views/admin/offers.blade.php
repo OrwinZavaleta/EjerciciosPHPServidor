@@ -13,6 +13,12 @@
                     @endadmin
                 </h2>
             </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ route('admin.offers.create') }}" class="btn btn-success">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Crear nueva oferta
+                </a>
+            </div>
         </div>
 
         @if ($offers->isEmpty())
@@ -27,13 +33,32 @@
                 </div>
             @endadmin
         @else
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
                 @foreach ($offers as $o)
                     @admin
-                        <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="col">
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                                 <!-- Cabecera de la Reserva -->
-                               hola
+                                <div class="card-body">
+                                    <h5 class="card-title fs-2">Reserva del
+                                        {{ \Carbon\Carbon::parse($o->date_delivery)->translatedFormat('j \d\e F') }}
+                                    </h5>
+
+                                    @foreach ($o->productsOffer as $po)
+                                        {{-- <img src="{{ assets('storage/' . $po->product->image) }}" class="card-img-top"
+                                        alt="{{ $po->product->name }}"> --}}
+                                        <h5 class="card-title">{{ $po->product->name }}</h5>
+                                        <p class="card-text">{{ $po->product->description }}</p>
+                                    @endforeach
+
+                                    <form action="{{ route('admin.offers.destroy', $o->id) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="bi bi-trash me-2"></i>Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     @endadmin
                 @endforeach

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
+use App\Models\Product;
+use App\Models\ProductOffer;
 use Illuminate\Http\Request;
 
 class AdminOffersController extends Controller
@@ -13,7 +15,7 @@ class AdminOffersController extends Controller
      */
     public function index()
     {
-        $offers = Offer::with("products")->get()->reverse() ?? [];
+        $offers = Offer::with("productsOffer.product")->get()->reverse() ?? [];
 
         return view("admin.offers", compact("offers"));
     }
@@ -23,7 +25,8 @@ class AdminOffersController extends Controller
      */
     public function create()
     {
-        //
+        $platos = Product::all();
+        return view("admin.createOffer", compact("platos"));
     }
 
     /**
@@ -31,7 +34,27 @@ class AdminOffersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "date_delivery" => "required|date",
+            "time_delivery" => "required|string",
+            "datetime_limit" => "required|date",
+            "platosSeleccionados" => "required|array",
+            "platosSeleccionados.*" => "exists:products,id",
+        ]);
+
+        $ofertaCreada = Offer::create([
+            "date_delivery" => $request->date_delivery,
+            "time_delivery" => $request->time_delivery,
+            "datetime_limit" => $request->datetime_limit,
+        ]);
+
+        for ($i = 0; $i < count($request->platosSeleccionados); $i++) {
+
+            ProductOffer::create([
+                "offer_id"=>$ofertaCreada->id,
+                "product_id"=>$request->platosSeleccionados[$id],
+            ]);// TODO: terminar
+        }
     }
 
     /**
@@ -63,6 +86,8 @@ class AdminOffersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Offer::destroy($id);
+
+        return back()->with("success", "Se borro la oferta exitosamente");
     }
 }
