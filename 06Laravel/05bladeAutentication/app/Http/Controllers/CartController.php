@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
-use App\Models\Order_Item;
-use App\Models\Product;
+use App\Models\ProductOffer;
+use App\Models\Offer;
+use App\Models\ProductOrder;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -15,39 +16,62 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get("cart", []);
-        return view("auth.cart", compact("cart"));
+
+        if (empty($cart)) {
+            return view("auth.cart", [
+                "cart" => [],
+                "offersById" => collect(),
+                "productOffersById" => collect(),
+            ]);
+        }
+
+
+        $offerIds = array_keys($cart);
+
+        $productOfferIds = [];
+
+        foreach ($cart as $offerIds => $items) {
+            $productOfferIds = array_merge($productOfferIds, array_keys($items));
+        }
+
+        $productOfferIds = array_unique($productOfferIds);
+
+        $offerById = Offer::whereIn("id", $offerIds)
+            ->get(["id", "date_delivery", "time_delivery"])
+            ->keyBy("id");
+
+        $productOffersById = ProductOffer::with("product")
+            ->whereIn("id", $productOfferIds)
+            ->get(["id", "offer_id", "product_id"])
+            ->keyBy("id");
+
+        return view("auth.cart", compact("cart", "offersById", "productOffersById"));
     }
 
-    public function add($id)
+    public function add($idProductOffer)
     {
-        $product = null;
+        $productOffer = null;
         try {
-            $product = Product::findOrFail($id);
+            $productOffer = ProductOffer::findOrFail($idProductOffer);
         } catch (\Exception $e) {
             return back()->with("error", "No se encontro el producto.");
         }
 
         $cart = session()->get("cart", []);
 
-        $productId = (int) $id;
-
-        if (!isset($cart[$productId])) {
-            $cart[$product->id] = [
-                "name" => $product->name,
-                "price" => $product->price,
-                "quantity" => 1,
-                "image" => $product->image,
+        if (!isset($cart[$productOffer->offer_id])) {
+            $cart[$productOffer->offer_id] = [
+                "$productOffer->id" => 1,
             ];
         } else {
-            $cart[$productId]["quantity"]++;
+            $cart[$productOffer->offer_id][$productOffer->id]++;
         }
         session()->put("cart", $cart);
 
-        // return view("auth.cart", compact("cart"));
         return redirect()->route("cart.index");
     }
 
-    public function delete($id)
+    public function delete($id) //TODO
     {
         $cart = session()->get("cart", []);
 
@@ -70,7 +94,7 @@ class CartController extends Controller
     }
 
     // Quiza esto es mejor hacerlo con js. Habrian muchos recargos de página.
-    public function increase($id)
+    public function increase($id) //TODO
     {
         $cart = session()->get("cart", []);
 
@@ -84,7 +108,7 @@ class CartController extends Controller
 
         return redirect()->route("cart.index");
     }
-    public function decrease($id)
+    public function decrease($id) //TODO
     {
         $cart = session()->get("cart", []);
 
@@ -113,7 +137,7 @@ class CartController extends Controller
         $precioTotal = 0;
         foreach ($cart as $key => $product) {
             $precioTotal += $product["quantity"] * $product["price"];
-            Order_Item::create([
+            ProductOrder::create([
                 "order_id" => $order->id,
                 "product_id" => $key,
                 "quantity" => $product["quantity"],

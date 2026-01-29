@@ -20,9 +20,9 @@ class ProductSeeder extends Seeder
         DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (3, 'Pavlova de Frutos Rojos', 'Algo muy raro', 4.00, NULL, '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
         DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (4, 'Solomillo de Cerdo Stroganoff', 'No se', 4.00, NULL, '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
 
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (5, 'Albondigas de Pollo', 'No se', 4.00, '/storage/img/albondigasPollo.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (6, 'Ensalada de Patata', 'No se', 4.00, '/storage/img/ensaladaPatata.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (7, 'Flan Parisien', 'No se', 4.00, '/storage/img/flanParisien.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
+        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (5, 'Albondigas de Pollo', 'No se', 4.00, 'img/albondigasPollo.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
+        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (6, 'Ensalada de Patata', 'No se', 4.00, 'img/ensaladaPatata.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
+        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (7, 'Flan Parisien', 'No se', 4.00, 'img/flanParisien.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
 
         // DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (5, 'Menu Noviembre 11', 'Un menu con muchas cosas', 123.00, '/storage/img/menu11Nov2025.png', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
 

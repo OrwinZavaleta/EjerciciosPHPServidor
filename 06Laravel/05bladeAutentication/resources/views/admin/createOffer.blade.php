@@ -17,11 +17,11 @@
             </div>
             <div class="col-md-4">
                 <label for="time_delivery" class="form-label">Horas de entrega</label>
-                <input type="text" class="form-control" id="time_delivery" name="time_delivery" required>
+                <input type="text" class="form-control" id="time_delivery" name="time_delivery" value="13:30 a 14:30" required>
                 <div class="invalid-feedback">
                     Hora no valida
                 </div>
-            </div>
+            </div>r
             <div class="col-md-4">
                 <label for="datetime_limit" class="form-label">Fecha limite de pedido</label>
                 <input type="datetime-local" class="form-control" id="datetime_limit" name="datetime_limit" required>

@@ -79,7 +79,7 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
         //TODO: recibir y guardar los datos --- Terminarlo
-        $request->validate([
+        $validated = $request->validate([
             "nombre" => "required|string",
             "precio" => "required|numeric",
             "descripcion" => "required|string",
@@ -91,10 +91,10 @@ class AdminProductController extends Controller
 
         $plato = Product::find($id);
 
-        $plato->name = $request->nombre;
-        $plato->description = $request->descripcion;
-        $plato->price = $request->precio;
-        $plato->image = $path ?? null;
+        $plato->name = $validated["nombre"] ?? $plato["nombre"];
+        $plato->description = $validated["descripcion"] ?? $plato["descripcion"];
+        $plato->price = $validated["precio"] ?? $plato["precio"];
+        $plato->image = $path ?? $plato["image"];
 
         $plato->save();
 
@@ -108,5 +108,6 @@ class AdminProductController extends Controller
     {
         Product::destroy($id);
         return back()->with("success", "Se borro el producto exitosamente");
+        // TODO: pedir confirmacion
     }
 }

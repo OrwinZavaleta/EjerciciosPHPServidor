@@ -1,4 +1,4 @@
-@props(['product', 'offer', 'editar' => false])
+@props(['product', 'offer',"productOfferId" , 'editar' => false])
 
 {{-- @foreach ($offers as $offer) --}}
     <div class="col">
@@ -28,7 +28,7 @@
                             </div>
                         @else
                             <div class="d-flex justify-content-between">
-                                <form action="{{ route('cart.add', $product->id) }}" method="post">
+                                <form action="{{ route('cart.add', $productOfferId) }}" method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-success"> <i
                                             class="bi bi-fork-knife me-2"></i>Reservar</button>

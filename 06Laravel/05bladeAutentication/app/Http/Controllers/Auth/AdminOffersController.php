@@ -7,6 +7,7 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\ProductOffer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminOffersController extends Controller
 {
@@ -42,19 +43,23 @@ class AdminOffersController extends Controller
             "platosSeleccionados.*" => "exists:products,id",
         ]);
 
-        $ofertaCreada = Offer::create([
-            "date_delivery" => $request->date_delivery,
-            "time_delivery" => $request->time_delivery,
-            "datetime_limit" => $request->datetime_limit,
-        ]);
+        DB::transaction(function () use ($request) {
+            $ofertaCreada = Offer::create([
+                "date_delivery" => $request->date_delivery,
+                "time_delivery" => $request->time_delivery,
+                "datetime_limit" => $request->datetime_limit,
+            ]);
 
-        for ($i = 0; $i < count($request->platosSeleccionados); $i++) {
+            for ($i = 0; $i < count($request->platosSeleccionados); $i++) {
 
-            ProductOffer::create([
-                "offer_id"=>$ofertaCreada->id,
-                "product_id"=>$request->platosSeleccionados[$id],
-            ]);// TODO: terminar
-        }
+                ProductOffer::create([
+                    "offer_id" => $ofertaCreada->id,
+                    "product_id" => $request->platosSeleccionados[$i],
+                ]);
+            }
+        });
+
+        return redirect()->route("admin.offers.index")->with("success", "Se agregó la oferta exitosamente");
     }
 
     /**
@@ -89,5 +94,6 @@ class AdminOffersController extends Controller
         Offer::destroy($id);
 
         return back()->with("success", "Se borro la oferta exitosamente");
+        // TODO: pedir confirmacion
     }
 }
