@@ -37,3 +37,9 @@
     height: 24px;
     font-size: 0.75rem;
 }
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: var(--bs-success);
+    --bs-nav-link-color: var(--bs-success);
+    --bs-nav-link-hover-color: #157347;
+}
