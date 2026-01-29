@@ -4,34 +4,35 @@
 
 @section('content')
     <div class="container py-5">
-        <div class="row mb-4 align-items-center">
-            <div class="col-md-8">
-                <h2 class="fw-bold text-success mb-1">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
+            <div>
+                <h2 class="fw-bold text-success mb-0">
                     @admin
-                        <i class="bi bi-journal-text me-2"></i>
-                        Todas las Reservas
+                        <i class="bi bi-clipboard-data-fill me-2"></i>Historial de Reservas
                     @endadmin
                 </h2>
+                <p class="text-muted mt-1 mb-0">Visualiza todas las reservas realizadas por los usuarios.</p>
             </div>
         </div>
 
         @if ($orders->isEmpty())
             @admin
-                <div class="card border-0 shadow-sm rounded-4 py-5">
+                <div class="card border-0 shadow-sm rounded-4 py-5 bg-light">
                     <div class="card-body text-center py-5">
                         <div class="display-1 text-success opacity-25 mb-4">
-                            <i class="bi bi-cart-x"></i>
+                            <i class="bi bi-clipboard-x"></i>
                         </div>
-                        <h4 class="fw-bold">No hay reservas</h4>
+                        <h3 class="fw-bold text-secondary">No hay reservas activas</h3>
+                        <p class="text-muted mb-0">El historial de pedidos está vacío por el momento.</p>
                     </div>
                 </div>
             @endadmin
         @else
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 @foreach ($orders as $o)
                     @admin
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                        <div class="col">
+                            <div class="card h-100 border-0 shadow rounded-4 overflow-hidden hover-shadow transition-all">
                                 <!-- Cabecera de la Reserva -->
                                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
                                     <div class="d-flex justify-content-between align-items-start mb-3">
@@ -46,7 +47,7 @@
                                             </div>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-muted small d-block">Total</span>
+                                            <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.7rem;">Total</small>
                                             <span class="fw-bold fs-4 text-success">{{ number_format($o->total, 2) }}€</span>
                                         </div>
                                     </div>
@@ -57,7 +58,7 @@
                                     <h6 class="fw-bold mb-3 text-uppercase small ls-wide text-muted border-bottom pb-2">
                                         <i class="bi bi-list-stars me-2"></i>Detalle del Pedido
                                     </h6>
-                                    <div class="order-items-container">
+                                    <div class="order-items-container" style="max-height: 200px; overflow-y: auto;">
                                         @php $totalPlatos = 0; @endphp
                                         @foreach ($o->order_items as $item)
                                             @php $totalPlatos += $item->quantity; @endphp
@@ -65,7 +66,7 @@
                                                 class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">
                                                 <div class="d-flex align-items-center">
                                                     <div
-                                                        class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle">
+                                                        class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle shadow-sm" style="width: 25px; height: 25px; font-size: 0.8rem;">
                                                         {{ $item->quantity }}
                                                     </div>
                                                     <span class="small fw-medium text-dark">{{ $item->product->name }}</span>

@@ -21,43 +21,48 @@
     </div> --}}
 
     <!-- Features Section -->
-    <div class="container py-3">
-        <h2 class="fw-bold text-success py-2"><i class="bi bi-cup-hot-fill me-2"></i>Ofertas Disponibles</h2>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-success display-5"><i class="bi bi-stars me-2"></i>Nuestras Ofertas</h2>
+            <p class="lead text-muted">Selecciona una fecha para ver el menú disponible</p>
+        </div>
 
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            @foreach ($ofertas as $i => $oferta)
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link @if ($i == 1) active @endif"
-                        id="pills-{{ $i }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $i }}"
-                        type="button" role="tab" aria-controls="pills-{{ $i }}"
-                        aria-selected="@if ($i == 1) true @else false @endif">{{ \Carbon\Carbon::parse($oferta->date_delivery)->translatedFormat('j \d\e F') }}</button>
-                </li>
-            @endforeach
-        </ul>
+        <div class="d-flex justify-content-center mb-5">
+            <ul class="nav nav-pills nav-fill bg-white shadow-sm rounded-pill p-2" id="pills-tab" role="tablist">
+                @foreach ($ofertas as $i => $oferta)
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4 py-2 fw-bold @if ($i == 0) active @endif"
+                            id="pills-{{ $i }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $i }}"
+                            type="button" role="tab" aria-controls="pills-{{ $i }}"
+                            aria-selected="@if ($i == 0) true @else false @endif">
+                            {{ \Carbon\Carbon::parse($oferta->date_delivery)->translatedFormat('l j \d\e F') }}
+                        </button>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
         <div class="tab-content" id="pills-tabContent">
             @foreach ($ofertas as $i => $oferta)
-                <div class="tab-pane fade @if ($i == 1) show active @endif"
+                <div class="tab-pane fade @if ($i == 0) show active @endif"
                     id="pills-{{ $i }}" role="tabpanel" aria-labelledby="pills-{{ $i }}-tab"
                     tabindex="0">
-                    <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 py-3">
 
                         @foreach ($oferta->productsOffer as $productOffer)
                             <x-card-product :product="$productOffer->product" :offer="$oferta" :productOfferId="$productOffer->id"></x-card-product>
                         @endforeach
 
                     </div>
+                    @if($oferta->productsOffer->isEmpty())
+                        <div class="text-center py-5">
+                             <div class="display-1 text-muted opacity-25 mb-3"><i class="bi bi-emoji-frown"></i></div>
+                             <h4 class="text-muted">No hay platos disponibles para esta fecha.</h4>
+                        </div>
+                    @endif
 
                 </div>
             @endforeach
         </div>
-
-        {{-- <div class="row row-cols-1 row-cols-md-2 g-4 py-3">
-            @forelse ($ofertas as $o)
-                <x-card-product :product="$o->productsOffer->product" :offer="$o" />
-            @empty
-                <h2 class="text-center mx-auto">En este momento no hay platos disponibles, por favor regrese en unos días.
-                </h2>
-            @endforelse
-        </div> --}}
     </div>
 @endsection

@@ -50,7 +50,7 @@
 
                             <!-- Actions -->
                             <div class="d-grid gap-2">
-                                <button class="btn btn-success btn-lg fw-bold" type="submit">Iniciar Sesión</button>
+                                <button class="btn btn-success btn-lg fw-bold rounded-pill shadow-sm" type="submit">Iniciar Sesión</button>
                             </div>
 
                             <div class="text-center mt-4">

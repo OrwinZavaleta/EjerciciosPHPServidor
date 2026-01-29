@@ -3,42 +3,61 @@
 @section('title', 'Crear un nuevo Producto')
 
 @section('content')
-    <div class="container">
-        <h2 class="py-2">Crear un nuevo producto</h2>
-        <form action="{{ route('admin.products.store') }}" method="post" class="row g-3 needs-validation" novalidate
-            enctype="multipart/form-data">
-            @csrf
-            <div class="col-md-4">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                <div class="invalid-feedback">
-                    Nombre del producto no valido
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-success text-white py-3">
+                        <h4 class="mb-0 fw-bold"><i class="bi bi-basket-fill me-2"></i>Crear Nuevo Producto</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="{{ route('admin.products.store') }}" method="post" class="row g-4 needs-validation"
+                            novalidate enctype="multipart/form-data">
+                            @csrf
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label fw-bold text-muted">Nombre del Producto</label>
+                                <input type="text" class="form-control form-control-lg" id="nombre" name="nombre"
+                                    placeholder="Ej. Paella Valenciana" required>
+                                <div class="invalid-feedback">
+                                    Nombre del producto no valido
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="precio" class="form-label fw-bold text-muted">Precio (€)</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light text-success fw-bold">€</span>
+                                    <input type="number" class="form-control" min="0.01" step="0.01" id="precio"
+                                        name="precio" placeholder="0.00" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Precio del producto no valido
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="descripcion" class="form-label fw-bold text-muted">Descripción</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="4"
+                                    placeholder="Describe los ingredientes y detalles del plato..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="imagen" class="form-label fw-bold text-muted">Imagen del Producto</label>
+                                <input type="file" class="form-control form-control-lg" id="imagen" name="imagen"
+                                    accept="image/png, image/jpeg, image/webp">
+                                <div class="form-text">Formatos aceptados: PNG, JPG, WebP.</div>
+                                <div class="invalid-feedback">
+                                    Por favor, seleccione un formato de imagen válido.
+                                </div>
+                            </div>
+                            <div class="col-12 pt-3 text-end">
+                                <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary btn-lg me-2 rounded-pill">Cancelar</a>
+                                <button class="btn btn-success btn-lg px-5 rounded-pill fw-bold" type="submit">
+                                    <i class="bi bi-save me-2"></i>Guardar Producto
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <label for="precio" class="form-label">Precio</label>
-                <input type="number" class="form-control" min="0.01" step="0.01" id="precio" name="precio"
-                    required>
-                <div class="invalid-feedback">
-                    Precio del producto no valido
-                </div>
-            </div>
-            <div class="col-md-12">
-                <label for="descripcion" class="form-label">Descripcion</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
-            </div>
-            <div class="col-md-4">
-                <label for="imagen" class="form-label">Imagen</label>
-                <input type="file" class="form-control" id="imagen" name="imagen"
-                    accept="image/png, image/jpeg, image/webp"s>
-                <div class="invalid-feedback">
-                    Por favor, seleccione un formato de imagen válido (PNG, JPG o WebP).
-                </div>
-            </div>
-            <div class="col-12 pb-3">
-                <button class="btn btn-primary" type="submit">Crear Producto</button>
-            </div>
-        </form>
+        </div>
     </div>
 @endsection
 @push('scripts')

@@ -4,38 +4,38 @@
 
 @section('content')
     <div class="container py-5">
-        <div class="row mb-4 align-items-center">
-            <div class="col-md-8">
-                <h2 class="fw-bold text-success mb-1">
-                    <i class="bi bi-journal-text me-2"></i>Mis Reservas
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
+            <div>
+                <h2 class="fw-bold text-success mb-0">
+                    <i class="bi bi-journal-check me-2"></i>Mis Reservas
                 </h2>
-                <p class="text-muted">Consulta el historial de todos tus pedidos realizados en Prieto Eats.</p>
+                <p class="text-muted mt-1 mb-0">Consulta el historial de todos tus pedidos realizados en Prieto Eats.</p>
             </div>
-            <div class="col-md-4 text-md-end">
-                <a href="{{ route('home') }}" class="btn btn-outline-success rounded-pill px-4">
+            <div class="text-end">
+                <a href="{{ route('home') }}" class="btn btn-success btn-lg rounded-pill shadow-sm fw-bold px-4">
                     <i class="bi bi-plus-lg me-2"></i>Nueva Reserva
                 </a>
             </div>
         </div>
 
         @if ($orders->isEmpty())
-            <div class="card border-0 shadow-sm rounded-4 py-5">
+            <div class="card border-0 shadow-sm rounded-4 py-5 bg-light">
                 <div class="card-body text-center py-5">
                     <div class="display-1 text-success opacity-25 mb-4">
-                        <i class="bi bi-cart-x"></i>
+                        <i class="bi bi-basket2"></i>
                     </div>
-                    <h4 class="fw-bold">Aún no tienes reservas</h4>
+                    <h3 class="fw-bold text-secondary">Aún no tienes reservas</h3>
                     <p class="text-muted mb-4">Tu historial de pedidos aparecerá aquí una vez que realices tu primera reserva.</p>
-                    <a href="{{ route('home') }}" class="btn btn-success btn-lg px-5 fw-bold rounded-pill shadow-sm">
+                    <a href="{{ route('home') }}" class="btn btn-outline-success rounded-pill fw-bold px-4">
                         ¡Quiero pedir algo!
                     </a>
                 </div>
             </div>
         @else
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 @foreach ($orders as $o)
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow rounded-4 overflow-hidden hover-shadow transition-all">
                             <!-- Cabecera de la Reserva -->
                             <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <span class="text-muted small d-block">Total</span>
+                                        <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.7rem;">Total</small>
                                         <span class="fw-bold fs-4 text-success">{{ number_format($o->total, 2) }}€</span>
                                     </div>
                                 </div>
@@ -60,13 +60,13 @@
                                 <h6 class="fw-bold mb-3 text-uppercase small ls-wide text-muted border-bottom pb-2">
                                     <i class="bi bi-list-stars me-2"></i>Detalle del Pedido
                                 </h6>
-                                <div class="order-items-container">
+                                <div class="order-items-container" style="max-height: 200px; overflow-y: auto;">
                                     @php $totalPlatos = 0; @endphp
                                     @foreach ($o->order_items as $item)
                                         @php $totalPlatos += $item->quantity; @endphp
                                         <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">
                                             <div class="d-flex align-items-center">
-                                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle" >
+                                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle shadow-sm" style="width: 25px; height: 25px; font-size: 0.8rem;">
                                                     {{ $item->quantity }}
                                                 </div>
                                                 <span class="small fw-medium text-dark">{{ $item->product->name }}</span>

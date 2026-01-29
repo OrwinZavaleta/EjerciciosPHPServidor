@@ -73,7 +73,7 @@
 
                             <!-- Actions -->
                             <div class="d-grid gap-2">
-                                <button class="btn btn-success btn-lg fw-bold" type="submit">Registrarse</button>
+                                <button class="btn btn-success btn-lg fw-bold rounded-pill shadow-sm" type="submit">Registrarse</button>
                             </div>
 
                             <div class="text-center mt-4">

@@ -1,49 +1,56 @@
-@props(['product', 'offer',"productOfferId" , 'editar' => false])
+@props(['product', 'offer', 'productOfferId', 'editar' => false])
 
-{{-- @foreach ($offers as $offer) --}}
-    <div class="col">
-        <div class="card shadow-sm">
-            <img src="{{ asset('storage/'.($product->image ?? 'img/unknown-dish.png')) }}" class="card-img-top img-16-9"
-                alt="{{ $product->name }}" loading="lazy">
-            <div class="card-body">
-                <h5 class="card-title">{{ $product->name }}</h5>
-                <p class="card-text">{{ $product->description }}</p>
-                {{-- <p class="card-text">Día de entrega: {{ $offer->date_delivery }}</p>
-                <p class="card-text">Hora de entrega: {{ $offer->time_delivery }}</p>
-                <p class="card-text">Día de entrega: {{ $offer->datetime_limit }}</p> --}}
-                <div class="border-top border-1 border-top-success pt-3">
-                    @auth
-                        @if (auth()->user()->isAdmin() && $editar)
-                            <div class="d-flex justify-content-between">
-                                <div class="fs-4 text-success fw-bold">
-                                    <a href="{{ route("admin.products.edit", $product->id) }}" class="btn btn-warning"><i
-                                            class="bi bi-pencil-fill me-2"></i>Editar</a>
-                                </div>
-                                <form action="{{ route("admin.products.destroy", $product->id) }}" method="post">
-                                    @method("DELETE")
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger"><i
-                                            class="bi bi-trash me-2"></i>Eliminar</button>
-                                </form>
-                            </div>
-                        @else
-                            <div class="d-flex justify-content-between">
-                                <form action="{{ route('cart.add', $productOfferId) }}" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success"> <i
-                                            class="bi bi-fork-knife me-2"></i>Reservar</button>
-                                </form>
-                                <div class="fs-4 text-success fw-bold">
-                                    <span id="precio me-3">{{ $product->price }}</span>
-                                    €
-                                </div>
-                            </div>
-                        @endif
-                    @else
-                        <p class="m-0 text-danger">Inicie sesión</p>
-                    @endauth
+<div class="col">
+    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card hover-shadow transition-all">
+        <div class="position-relative">
+            <img src="{{ asset('storage/' . ($product->image ?? 'img/unknown-dish.png')) }}"
+                class="card-img-top object-fit-cover" alt="{{ $product->name }}" loading="lazy" style="height: 220px;">
+            @if (!$editar)
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge bg-white text-success shadow-sm fs-5 fw-bold px-3 py-2 rounded-pill">
+                        {{ $product->price }} €
+                    </span>
                 </div>
+            @endif
+        </div>
+
+        <div class="card-body d-flex flex-column p-4">
+            <h5 class="card-title fw-bold text-dark mb-2">{{ $product->name }}</h5>
+            <p class="card-text text-muted small flex-grow-1 line-clamp-3">{{ $product->description }}</p>
+
+            <div class="mt-3 pt-3 border-top border-light">
+                @auth
+                    @if (auth()->user()->isAdmin() && $editar)
+                        <div class="d-flex justify-content-between gap-2">
+                            <a href="{{ route('admin.products.edit', $product->id) }}"
+                                class="btn btn-warning flex-grow-1 fw-bold rounded-pill">
+                                <i class="bi bi-pencil-fill me-1"></i> Editar
+                            </a>
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="post" class="flex-grow-1">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger w-100 fw-bold rounded-pill">
+                                    <i class="bi bi-trash-fill me-1"></i> Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <form action="{{ route('cart.add', $productOfferId) }}" method="post" class="d-grid">
+                            @csrf
+                            <button type="submit" class="btn btn-success rounded-pill py-2 fw-bold shadow-sm btn-hover-scale">
+                                <i class="bi bi-cart-plus-fill me-2"></i>Añadir al Pedido
+                            </button>
+                        </form>
+                    @endif
+                @else
+                    <div class="d-grid">
+                        <a href="{{ route('login') }}" class="btn btn-outline-success rounded-pill fw-bold">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Inicia sesión para pedir
+                        </a>
+                    </div>
+                @endauth
             </div>
         </div>
     </div>
-{{-- @endforeach --}}
+</div>
+
