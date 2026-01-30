@@ -17,7 +17,7 @@ class ProductController extends Controller
         // })->get()->reverse() ?? [];
 
         // $dishes = ProductOffer::with(["product", "offer"])->get()->reverse() ?? [];
-        $ofertas = Offer::with("productsOffer.product")->get()->reverse() ?? [];
+        $ofertas = Offer::with("productsOffer.product")->where("date_delivery", ">", now())->orderBy("date_delivery")->get() ?? [];
         // dd($ofertas);
         return view("home", compact("ofertas"));
     }
