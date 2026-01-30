@@ -30,13 +30,13 @@ class CartController extends Controller
 
         $productOfferIds = [];
 
-        foreach ($cart as $offerIds => $items) {
+        foreach ($cart as $offerId => $items) {
             $productOfferIds = array_merge($productOfferIds, array_keys($items));
         }
 
         $productOfferIds = array_unique($productOfferIds);
 
-        $offerById = Offer::whereIn("id", $offerIds)
+        $offersById = Offer::whereIn("id", $offerIds)
             ->get(["id", "date_delivery", "time_delivery"])
             ->keyBy("id");
 
@@ -58,11 +58,8 @@ class CartController extends Controller
         }
 
         $cart = session()->get("cart", []);
-
-        if (!isset($cart[$productOffer->offer_id])) {
-            $cart[$productOffer->offer_id] = [
-                "$productOffer->id" => 1,
-            ];
+        if (!isset($cart[$productOffer->offer_id][$productOffer->id])) {
+            $cart[$productOffer->offer_id][$productOffer->id] = 1;
         } else {
             $cart[$productOffer->offer_id][$productOffer->id]++;
         }
@@ -135,14 +132,20 @@ class CartController extends Controller
         ]);
 
         $precioTotal = 0;
-        foreach ($cart as $key => $product) {
-            $precioTotal += $product["quantity"] * $product["price"];
-            ProductOrder::create([
-                "order_id" => $order->id,
-                "product_id" => $key,
-                "quantity" => $product["quantity"],
-                "unit_price" => $product["quantity"] * $product["price"],
-            ]);
+        foreach ($cart as $offerId => $items) {
+            foreach ($items as $poId => $quantity) {
+                try {
+                    $productOffer = ProductOffer::with("product")->findOrFail($poId);
+                } catch (\Exception $e) {
+                    return back()->with("error", "Un producto no encontrado.");
+                }
+                $precioTotal += $quantity * $productOffer->product["price"];
+                ProductOrder::create([
+                    "order_id" => $order->id,
+                    "product_id" => $productOffer->id,
+                    "quantity" => $quantity,
+                ]);
+            }
         }
 
         $order->total = $precioTotal;

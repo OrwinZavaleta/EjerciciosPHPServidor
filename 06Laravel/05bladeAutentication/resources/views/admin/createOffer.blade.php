@@ -30,14 +30,6 @@
                                     Hora no valida
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="datetime_limit" class="form-label fw-bold text-muted">Fecha limite de pedido</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="datetime_limit"
-                                    name="datetime_limit" required>
-                                <div class="invalid-feedback">
-                                    Fecha u hora no validas
-                                </div>
-                            </div>
 
                             <div class="col-12 mt-4">
                                 <h5 class="fw-bold text-success border-bottom pb-2 mb-3">Productos en la oferta</h5>

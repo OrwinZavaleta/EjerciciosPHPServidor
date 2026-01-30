@@ -17,7 +17,7 @@
                                 <i class="bi bi-basket2"></i>
                             </div>
                             <h3 class="fw-bold text-secondary">Tu carrito está vacío</h3>
-                            <p class="text-muted mb-4">¡Parece que aún no has elegido tu comida de hoy!</p>
+                            {{-- <p class="text-muted mb-4">¡Parece que aún no has elegido tu comida de hoy!</p> --}}
                             <a href="{{ route('home') }}" class="btn btn-success btn-lg rounded-pill px-5 fw-bold shadow-sm">
                                 <i class="bi bi-search me-2"></i>Ver Ofertas
                             </a>
@@ -25,16 +25,52 @@
                     </div>
                 @else
                     @php $totalGeneral = 0; @endphp
+
                     <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
                         <div class="card-body p-0">
-                            <!-- //TODO -->
+                            <ul class="list-group">
+                                @foreach ($cart as $offerId => $items)
+                                    @php
+                                        $offer = $offersById["$offerId"] ?? null;
+                                        $subtotal = 0;
+                                    @endphp
+                                    <div class="card list-group-item p-0">
+                                        <div class="card-header">
+                                            <strong>Oferta: </strong>
+                                            {{ \Carbon\Carbon::parse($offer->date_delivery)->translatedFormat('l j \d\e F') }}
+                                            <small class="text-muted">{{ $offer->time_delivery }}</small>
+                                        </div>
+                                        <div class="card-body">
+                                            @foreach ($items as $productOfferId => $quantity)
+                                                @php
+                                                    $po = $productOffersById[$productOfferId] ?? null;
+                                                    $producto = $po->product;
+                                                    $lineaTot = $producto->price * (int) $quantity;
+                                                    $subtotal += $lineaTot;
+                                                    $totalGeneral += $lineaTot;
+                                                @endphp
+
+                                                <div class="row  pb-2">
+                                                    <div class="col"><img
+                                                            src="{{ asset('storage/' . ($producto->image ?? 'img/unknown-dish.png')) }}"
+                                                            alt="{{ $producto->name }}" class="w-100 rounded-3"></div>
+                                                    <div class="col">{{ $producto->name }}</div>
+                                                    <div class="col">{{ number_format($producto->price, 2) }}€</div>
+                                                    <div class="col">{{ $quantity }}</div>
+                                                    <div class="col">{{ number_format($lineaTot, 2) }}€</div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
 
                     <div class="card border-0 shadow-sm rounded-4 bg-success bg-opacity-10 mb-4">
                         <div class="card-body d-flex justify-content-between align-items-center p-4">
                             <span class="fs-4 fw-medium text-success">Total a pagar:</span>
-                            <span class="display-6 fw-bold text-success">{{ $precioTotal }}€</span>
+                            <span class="display-6 fw-bold text-success">{{ $totalGeneral }}€</span>
                         </div>
                     </div>
 

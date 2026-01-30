@@ -20,5 +20,6 @@ class OfferProductSeeder extends Seeder
         DB::insert("INSERT INTO product_offers (id, offer_id, product_id, created_at, updated_at) VALUES (5,4,5, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
         DB::insert("INSERT INTO product_offers (id, offer_id, product_id, created_at, updated_at) VALUES (6,4,6, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
         DB::insert("INSERT INTO product_offers (id, offer_id, product_id, created_at, updated_at) VALUES (7,4,7, '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
+        DB::statement("SELECT setval('product_offers_id_seq', (SELECT MAX(id) FROM product_offers));");
     }
 }

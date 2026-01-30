@@ -38,7 +38,6 @@ class AdminOffersController extends Controller
         $request->validate([
             "date_delivery" => "required|date",
             "time_delivery" => "required|string",
-            "datetime_limit" => "required|date",
             "platosSeleccionados" => "required|array",
             "platosSeleccionados.*" => "exists:products,id",
         ]);
@@ -47,7 +46,6 @@ class AdminOffersController extends Controller
             $ofertaCreada = Offer::create([
                 "date_delivery" => $request->date_delivery,
                 "time_delivery" => $request->time_delivery,
-                "datetime_limit" => $request->datetime_limit,
             ]);
 
             for ($i = 0; $i < count($request->platosSeleccionados); $i++) {

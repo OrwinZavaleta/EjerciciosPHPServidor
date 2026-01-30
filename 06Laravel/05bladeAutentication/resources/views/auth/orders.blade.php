@@ -25,7 +25,8 @@
                         <i class="bi bi-basket2"></i>
                     </div>
                     <h3 class="fw-bold text-secondary">Aún no tienes reservas</h3>
-                    <p class="text-muted mb-4">Tu historial de pedidos aparecerá aquí una vez que realices tu primera reserva.</p>
+                    <p class="text-muted mb-4">Tu historial de pedidos aparecerá aquí una vez que realices tu primera
+                        reserva.</p>
                     <a href="{{ route('home') }}" class="btn btn-outline-success rounded-pill fw-bold px-4">
                         ¡Quiero pedir algo!
                     </a>
@@ -40,7 +41,8 @@
                             <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <div>
-                                        <span class="badge bg-success bg-opacity-10 text-success mb-2 px-3 py-2 rounded-pill small fw-bold">
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success mb-2 px-3 py-2 rounded-pill small fw-bold">
                                             Reserva #{{ $o->id }}
                                         </span>
                                         <div class="text-muted small mt-1">
@@ -49,7 +51,8 @@
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.7rem;">Total</small>
+                                        <small class="text-muted d-block text-uppercase fw-bold"
+                                            style="font-size: 0.7rem;">Total</small>
                                         <span class="fw-bold fs-4 text-success">{{ number_format($o->total, 2) }}€</span>
                                     </div>
                                 </div>
@@ -62,14 +65,18 @@
                                 </h6>
                                 <div class="order-items-container" style="max-height: 200px; overflow-y: auto;">
                                     @php $totalPlatos = 0; @endphp
-                                    @foreach ($o->order_items as $item)
+                                    @foreach ($o->products as $item)
                                         @php $totalPlatos += $item->quantity; @endphp
-                                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">
                                             <div class="d-flex align-items-center">
-                                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle shadow-sm" style="width: 25px; height: 25px; font-size: 0.8rem;">
+                                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle shadow-sm"
+                                                    style="width: 25px; height: 25px; font-size: 0.8rem;">
                                                     {{ $item->quantity }}
                                                 </div>
-                                                <span class="small fw-medium text-dark">{{ $item->product->name }}</span>
+
+                                                <span
+                                                    class="small fw-medium text-dark">{{ $item->productOffer->product->name ?? "null"}}</span> {{-- TODO: no muestra los nombres --}}
                                             </div>
                                         </div>
                                     @endforeach
@@ -80,7 +87,8 @@
                             <div class="card-footer bg-light border-0 px-4 py-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="text-muted small">Cantidad total</span>
-                                    <span class="badge bg-white text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold shadow-sm">
+                                    <span
+                                        class="badge bg-white text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold shadow-sm">
                                         {{ $totalPlatos }} {{ $totalPlatos == 1 ? 'plato' : 'platos' }}
                                     </span>
                                 </div>
