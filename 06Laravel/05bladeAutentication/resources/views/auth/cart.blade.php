@@ -5,9 +5,12 @@
 @section('content')
     <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="d-flex align-items-center mb-4 border-bottom pb-3">
                     <h2 class="fw-bold text-success mb-0"><i class="bi bi-cart3 me-2"></i>Tu Carrito</h2>
+                    @if (!empty($cart))
+                        <span class="badge bg-success ms-3 rounded-pill">{{ count($cart, COUNT_RECURSIVE) - count($cart) }} productos</span>
+                    @endif
                 </div>
 
                 @empty($cart)
@@ -17,7 +20,7 @@
                                 <i class="bi bi-basket2"></i>
                             </div>
                             <h3 class="fw-bold text-secondary">Tu carrito está vacío</h3>
-                            {{-- <p class="text-muted mb-4">¡Parece que aún no has elegido tu comida de hoy!</p> --}}
+                            <p class="text-muted mb-4">¡Parece que aún no has elegido tu comida de hoy!</p>
                             <a href="{{ route('home') }}" class="btn btn-success btn-lg rounded-pill px-5 fw-bold shadow-sm">
                                 <i class="bi bi-search me-2"></i>Ver Ofertas
                             </a>
@@ -26,99 +29,126 @@
                 @else
                     @php $totalGeneral = 0; @endphp
 
-                    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
-                        <div class="card-body p-0">
-                            <ul class="list-group">
-                                @foreach ($cart as $offerId => $items)
-                                    @php
-                                        $offer = $offersById["$offerId"] ?? null;
-                                        $subtotal = 0;
-                                    @endphp
-                                    <div class="card list-group-item p-0">
-                                        <div class="card-header">
-                                            <strong>Oferta: </strong>
-                                            {{ \Carbon\Carbon::parse($offer->date_delivery)->translatedFormat('l j \d\e F') }}
-                                            <small class="text-muted">{{ $offer->time_delivery }}</small>
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            @foreach ($cart as $offerId => $items)
+                                @php
+                                    $offer = $offersById["$offerId"] ?? null;
+                                @endphp
+                                <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                                    <div class="card-header bg-success bg-opacity-10 py-3 border-0">
+                                        <div class="d-flex align-items-center text-success">
+                                            <i class="bi bi-calendar-event me-2 fs-5"></i>
+                                            <div>
+                                                <h5 class="mb-0 fw-bold">{{ \Carbon\Carbon::parse($offer->date_delivery)->translatedFormat('l j \d\e F') }}</h5>
+                                                <small class="text-muted fw-semibold">Entrega: {{ $offer->time_delivery }}</small>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            @foreach ($items as $productOfferId => $quantity)
-                                                @php
-                                                    $po = $productOffersById[$productOfferId] ?? null;
-                                                    $producto = $po->product;
-                                                    $lineaTot = $producto->price * (int) $quantity;
-                                                    $subtotal += $lineaTot;
-                                                    $totalGeneral += $lineaTot;
-                                                @endphp
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        @foreach ($items as $productOfferId => $quantity)
+                                            @php
+                                                $po = $productOffersById[$productOfferId] ?? null;
+                                                $producto = $po->product;
+                                                $lineaTot = $producto->price * (int) $quantity;
+                                                $totalGeneral += $lineaTot;
+                                            @endphp
 
-                                                <div class="row  pb-2">
-                                                    <div class="col"><img
-                                                            src="{{ asset('storage/' . ($producto->image ?? 'img/unknown-dish.png')) }}"
-                                                            alt="{{ $producto->name }}" class="w-100 rounded-3"></div>
-                                                    <div class="col">{{ $producto->name }}</div>
-                                                    <div class="col">{{ number_format($producto->price, 2) }} €</div>
-                                                    <div class="col">
-                                                        <form
-                                                            action="{{ route('cart.decrease', ['i' => $offerId, 'j' => $productOfferId]) }}"
-                                                            class="d-inline-block" method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button type="submit"
-                                                                class="rounded-5 btn btn-secondary px-1 py-0 mx-1"
-                                                                @if ($quantity <= 1) disabled @endif> - </button>
-                                                        </form>
-                                                        {{ $quantity }}
-                                                        <form
-                                                            action="{{ route('cart.increase', ['i' => $offerId, 'j' => $productOfferId]) }}"
-                                                            class="d-inline-block" method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button type="submit"
-                                                                class="rounded-5 btn btn-secondary px-1 py-0 mx-1"> + </button>
-                                                        </form>
+                                            <div class="list-group-item p-3 border-light">
+                                                <div class="row align-items-center g-3">
+                                                    {{-- Imagen --}}
+                                                    <div class="col-3 col-md-2">
+                                                        <img src="{{ asset('storage/' . ($producto->image ?? 'img/unknown-dish.png')) }}"
+                                                             alt="{{ $producto->name }}" 
+                                                             class="img-fluid rounded-3 shadow-sm object-fit-cover" 
+                                                             style="aspect-ratio: 1/1; width: 100%;">
                                                     </div>
-                                                    <div class="col">{{ number_format($lineaTot, 2) }}€</div>
-                                                    <div class="col">
-                                                        <form
-                                                            action="{{ route("cart.delete", ['i' => $offerId, 'j' => $productOfferId]) }}"
-                                                            class="d-inline-block" method="post">
+                                                    
+                                                    {{-- Info Producto --}}
+                                                    <div class="col-9 col-md-4">
+                                                        <h6 class="fw-bold mb-1 text-dark">{{ $producto->name }}</h6>
+                                                        <p class="text-muted small mb-0">{{ number_format($producto->price, 2) }} € / ud</p>
+                                                    </div>
+
+                                                    {{-- Cantidad --}}
+                                                    <div class="col-6 col-md-3 d-flex justify-content-start justify-content-md-center align-items-center">
+                                                            <form action="{{ route('cart.decrease', ['i' => $offerId, 'j' => $productOfferId]) }}" method="post" style="display: contents">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button class="btn btn-outline-secondary" type="submit" @if ($quantity <= 1) disabled @endif>
+                                                                    <i class="bi bi-dash"></i>
+                                                                </button>
+                                                            </form>
+                                                            <span class="px-3 text-center border-secondary bg-white">{{ $quantity }}</span>
+                                                            <form action="{{ route('cart.increase', ['i' => $offerId, 'j' => $productOfferId]) }}" method="post" style="display: contents">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button class="btn btn-outline-secondary" type="submit">
+                                                                    <i class="bi bi-plus"></i>
+                                                                </button>
+                                                            </form>
+                                                    </div>
+
+                                                    {{-- Subtotal --}}
+                                                    <div class="col-4 col-md-2 text-end">
+                                                        <span class="fw-bold text-success fs-5">{{ number_format($lineaTot, 2) }}€</span>
+                                                    </div>
+
+                                                    {{-- Borrar --}}
+                                                    <div class="col-2 col-md-1 text-end">
+                                                        <form action="{{ route('cart.delete', ['i' => $offerId, 'j' => $productOfferId]) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="rounded-5 btn btn-danger"> Borrar </button>
+                                                            <button type="submit" class="btn btn-link text-danger p-0 fs-5" title="Eliminar del carrito">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
-                            </ul>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
 
-                    <div class="card border-0 shadow-sm rounded-4 bg-success bg-opacity-10 mb-4">
-                        <div class="card-body d-flex justify-content-between align-items-center p-4">
-                            <span class="fs-4 fw-medium text-success">Total a pagar:</span>
-                            <span class="display-6 fw-bold text-success">{{ $totalGeneral }}€</span>
+                        {{-- Resumen lateral --}}
+                        <div class="col-lg-4">
+                            <div class="card border-0 shadow-sm rounded-4 bg-white sticky-top" style="top: 2rem; z-index: 100;">
+                                <div class="card-body p-4">
+                                    <h4 class="fw-bold mb-4">Resumen</h4>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-muted">Subtotal</span>
+                                        <span class="fw-semibold">{{ number_format($totalGeneral, 2) }} €</span>
+                                    </div>
+                                    
+                                    <hr class="my-3 border-light">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="fs-5 fw-bold text-dark">Total</span>
+                                        <span class="fs-3 fw-bold text-success">{{ number_format($totalGeneral, 2) }} €</span>
+                                    </div>
+
+                                    <form action="{{ route('cart.order') }}" method="post" class="d-grid mb-3">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold shadow-sm"
+                                            @if (count($cart) === 0) disabled @endif>
+                                            Confirmar Pedido
+                                        </button>
+                                    </form>
+
+                                    <form action="{{ route('cart.destroy') }}" method="post" class="text-center">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link text-danger text-decoration-none small"
+                                            @if (count($cart) === 0) disabled @endif>
+                                            <i class="bi bi-trash3 me-1"></i> Vaciar todo el carrito
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex gap-3 justify-content-end">
-                        <form action="{{ route('cart.destroy') }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger btn-lg rounded-pill fw-bold"
-                                @if (count($cart) === 0) disabled @endif>
-                                <i class="bi bi-trash3 me-2"></i>Vaciar Carrito
-                            </button>
-                        </form>
-                        <form action="{{ route('cart.order') }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-lg px-5 rounded-pill fw-bold shadow-sm"
-                                @if (count($cart) === 0) disabled @endif>
-                                <i class="bi bi-check-lg me-2"></i>Confirmar Reserva
-                            </button>
-                        </form>
                     </div>
                 @endempty
             </div>
