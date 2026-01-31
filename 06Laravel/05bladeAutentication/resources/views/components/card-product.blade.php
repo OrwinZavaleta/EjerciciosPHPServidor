@@ -1,6 +1,6 @@
 @props(['product', 'offer', 'productOfferId', 'editar' => false])
 
-<div class="col">
+<div {{ $attributes->merge(['class' => 'col']) }}>
     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card hover-shadow transition-all">
         <div class="position-relative">
             <img src="{{ asset('storage/' . ($product->image ?? 'img/unknown-dish.png')) }}"

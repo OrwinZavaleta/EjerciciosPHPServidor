@@ -33,17 +33,27 @@
 
                             <div class="col-12 mt-4">
                                 <h5 class="fw-bold text-success border-bottom pb-2 mb-3">Productos en la oferta</h5>
-                                <div class="list-group">
-                                    @foreach ($platos as $p)
-                                        <label class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer">
-                                            <input class="form-check-input me-3" type="checkbox" name="platosSeleccionados[]"
-                                                id="{{ $p->id }}" value="{{ $p->id }}" style="transform: scale(1.2);">
-                                            <img src="{{ asset('storage/' . ($p->image ?? 'img/unknown-dish.png')) }}"
-                                                alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3"
-                                                width="60" height="60">
-                                            <span class="fs-5 fw-medium">{{ $p->name }}</span>
-                                        </label>
-                                    @endforeach
+                                
+                                <div class="mb-3">
+                                    <input type="text" id="offerSearch" class="form-control" placeholder="Filtrar productos...">
+                                </div>
+
+                                <div class="border rounded-3 p-2" style="max-height: 400px; overflow-y: auto;" id="productsContainer">
+                                    <div class="list-group list-group-flush" id="productsList">
+                                        @foreach ($platos as $p)
+                                            <label class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer border-0 rounded-3 mb-1 product-option" data-name="{{ strtolower($p->name) }}">
+                                                <input class="form-check-input me-3" type="checkbox" name="platosSeleccionados[]"
+                                                    id="{{ $p->id }}" value="{{ $p->id }}" style="transform: scale(1.2);">
+                                                <img src="{{ asset('storage/' . ($p->image ?? 'img/unknown-dish.png')) }}"
+                                                    alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3"
+                                                    width="60" height="60">
+                                                <span class="fs-5 fw-medium">{{ $p->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    <div id="noOfferResults" class="text-center py-4 d-none">
+                                        <p class="text-muted mb-0">No se encontraron productos.</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 pt-4 text-end">
@@ -83,6 +93,74 @@
                     form.classList.add('was-validated')
                 }, false)
             })
+
+            // Logic for filtering and sorting
+            const searchInput = document.getElementById('offerSearch');
+            const productsList = document.getElementById('productsList');
+            const items = document.querySelectorAll('.product-option');
+            const noResults = document.getElementById('noOfferResults');
+
+            // 1. Filter Logic
+            if(searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    let visible = 0;
+
+                    items.forEach(item => {
+                        const name = item.dataset.name;
+                        if(name.includes(term)) {
+                            item.classList.remove('d-none');
+                            visible++;
+                        } else {
+                            item.classList.add('d-none');
+                        }
+                    });
+
+                    if(visible === 0) {
+                        noResults.classList.remove('d-none');
+                    } else {
+                        noResults.classList.add('d-none');
+                    }
+                });
+            }
+
+            // 2. Sort Logic (Checked always on top)
+            const sortItems = () => {
+                const itemsArray = Array.from(productsList.children);
+                
+                itemsArray.sort((a, b) => {
+                    const aChecked = a.querySelector('input[type="checkbox"]').checked;
+                    const bChecked = b.querySelector('input[type="checkbox"]').checked;
+                    
+                    if (aChecked && !bChecked) return -1;
+                    if (!aChecked && bChecked) return 1;
+                    
+                    // Secondary sort: Keep original order (optional, but good for UX)
+                    // We can use the 'value' (ID) or just text content for stability if needed.
+                    // For now, stable sort of JS usually keeps relative order of equals.
+                    return 0;
+                });
+
+                // Re-append in new order
+                itemsArray.forEach(item => productsList.appendChild(item));
+                
+                // Reset scroll to top to show changes? Maybe not, user might be scrolling down.
+                // But if they uncheck, it moves down.
+            };
+
+            items.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', function() {
+                    sortItems();
+                    
+                    if (this.checked) {
+                         item.classList.add('bg-success', 'bg-opacity-10');
+                    } else {
+                         item.classList.remove('bg-success', 'bg-opacity-10');
+                    }
+                });
+            });
+
         })()
     </script>
 @endpush

@@ -13,7 +13,11 @@
                 </h2>
                 <p class="text-muted mt-1 mb-0">Gestiona todos los platos disponibles en la plataforma.</p>
             </div>
-            <div class="text-end">
+            <div class="d-flex gap-3 align-items-center">
+                <div class="position-relative">
+                    <input type="text" id="searchInput" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar producto...">
+                    <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
+                </div>
                 <a href="{{ route('admin.products.create') }}" class="btn btn-success btn-lg rounded-pill shadow-sm fw-bold px-4">
                     <i class="bi bi-plus-lg me-2"></i>Nuevo Producto
                 </a>
@@ -36,16 +40,52 @@
                 </div>
             @endadmin
         @else
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="productsGrid">
                 @foreach ($products as $p)
                     @admin
-                        <x-card-product :product="$p" :offers="$p->offers" :editar="true" />
+                        <x-card-product :product="$p" :offers="$p->offers" :editar="true" 
+                            class="product-item" 
+                            data-name="{{ strtolower($p->name) }}" />
                     @endadmin
                 @endforeach
+            </div>
+            <div id="noResults" class="text-center py-5 d-none">
+                <div class="fs-1 text-muted opacity-25 mb-3"><i class="bi bi-search"></i></div>
+                <h4 class="text-muted">No se encontraron productos</h4>
             </div>
         @endif
     </div>
 @endsection
 
 @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const items = document.querySelectorAll('.product-item');
+            const noResults = document.getElementById('noResults');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const term = e.target.value.toLowerCase();
+                    let visibleCount = 0;
+
+                    items.forEach(item => {
+                        const name = item.dataset.name;
+                        if (name.includes(term)) {
+                            item.classList.remove('d-none');
+                            visibleCount++;
+                        } else {
+                            item.classList.add('d-none');
+                        }
+                    });
+
+                    if (visibleCount === 0) {
+                        noResults.classList.remove('d-none');
+                    } else {
+                        noResults.classList.add('d-none');
+                    }
+                });
+            }
+        });
+    </script>
 @endpush
