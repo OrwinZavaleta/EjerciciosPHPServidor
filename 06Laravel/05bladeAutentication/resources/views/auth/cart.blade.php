@@ -5,7 +5,7 @@
 @section('content')
     <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-10">
                 <div class="d-flex align-items-center mb-4 border-bottom pb-3">
                     <h2 class="fw-bold text-success mb-0"><i class="bi bi-cart3 me-2"></i>Tu Carrito</h2>
                 </div>
@@ -55,9 +55,38 @@
                                                             src="{{ asset('storage/' . ($producto->image ?? 'img/unknown-dish.png')) }}"
                                                             alt="{{ $producto->name }}" class="w-100 rounded-3"></div>
                                                     <div class="col">{{ $producto->name }}</div>
-                                                    <div class="col">{{ number_format($producto->price, 2) }}€</div>
-                                                    <div class="col">{{ $quantity }}</div>
+                                                    <div class="col">{{ number_format($producto->price, 2) }} €</div>
+                                                    <div class="col">
+                                                        <form
+                                                            action="{{ route('cart.decrease', ['i' => $offerId, 'j' => $productOfferId]) }}"
+                                                            class="d-inline-block" method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="rounded-5 btn btn-secondary px-1 py-0 mx-1"
+                                                                @if ($quantity <= 1) disabled @endif> - </button>
+                                                        </form>
+                                                        {{ $quantity }}
+                                                        <form
+                                                            action="{{ route('cart.increase', ['i' => $offerId, 'j' => $productOfferId]) }}"
+                                                            class="d-inline-block" method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="rounded-5 btn btn-secondary px-1 py-0 mx-1"> + </button>
+                                                        </form>
+                                                    </div>
                                                     <div class="col">{{ number_format($lineaTot, 2) }}€</div>
+                                                    <div class="col">
+                                                        <form
+                                                            action="{{ route("cart.delete", ['i' => $offerId, 'j' => $productOfferId]) }}"
+                                                            class="d-inline-block" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="rounded-5 btn btn-danger"> Borrar </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>

@@ -17,11 +17,11 @@ Route::get('/', [ProductController::class, "home"])->name("home");
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{i}', [CartController::class, 'add'])->name('cart.add');
-    Route::delete('/cart/delete/{i}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::delete('/cart/delete/{i}/{j}', [CartController::class, 'delete'])->name('cart.delete');
     Route::delete('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/order', [CartController::class, 'order'])->name('cart.order');
-    Route::put('/cart/increase/{i}', [CartController::class, 'increase'])->name('cart.increase');
-    Route::put('/cart/decrease/{i}', [CartController::class, 'decrease'])->name('cart.decrease');
+    Route::put('/cart/increase/{i}/{j}', [CartController::class, 'increase'])->name('cart.increase');
+    Route::put('/cart/decrease/{i}/{j}', [CartController::class, 'decrease'])->name('cart.decrease');
 
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 });

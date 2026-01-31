@@ -68,14 +68,16 @@ class CartController extends Controller
         return redirect()->route("cart.index");
     }
 
-    public function delete($id) //TODO
+    public function delete($offerId, $productOfferId) //TODO
     {
         $cart = session()->get("cart", []);
 
-        $productId = (int) $id;
+        if (isset($cart[$offerId][$productOfferId])) {
+            unset($cart[$offerId][$productOfferId]);
+        }
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
+        if (count($cart[$offerId]) == 0) {
+            unset($cart[$offerId]);
         }
 
         session()->put("cart", $cart);
@@ -91,28 +93,24 @@ class CartController extends Controller
     }
 
     // Quiza esto es mejor hacerlo con js. Habrian muchos recargos de página.
-    public function increase($id) //TODO
+    public function increase($offerId, $productOfferId)
     {
         $cart = session()->get("cart", []);
 
-        $productId = (int) $id;
-
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] < $this->LIMITE_RESERVA_POR_PRODUCTO) {
-            $cart[$productId]["quantity"]++;
+        if (isset($cart[$offerId][$productOfferId]) && $cart[$offerId][$productOfferId] < $this->LIMITE_RESERVA_POR_PRODUCTO) {
+            $cart[$offerId][$productOfferId]++;
         }
 
         session()->put("cart", $cart);
 
         return redirect()->route("cart.index");
     }
-    public function decrease($id) //TODO
+    public function decrease($offerId, $productOfferId)
     {
         $cart = session()->get("cart", []);
 
-        $productId = (int) $id;
-
-        if (isset($cart[$productId]) && $cart[$productId]["quantity"] > 1) {
-            $cart[$productId]["quantity"]--;
+        if (isset($cart[$offerId][$productOfferId]) && $cart[$offerId][$productOfferId] > 1) {
+            $cart[$offerId][$productOfferId]--;
         }
 
         session()->put("cart", $cart);

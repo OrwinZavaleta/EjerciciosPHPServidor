@@ -60,7 +60,7 @@
                                     </h6>
                                     <div class="order-items-container" style="max-height: 200px; overflow-y: auto;">
                                         @php $totalPlatos = 0; @endphp
-                                        @foreach ($o->order_items as $item)
+                                        @foreach ($o->products as $item)
                                             @php $totalPlatos += $item->quantity; @endphp
                                             <div
                                                 class="d-flex justify-content-between align-items-center mb-2 p-2 rounded-3 bg-light bg-opacity-50">
@@ -69,7 +69,7 @@
                                                         class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2 quantity-circle shadow-sm" style="width: 25px; height: 25px; font-size: 0.8rem;">
                                                         {{ $item->quantity }}
                                                     </div>
-                                                    <span class="small fw-medium text-dark">{{ $item->product->name }}</span>
+                                                    <span class="small fw-medium text-dark">{{ $offerProducts[$item->product_id]->product->name ?? 'null' }}</span>
                                                 </div>
                                             </div>
                                         @endforeach

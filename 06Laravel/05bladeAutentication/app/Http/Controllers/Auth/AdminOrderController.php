@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductOffer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,10 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with("order_items.product")->get()->reverse(); // TODO: hacer que solo se muestren los de esta semana
-        return view("admin.orders", compact("orders"));
+        $orders = Order::with("products.productOffer.product")->get()->reverse(); // TODO: hacer que solo se muestren los de esta semana
+        $offerProducts = ProductOffer::with("product")->get()->keyBy("id");
+
+        return view("admin.orders", compact("orders", "offerProducts"));
     }
 
     /**

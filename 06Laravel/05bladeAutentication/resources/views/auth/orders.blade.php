@@ -74,9 +74,9 @@
                                                     style="width: 25px; height: 25px; font-size: 0.8rem;">
                                                     {{ $item->quantity }}
                                                 </div>
-
                                                 <span
-                                                    class="small fw-medium text-dark">{{ $item->productOffer->product->name ?? "null"}}</span> {{-- TODO: no muestra los nombres --}}
+                                                    class="small fw-medium text-dark">{{ $offerProducts[$item->product_id]->product->name ?? 'null' }}</span>
+                                                {{-- TODO: no muestra los nombres --}}
                                             </div>
                                         </div>
                                     @endforeach
