@@ -40,8 +40,14 @@
                             </div>
                             <div class="col-12">
                                 <label for="imagen" class="form-label fw-bold text-muted">Imagen del Producto</label>
-                                <input type="file" class="form-control form-control-lg" id="imagen" name="imagen"
+                                <input type="file" class="form-control form-control-lg mb-3" id="imagen" name="imagen"
                                     accept="image/png, image/jpeg, image/webp">
+                                
+                                <div class="text-center d-none" id="imagePreviewContainer">
+                                    <p class="small text-muted mb-2">Previsualización:</p>
+                                    <img id="imagePreview" src="#" alt="Vista previa" class="img-fluid rounded-3 shadow-sm object-fit-cover" style="max-height: 200px;">
+                                </div>
+
                                 <div class="form-text">Formatos aceptados: PNG, JPG, WebP.</div>
                                 <div class="invalid-feedback">
                                     Por favor, seleccione un formato de imagen válido.
@@ -74,6 +80,28 @@
                     form.classList.add('was-validated')
                 }, false)
             })
+
+            // Image Preview Logic
+            const imgInput = document.getElementById('imagen');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewImg = document.getElementById('imagePreview');
+
+            if(imgInput) {
+                imgInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if(file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImg.src = e.target.result;
+                            previewContainer.classList.remove('d-none');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewContainer.classList.add('d-none');
+                        previewImg.src = '#';
+                    }
+                });
+            }
         })()
     </script>
 @endpush

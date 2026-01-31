@@ -96,7 +96,7 @@
 
                                                     {{-- Borrar --}}
                                                     <div class="col-2 col-md-1 text-end">
-                                                        <form action="{{ route('cart.delete', ['i' => $offerId, 'j' => $productOfferId]) }}" method="post">
+                                                        <form action="{{ route('cart.delete', ['i' => $offerId, 'j' => $productOfferId]) }}" method="post" class="form-delete" data-confirm-message="¿Quieres eliminar este producto del carrito?">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-link text-danger p-0 fs-5" title="Eliminar del carrito">
@@ -138,7 +138,7 @@
                                         </button>
                                     </form>
 
-                                    <form action="{{ route('cart.destroy') }}" method="post" class="text-center">
+                                    <form action="{{ route('cart.destroy') }}" method="post" class="text-center form-delete" data-confirm-title="¿Vaciar Carrito?" data-confirm-message="Se eliminarán todos los productos de tu pedido." data-confirm-btn="Si, vaciar">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-link text-danger text-decoration-none small"

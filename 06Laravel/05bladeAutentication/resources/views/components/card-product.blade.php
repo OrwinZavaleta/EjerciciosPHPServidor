@@ -26,7 +26,7 @@
                                 class="btn btn-warning flex-grow-1 fw-bold rounded-pill">
                                 <i class="bi bi-pencil-fill me-1"></i> Editar
                             </a>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="post" class="flex-grow-1">
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="post" class="flex-grow-1 form-delete" data-confirm-message="¿Eliminar este producto permanentemente?">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-danger w-100 fw-bold rounded-pill">

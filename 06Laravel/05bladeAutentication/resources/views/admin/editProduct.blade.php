@@ -40,19 +40,24 @@
                             </div>
 
                             <div class="col-12">
-                                <div class="d-flex align-items-center mb-2">
-                                    <img src="{{ asset('storage/' . ($plato->image ?? 'img/unknown-dish.png')) }}"
-                                        alt="Imagen actual" class="rounded-3 shadow-sm me-3 object-fit-cover" width="80"
-                                        height="80">
-                                    <div>
-                                        <label for="imagen" class="form-label fw-bold text-muted mb-1">Cambiar Imagen</label>
-                                        <input type="file" class="form-control" id="imagen" name="imagen"
-                                            accept="image/png, image/jpeg, image/webp">
-                                        <div class="form-text small">Dejar vacío para mantener la actual.</div>
+                                <label class="form-label fw-bold text-muted mb-2">Imagen del Producto</label>
+                                <div class="d-flex flex-column flex-sm-row gap-4 align-items-start">
+                                    <div class="text-center">
+                                        <p class="small text-muted mb-1">Actual / Nueva:</p>
+                                        <img id="imagePreview" src="{{ asset('storage/' . ($plato->image ?? 'img/unknown-dish.png')) }}"
+                                            alt="Imagen actual" class="rounded-4 shadow-sm object-fit-cover border" width="150"
+                                            height="150">
                                     </div>
-                                </div>
-                                <div class="invalid-feedback">
-                                    Por favor, seleccione un formato de imagen válido (PNG, JPG o WebP).
+                                    <div class="flex-grow-1 w-100">
+                                        <label for="imagen" class="form-label fw-bold text-muted mb-1">Cambiar Imagen</label>
+                                        <input type="file" class="form-control mb-2" id="imagen" name="imagen"
+                                            accept="image/png, image/jpeg, image/webp">
+                                        <div class="form-text small mb-2">Dejar vacío para mantener la imagen actual.</div>
+                                        <div class="form-text small">Formatos: PNG, JPG, WebP.</div>
+                                        <div class="invalid-feedback">
+                                            Por favor, seleccione un formato de imagen válido.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 pt-3 text-end">
@@ -82,6 +87,26 @@
                     form.classList.add('was-validated')
                 }, false)
             })
+
+            // Image Preview Logic (Update existing img)
+            const imgInput = document.getElementById('imagen');
+            const previewImg = document.getElementById('imagePreview');
+            // Store original src to revert if needed (optional, keeping it simple)
+
+            if(imgInput && previewImg) {
+                imgInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if(file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImg.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                    // If file input is cleared (user cancels), browser usually clears the input.
+                    // We could revert to original src if we stored it, but standard file input behavior varies.
+                });
+            }
         })()
     </script>
 @endpush

@@ -66,7 +66,7 @@
                                     </ul>
                                 </div>
                                 <div class="card-footer bg-light border-0 px-4 py-3">
-                                    <form action="{{ route('admin.offers.destroy', $o->id) }}" method="post" class="d-grid">
+                                    <form action="{{ route('admin.offers.destroy', $o->id) }}" method="post" class="d-grid form-delete" data-confirm-message="Esta oferta y sus productos asociados se eliminarán.">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-outline-danger rounded-pill fw-bold btn-sm">
