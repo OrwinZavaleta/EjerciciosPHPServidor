@@ -65,10 +65,10 @@ class CartController extends Controller
         }
         session()->put("cart", $cart);
 
-        return redirect()->route("cart.index");
+        return redirect()->route("home")->with("success", "Producto añadido correctamente.");
     }
 
-    public function delete($offerId, $productOfferId) //TODO
+    public function delete($offerId, $productOfferId) 
     {
         $cart = session()->get("cart", []);
 
@@ -119,7 +119,7 @@ class CartController extends Controller
     }
 
     public function order()
-    {
+    { // TODO: guardarlo por separado
         $cart = session()->get("cart", []);
 
         session()->forget("cart");
