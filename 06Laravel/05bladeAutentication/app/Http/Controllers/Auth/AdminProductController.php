@@ -78,7 +78,6 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //TODO: recibir y guardar los datos --- Terminarlo
         $validated = $request->validate([
             "nombre" => "required|string",
             "precio" => "required|numeric",
@@ -108,6 +107,5 @@ class AdminProductController extends Controller
     {
         Product::destroy($id);
         return back()->with("success", "Se borro el producto exitosamente");
-        // TODO: pedir confirmacion
     }
 }

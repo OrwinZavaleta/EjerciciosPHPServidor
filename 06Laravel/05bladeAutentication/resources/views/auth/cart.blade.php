@@ -30,7 +30,7 @@
                 @else
                     @php $totalGeneral = 0; @endphp
 
-                    <div class="row g-4">
+                    <div class="row g-4"> {{-- TODO: hacer que el precio de la oferta se muestre por separado, o que se muestren por separado en el subtotal --}}
                         <div class="col-lg-8">
                             @foreach ($cart as $offerId => $items)
                                 @php

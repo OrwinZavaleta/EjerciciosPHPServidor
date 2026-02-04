@@ -68,7 +68,7 @@ class CartController extends Controller
         return redirect()->route("home")->with("success", "Producto añadido correctamente.");
     }
 
-    public function delete($offerId, $productOfferId) 
+    public function delete($offerId, $productOfferId)
     {
         $cart = session()->get("cart", []);
 
@@ -124,13 +124,12 @@ class CartController extends Controller
 
         session()->forget("cart");
 
-        $order = Order::create([
-            "user_id" => Auth::id(),
-            "total" => 0,
-        ]);
-
-        $precioTotal = 0;
         foreach ($cart as $offerId => $items) {
+            $precioTotal = 0;
+            $order = Order::create([
+                "user_id" => Auth::id(),
+                "total" => 0,
+            ]);
             foreach ($items as $poId => $quantity) {
                 try {
                     $productOffer = ProductOffer::with("product")->findOrFail($poId);
@@ -144,10 +143,10 @@ class CartController extends Controller
                     "quantity" => $quantity,
                 ]);
             }
+            $order->total = $precioTotal;
+            $order->save();
         }
 
-        $order->total = $precioTotal;
-        $order->save();
 
         return redirect()->route("home")->with("success", "Su reserva se realizó correctamente.");
     }

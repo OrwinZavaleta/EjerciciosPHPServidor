@@ -14,7 +14,7 @@ class AdminOffersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() // TODO: poder filtrarla las ofertas y que las marcadas se queden sin filtrar
+    public function index() 
     {
         $offers = Offer::with("productsOffer.product")->get()->reverse() ?? [];
 
@@ -24,7 +24,7 @@ class AdminOffersController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() // TODO: en el filtro 
+    public function create() 
     {
         $platos = Product::all();
         return view("admin.createOffer", compact("platos"));
@@ -92,6 +92,5 @@ class AdminOffersController extends Controller
         Offer::destroy($id);
 
         return back()->with("success", "Se borro la oferta exitosamente");
-        // TODO: pedir confirmacion
     }
 }
