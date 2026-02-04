@@ -15,7 +15,7 @@
             </div>
             <div class="d-flex gap-3 align-items-center">
                 <div class="position-relative">
-                    <input type="text" id="searchInput" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar producto...">
+                    <input type="text" id="searchInput" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar producto..." aria-label="Buscador de productos por nombre">
                     <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
                 </div>
                 <a href="{{ route('admin.products.create') }}" class="btn btn-success btn-lg rounded-pill shadow-sm fw-bold px-4">
@@ -32,7 +32,7 @@
                             <i class="bi bi-basket3"></i>
                         </div>
                         <h3 class="fw-bold text-secondary">No hay productos registrados</h3>
-                        <p class="text-muted mb-4">Comienza agregando deliciosos platos al menú.</p>
+                        {{-- <p class="text-muted mb-4">Comienza agregando deliciosos platos al menú.</p> --}}
                         <a href="{{ route('admin.products.create') }}" class="btn btn-outline-success rounded-pill fw-bold">
                             Crear primer producto
                         </a>

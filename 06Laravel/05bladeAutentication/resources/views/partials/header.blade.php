@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
-            <img src="/img/gregorioprieto.png" alt="Logo"
+            <img src="/img/gregorioprieto.png" alt="Logo del Instituto Gregorio Prieto"
                 class="d-inline-block align-text-top nav-icon shadow-sm rounded-circle"
                 style="background: white; padding: 2px;">
             <span class="text-white fs-4 ms-2 tracking-tight">Prieto<span

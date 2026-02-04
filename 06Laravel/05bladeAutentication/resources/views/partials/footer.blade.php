@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-md-6 mb-2 mb-md-0">
                 <div class="d-flex align-items-center gap-2">
-                    <img src="/img/gregorioprieto.png" alt="Logo" height="30" class="opacity-75 grayscale">
+                    <img src="/img/gregorioprieto.png" alt="Logo del Instituto Gregorio Prieto" height="30" class="opacity-75 grayscale">
                     <h5 class="text-success fw-bold mb-0">Prieto Eats</h5>
                 </div>
                 {{-- <small class="text-muted d-block mt-1">Sabor y tradición en cada pedido.</small> --}}

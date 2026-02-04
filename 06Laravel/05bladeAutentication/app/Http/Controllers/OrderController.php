@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index(){
+    public function index(){ // TODO: que se muestre la fecha de entrega
         $orders = Order::where("user_id", Auth::id())->with("products.productOffer.product")->get()->reverse();
         $offerProducts = ProductOffer::with("product")->get()->keyBy("id");
 

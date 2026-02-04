@@ -76,7 +76,6 @@
                                                 </div>
                                                 <span
                                                     class="small fw-medium text-dark">{{ $offerProducts[$item->product_id]->product->name ?? 'Producto no disponible' }}</span>
-                                                {{-- TODO: no muestra los nombres --}}
                                             </div>
                                         </div>
                                     @endforeach

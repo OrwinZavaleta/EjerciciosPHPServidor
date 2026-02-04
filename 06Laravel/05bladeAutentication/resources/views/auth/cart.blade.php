@@ -99,9 +99,9 @@
                                                             method="post" style="display: contents">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit"
+                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit" aria-label="Disminuir cantidad" 
                                                                 @if ($quantity <= 1) disabled @endif>
-                                                                <i class="bi bi-dash"></i>
+                                                                <i class="bi bi-dash" aria-hidden="true"></i>
                                                             </button>
                                                         </form>
                                                         <span class="px-3 fw-bold">{{ $quantity }}</span>
@@ -109,8 +109,8 @@
                                                             method="post" style="display: contents">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit">
-                                                                <i class="bi bi-plus"></i>
+                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit" aria-label="Aumentar cantidad">
+                                                                <i class="bi bi-plus" aria-hidden="true"></i>
                                                             </button>
                                                         </form>
                                                     </div>
@@ -125,8 +125,8 @@
                                                             data-confirm-message="¿Quieres eliminar este producto del carrito?">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-link text-danger p-0 fs-5">
-                                                                <i class="bi bi-trash"></i>
+                                                            <button type="submit" class="btn btn-link text-danger p-0 fs-5" aria-label="Eliminar linea de pedido">
+                                                                <i class="bi bi-trash" aria-hidden="true"></i>
                                                             </button>
                                                         </form>
                                                     </div>

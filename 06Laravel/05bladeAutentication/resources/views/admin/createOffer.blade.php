@@ -35,7 +35,7 @@
                                 <h5 class="fw-bold text-success border-bottom pb-2 mb-3">Productos en la oferta</h5>
                                 
                                 <div class="mb-3">
-                                    <input type="text" id="offerSearch" class="form-control" placeholder="Filtrar productos...">
+                                    <input type="text" id="offerSearch" class="form-control" placeholder="Filtrar productos..." aria-label="Buscar productos por nombre">
                                 </div>
 
                                 <div class="border rounded-3 p-2" style="max-height: 400px; overflow-y: auto;" id="productsContainer">

@@ -17,7 +17,9 @@
         <div class="card-body d-flex flex-column p-4">
             <h5 class="card-title fw-bold text-dark mb-2">{{ $product->name }}</h5>
             <p class="card-text text-muted small flex-grow-1 line-clamp-3">{{ $product->description }}</p>
-
+            @if ($editar)
+                <p class="card-text text-muted small flex-grow-1 line-clamp-3">{{ $product->price }} €</p>
+            @endif
             <div class="mt-3 pt-3 border-top border-light">
                 @auth
                     @if (auth()->user()->isAdmin() && $editar)
@@ -26,7 +28,9 @@
                                 class="btn btn-warning flex-grow-1 fw-bold rounded-pill">
                                 <i class="bi bi-pencil-fill me-1"></i> Editar
                             </a>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="post" class="flex-grow-1 form-delete" data-confirm-message="¿Eliminar este producto permanentemente?">
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="post"
+                                class="flex-grow-1 form-delete"
+                                data-confirm-message="¿Eliminar este producto permanentemente?">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-danger w-100 fw-bold rounded-pill">
@@ -37,7 +41,8 @@
                     @else
                         <form action="{{ route('cart.add', $productOfferId) }}" method="post" class="d-grid">
                             @csrf
-                            <button type="submit" class="btn btn-success rounded-pill py-2 fw-bold shadow-sm btn-hover-scale">
+                            <button type="submit"
+                                class="btn btn-success rounded-pill py-2 fw-bold shadow-sm btn-hover-scale">
                                 <i class="bi bi-cart-plus-fill me-2"></i>Añadir al Pedido
                             </button>
                         </form>
@@ -53,4 +58,3 @@
         </div>
     </div>
 </div>
-
