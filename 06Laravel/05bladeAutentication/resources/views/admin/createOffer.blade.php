@@ -47,8 +47,8 @@
                                                 <img src="{{ asset('storage/' . ($p->image ?? 'img/unknown-dish.png')) }}"
                                                     alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3" loading="lazy"
                                                     width="60" height="60">
-                                                <span class="fs-5 fw-medium">{{ $p->name }}</span> 
-                                                <span class="fs-5 fw-medium">{{ $p->price }} €</span>
+                                                <span class="fs-6 fw-medium text-truncate" style="max-width: 60%;">{{ $p->name }}</span> 
+                                                <span class="fs-5 fw-bold text-success ms-auto">{{ number_format($p->price, 2) }} €</span>
                                             </label>
                                         @endforeach
                                     </div>
@@ -95,37 +95,33 @@
                 }, false)
             })
 
-            // Logic for filtering and sorting
             const searchInput = document.getElementById('offerSearch');
             const productsList = document.getElementById('productsList');
             const items = document.querySelectorAll('.product-option');
             const noResults = document.getElementById('noOfferResults');
 
-            // 1. Filter Logic
-            if(searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const term = e.target.value.toLowerCase();
-                    let visible = 0;
+            const filterItems = () => {
+                const term = searchInput ? searchInput.value.toLowerCase() : '';
+                let visible = 0;
 
-                    items.forEach(item => {
-                        const name = item.dataset.name;
-                        if(name.includes(term)) {
-                            item.classList.remove('d-none');
-                            visible++;
-                        } else {
-                            item.classList.add('d-none');
-                        }
-                    });
-
-                    if(visible === 0) {
-                        noResults.classList.remove('d-none');
+                items.forEach(item => {
+                    const name = item.dataset.name;
+                    const isChecked = item.querySelector('input[type="checkbox"]').checked;
+                    
+                    // Los marcados SIEMPRE son visibles. Los no marcados dependen del filtro.
+                    if (isChecked || name.includes(term)) {
+                        item.classList.remove('d-none');
+                        visible++;
                     } else {
-                        noResults.classList.add('d-none');
+                        item.classList.add('d-none');
                     }
                 });
-            }
 
-            // 2. Sort Logic (Checked always on top)
+                if (noResults) {
+                    visible === 0 ? noResults.classList.remove('d-none') : noResults.classList.add('d-none');
+                }
+            };
+
             const sortItems = () => {
                 const itemsArray = Array.from(productsList.children);
                 
@@ -135,24 +131,21 @@
                     
                     if (aChecked && !bChecked) return -1;
                     if (!aChecked && bChecked) return 1;
-                    
-                    // Secondary sort: Keep original order (optional, but good for UX)
-                    // We can use the 'value' (ID) or just text content for stability if needed.
-                    // For now, stable sort of JS usually keeps relative order of equals.
                     return 0;
                 });
 
-                // Re-append in new order
                 itemsArray.forEach(item => productsList.appendChild(item));
-                
-                // Reset scroll to top to show changes? Maybe not, user might be scrolling down.
-                // But if they uncheck, it moves down.
             };
+
+            if(searchInput) {
+                searchInput.addEventListener('input', filterItems);
+            }
 
             items.forEach(item => {
                 const checkbox = item.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('change', function() {
                     sortItems();
+                    filterItems(); // Re-aplicar filtro para que el marcado se quede aunque no coincida con la búsqueda
                     
                     if (this.checked) {
                          item.classList.add('bg-success', 'bg-opacity-10');
