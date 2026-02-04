@@ -119,7 +119,7 @@ class CartController extends Controller
     }
 
     public function order()
-    { // TODO: guardarlo por separado
+    {
         $cart = session()->get("cart", []);
 
         session()->forget("cart");

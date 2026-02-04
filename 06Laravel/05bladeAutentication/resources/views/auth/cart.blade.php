@@ -28,7 +28,10 @@
                         </div>
                     </div>
                 @else
-                    @php $totalGeneral = 0; @endphp
+                    @php
+                        $totalGeneral = 0;
+                        $lineas = [];
+                    @endphp
 
                     <div class="row g-4"> {{-- TODO: hacer que el precio de la oferta se muestre por separado, o que se muestren por separado en el subtotal --}}
                         <div class="col-lg-8">
@@ -51,17 +54,20 @@
                                                         {{ $offer->time_delivery }}</small>
                                                 </div>
                                             </div>
-                                            {{-- @foreach ($items as $productOfferId => $quantity)
+                                            @foreach ($items as $productOfferId => $quantity)
                                                 @php
                                                     $po = $productOffersById[$productOfferId] ?? null;
                                                     $producto = $po->product;
                                                     $lineaTot = $producto->price * (int) $quantity;
-                                                    $precioOferta += $lineaTot
+                                                    $precioOferta += $lineaTot;
                                                 @endphp
-                                            @endforeach 
+                                            @endforeach
                                             <div class="fs-3 fw-bold">
-                                                {{$precio}} €
-                                            </div> --}}
+                                                @php
+                                                    $lineas[] = $precioOferta;
+                                                @endphp
+                                                {{ $precioOferta }} €
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="list-group list-group-flush">
@@ -150,9 +156,11 @@
                                 <div class="card-body p-4">
                                     <h4 class="fw-bold mb-4">Resumen</h4>
 
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-muted">Subtotal</span>
-                                        <span class="fw-semibold">{{ number_format($totalGeneral, 2) }} €</span>
+                                    <div class="mb-3">
+                                        @foreach ($lineas as $index => $oferta)
+                                            <p class="fw-bold fs-6 text-muted mb-1">Subtotal {{ $index + 1 }}:
+                                                {{ number_format($oferta, 2) }}€</p>
+                                        @endforeach
                                     </div>
 
                                     <hr class="my-3 border-light">
