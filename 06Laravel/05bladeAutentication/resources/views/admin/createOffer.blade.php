@@ -45,9 +45,10 @@
                                                 <input class="form-check-input me-3" type="checkbox" name="platosSeleccionados[]"
                                                     id="{{ $p->id }}" value="{{ $p->id }}" style="transform: scale(1.2);">
                                                 <img src="{{ asset('storage/' . ($p->image ?? 'img/unknown-dish.png')) }}"
-                                                    alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3"
+                                                    alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3" loading="lazy"
                                                     width="60" height="60">
-                                                <span class="fs-5 fw-medium">{{ $p->name }}</span>
+                                                <span class="fs-5 fw-medium">{{ $p->name }}</span> 
+                                                <span class="fs-5 fw-medium">{{ $p->price }} €</span>
                                             </label>
                                         @endforeach
                                     </div>

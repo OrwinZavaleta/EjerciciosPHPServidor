@@ -1,4 +1,4 @@
-class Persona {
+export class Persona {
     constructor(nombre, apellidos, edad) {
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -10,4 +10,4 @@ class Persona {
     }
 }
 
-module.exports = Persona;
+// module.exports = Persona;
