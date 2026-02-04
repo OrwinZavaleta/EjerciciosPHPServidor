@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body p-4">
                         <form action="{{ route('admin.offers.store') }}" method="post" class="row g-3 needs-validation"
-                            novalidate enctype="multipart/form-data">
+                            novalidate enctype="multipart/form-data" id="createOfferForm">
                             @csrf
                             <div class="col-md-4">
                                 <label for="date_delivery" class="form-label fw-bold text-muted">Fecha de Entrega</label>
@@ -22,44 +22,53 @@
                                     Fecha no valida
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="time_delivery" class="form-label fw-bold text-muted">Horas de entrega</label>
-                                <input type="text" class="form-control form-control-lg" id="time_delivery" name="time_delivery"
-                                    value="13:30 a 14:30" required>
-                                <div class="invalid-feedback">
-                                    Hora no valida
+                            
+                            <!-- UX Fix: Time Range Selection -->
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold text-muted">Horario de Entrega</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">De</span>
+                                    <input type="time" class="form-control form-control-lg" id="time_start" value="13:30" required aria-label="Hora de inicio">
+                                    <span class="input-group-text bg-light border-start-0 border-end-0">a</span>
+                                    <input type="time" class="form-control form-control-lg" id="time_end" value="14:30" required aria-label="Hora de fin">
                                 </div>
+                                <input type="hidden" name="time_delivery" id="time_delivery_input" value="13:30 a 14:30">
                             </div>
 
                             <div class="col-12 mt-4">
                                 <h5 class="fw-bold text-success border-bottom pb-2 mb-3">Productos en la oferta</h5>
                                 
                                 <div class="mb-3">
-                                    <input type="text" id="offerSearch" class="form-control" placeholder="Filtrar productos..." aria-label="Buscar productos por nombre">
+                                    <label for="offerSearch" class="visually-hidden">Filtrar productos</label>
+                                    <div class="position-relative">
+                                        <input type="text" id="offerSearch" class="form-control form-control-lg ps-5" placeholder="Filtrar productos..." aria-label="Buscar productos por nombre">
+                                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                    </div>
                                 </div>
 
-                                <div class="border rounded-3 p-2" style="max-height: 400px; overflow-y: auto;" id="productsContainer">
-                                    <div class="list-group list-group-flush" id="productsList">
+                                <div class="border rounded-3 p-2 bg-light" style="max-height: 400px; overflow-y: auto;" id="productsContainer">
+                                    <div class="list-group list-group-flush bg-transparent" id="productsList">
                                         @foreach ($platos as $p)
-                                            <label class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer border-0 rounded-3 mb-1 product-option" data-name="{{ strtolower($p->name) }}">
-                                                <input class="form-check-input me-3" type="checkbox" name="platosSeleccionados[]"
-                                                    id="{{ $p->id }}" value="{{ $p->id }}" style="transform: scale(1.2);">
+                                            <label class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer border-0 rounded-3 mb-1 product-option bg-white shadow-sm mb-2" data-name="{{ strtolower($p->name) }}">
+                                                <input class="form-check-input me-3 shadow-none border-2" type="checkbox" name="platosSeleccionados[]"
+                                                    id="{{ $p->id }}" value="{{ $p->id }}" style="transform: scale(1.3);">
                                                 <img src="{{ asset('storage/' . ($p->image ?? 'img/unknown-dish.png')) }}"
-                                                    alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3" loading="lazy"
+                                                    alt="{{ $p->name }}" class="rounded-3 object-fit-cover me-3 border" loading="lazy"
                                                     width="60" height="60">
-                                                <span class="fs-6 fw-medium text-truncate" style="max-width: 60%;">{{ $p->name }}</span> 
+                                                <span class="fs-6 fw-medium text-truncate text-dark" style="max-width: 60%;">{{ $p->name }}</span> 
                                                 <span class="fs-5 fw-bold text-success ms-auto">{{ number_format($p->price, 2) }} €</span>
                                             </label>
                                         @endforeach
                                     </div>
-                                    <div id="noOfferResults" class="text-center py-4 d-none">
-                                        <p class="text-muted mb-0">No se encontraron productos.</p>
+                                    <div id="noOfferResults" class="text-center py-5 d-none">
+                                        <div class="display-1 text-muted opacity-25 mb-3"><i class="bi bi-search"></i></div>
+                                        <p class="text-muted mb-0 fw-medium">No se encontraron productos.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 pt-4 text-end">
-                                <button class="btn btn-success btn-lg px-5 rounded-pill fw-bold" type="submit">
-                                    <i class="bi bi-check-lg me-2"></i>Crear Oferta
+                                <button class="btn btn-success btn-lg px-5 rounded-pill fw-bold shadow-sm" type="submit">
+                                    <i class="bi bi-plus-circle me-2"></i>Crear Oferta
                                 </button>
                             </div>
                         </form>
@@ -84,17 +93,34 @@
     <script>
         (() => {
             'use strict'
-            const forms = document.querySelectorAll('.needs-validation')
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
+            
+            // Time Range Logic
+            const form = document.getElementById('createOfferForm');
+            const timeStart = document.getElementById('time_start');
+            const timeEnd = document.getElementById('time_end');
+            const timeInput = document.getElementById('time_delivery_input');
 
+            const updateTimeInput = () => {
+                timeInput.value = `${timeStart.value} a ${timeEnd.value}`;
+            };
+
+            if(timeStart && timeEnd) {
+                timeStart.addEventListener('change', updateTimeInput);
+                timeEnd.addEventListener('change', updateTimeInput);
+            }
+
+            // Validation Logic
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                updateTimeInput(); // Ensure value is updated on submit
+                form.classList.add('was-validated')
+            }, false)
+
+
+            // Search Logic
             const searchInput = document.getElementById('offerSearch');
             const productsList = document.getElementById('productsList');
             const items = document.querySelectorAll('.product-option');
@@ -108,7 +134,6 @@
                     const name = item.dataset.name;
                     const isChecked = item.querySelector('input[type="checkbox"]').checked;
                     
-                    // Los marcados SIEMPRE son visibles. Los no marcados dependen del filtro.
                     if (isChecked || name.includes(term)) {
                         item.classList.remove('d-none');
                         visible++;
@@ -145,12 +170,14 @@
                 const checkbox = item.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('change', function() {
                     sortItems();
-                    filterItems(); // Re-aplicar filtro para que el marcado se quede aunque no coincida con la búsqueda
+                    filterItems();
                     
                     if (this.checked) {
-                         item.classList.add('bg-success', 'bg-opacity-10');
+                         item.classList.add('border-success', 'bg-success', 'bg-opacity-10');
+                         item.classList.remove('bg-white');
                     } else {
-                         item.classList.remove('bg-success', 'bg-opacity-10');
+                         item.classList.remove('border-success', 'bg-success', 'bg-opacity-10');
+                         item.classList.add('bg-white');
                     }
                 });
             });

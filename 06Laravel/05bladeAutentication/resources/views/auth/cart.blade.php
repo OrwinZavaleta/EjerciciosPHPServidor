@@ -99,7 +99,8 @@
                                                             method="post" style="display: contents">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit" aria-label="Disminuir cantidad" 
+                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit" 
+                                                                aria-label="Disminuir cantidad de {{ $producto->name }}"
                                                                 @if ($quantity <= 1) disabled @endif>
                                                                 <i class="bi bi-dash" aria-hidden="true"></i>
                                                             </button>
@@ -109,7 +110,8 @@
                                                             method="post" style="display: contents">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit" aria-label="Aumentar cantidad">
+                                                            <button class="btn btn-sm btn-outline-secondary rounded-circle" type="submit"
+                                                                aria-label="Aumentar cantidad de {{ $producto->name }}">
                                                                 <i class="bi bi-plus" aria-hidden="true"></i>
                                                             </button>
                                                         </form>

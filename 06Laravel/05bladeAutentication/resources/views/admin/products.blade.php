@@ -1,6 +1,6 @@
 @extends('partials.layout')
 
-@section('title', 'Mis Reservas - Prieto Eats')
+@section('title', 'Catálogo de Productos - Prieto Eats')
 
 @section('content')
     <div class="container py-5">
@@ -13,8 +13,9 @@
                 </h2>
                 <p class="text-muted mt-1 mb-0">Gestiona todos los platos disponibles en la plataforma.</p>
             </div>
-            <div class="d-flex gap-3 align-items-center">
+            <div class="d-flex gap-3 align-items-center flex-wrap justify-content-center">
                 <div class="position-relative">
+                    <label for="searchInput" class="visually-hidden">Buscar producto</label>
                     <input type="text" id="searchInput" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar producto..." aria-label="Buscador de productos por nombre">
                     <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
                 </div>
