@@ -24,31 +24,51 @@ let personajes = [];
 // pedir(1, pedir2)
 
 
-function final() {
-    console.log("Cantidad Personajes: " + personajes.length + "\nPersonajes: " + personajes);
 
-}
 
-axios.get("https://rickandmortyapi.com/api/character/?page=1")
-    .then(response => {
-        console.log("Peticion 1: " + response.data.results.length);
+// axios.get("https://rickandmortyapi.com/api/character/?page=1")
+//     .then(response => {
+//         console.log("Peticion 1: " + response.data.results.length);
+
+//         personajes.push(...response.data.results.map(p => p.name));
+
+//         axios.get("https://rickandmortyapi.com/api/character/?page=2")
+//             .then(response => {
+//                 console.log("Peticion 2: " + response.data.results.length);
+
+//                 personajes.push(...response.data.results.map(p => p.name));
+
+//                 console.log("Cantidad Personajes: " + personajes.length + "\nPersonajes: " + personajes);
+//             })
+//             .catch(error => {
+//                 console.log(error);
+
+//             })
+//     })
+//     .catch(error => {
+//         console.log(error);
+
+//     })
+
+async function pedir(pagActual, limit) {
+    if (pagActual > limit) return;
+    try {
+        const response = await axios.get("https://rickandmortyapi.com/api/character/?page=" + pagActual);
+
+        console.log("Peticion " + pagActual + ": " + response.data.results.length);
 
         personajes.push(...response.data.results.map(p => p.name));
 
-        axios.get("https://rickandmortyapi.com/api/character/?page=2")
-            .then(response => {
-                console.log("Peticion 2: " + response.data.results.length);
+        pedir(pagActual + 1, limit);
 
-                personajes.push(...response.data.results.map(p => p.name));
-
-                console.log("Cantidad Personajes: " + personajes.length + "\nPersonajes: " + personajes);
-            })
-            .catch(error => {
-                console.log(error);
-
-            })
-    })
-    .catch(error => {
+        if (pagActual === limit) final();
+    } catch (error) {
         console.log(error);
+    }
+}
 
-    })
+function final() {
+    console.log("Cantidad Personajes: " + personajes.length + "\nPersonajes: " + personajes);
+}
+
+pedir(1, 10);
