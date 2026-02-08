@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductOffer;
+use App\Models\ProductOrder;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +17,7 @@ class AdminOffersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() 
+    public function index()
     {
         $offers = Offer::with("productsOffer.product")->get()->reverse() ?? [];
 
@@ -24,7 +27,7 @@ class AdminOffersController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() 
+    public function create()
     {
         $platos = Product::all();
         return view("admin.createOffer", compact("platos"));
@@ -62,10 +65,38 @@ class AdminOffersController extends Controller
 
     /**
      * Display the specified resource.
+     * Para mostrar los platos pedidos en cada oferta
      */
     public function show(string $id)
     {
-        //
+        $offer = Offer::with('productsOffer.product')->findOrFail($id);
+
+        $productOrders = ProductOrder::with(['order.user', 'productOffer.product'])
+            ->whereHas('productOffer', function ($query) use ($id) {
+                $query->where('offer_id', $id);
+            })->get();
+
+        $reportData = [];
+
+        foreach ($productOrders as $po) {
+            $user = $po->order->user;
+            $product = $po->productOffer->product;
+            $qty = $po->quantity;
+
+            if (!isset($reportData[$user->id])) {
+                $reportData[$user->id] = [
+                    'user_name' => $user->name,
+                    'totals' => [] 
+                ];
+            }
+
+            if (!isset($reportData[$user->id]['totals'][$product->id])) {
+                $reportData[$user->id]['totals'][$product->id] = 0;
+            }
+            $reportData[$user->id]['totals'][$product->id] += $qty;
+        }
+
+        return view("admin.offerAdminOrder", compact('offer', 'reportData'));
     }
 
     /**

@@ -35,9 +35,9 @@ Route::middleware(['auth', 'isAdmin'])
     ->prefix("admin")
     ->name("admin.")
     ->group(function () {
-        Route::resource("orders", AdminOrderController::class);
         Route::resource("products", AdminProductController::class);
         Route::resource("offers", AdminOffersController::class);
+        Route::resource("orders", AdminOrderController::class);
     });
 
 require __DIR__ . '/auth.php';
