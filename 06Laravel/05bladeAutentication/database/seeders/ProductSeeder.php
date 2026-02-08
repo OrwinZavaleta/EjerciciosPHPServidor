@@ -3,31 +3,31 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (1, 'Menu Invierno', 'Muchas cosas en este menu', 12.30, '/storage/img/menu2dic2025.png', '2026-01-01 10:24:15', '2026-01-01 10:24:15')");
+        // Productos Básicos
+        DB::table('products')->insert([
+            ['id' => 1, 'name' => 'Pastel', 'description' => 'Es un pastel clásico', 'price' => 2.00, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 2, 'name' => 'Pastel de patata', 'description' => 'Es un pastel con patatas y carne', 'price' => 5.00, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 3, 'name' => 'Pavlova de Frutos Rojos', 'description' => 'Merengue crujiente con crema y frutos rojos', 'price' => 4.50, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 4, 'name' => 'Solomillo de Cerdo Stroganoff', 'description' => 'Solomillo en salsa cremosa con champiñones', 'price' => 8.50, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 5, 'name' => 'Albondigas de Pollo', 'description' => 'Albóndigas caseras en salsa de tomate', 'price' => 6.00, 'image' => 'img/albondigasPollo.png', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 6, 'name' => 'Ensalada de Patata', 'description' => 'Patata cocida, huevo, atún y mayonesa', 'price' => 3.50, 'image' => 'img/ensaladaPatata.png', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 7, 'name' => 'Flan Parisien', 'description' => 'Tarta de flan cremosa sobre base de hojaldre', 'price' => 3.00, 'image' => 'img/flanParisien.png', 'created_at' => now(), 'updated_at' => now()],
+            
+            // Nuevos Productos
+            ['id' => 8, 'name' => 'Lasaña de Carne', 'description' => 'Lasaña tradicional con bechamel gratinada', 'price' => 7.50, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 9, 'name' => 'Sopa de Marisco', 'description' => 'Sopa reconfortante con gambas y almejas', 'price' => 6.50, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 10, 'name' => 'Tarta de Queso', 'description' => 'Tarta de queso estilo New York', 'price' => 4.00, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 11, 'name' => 'Pollo al Curry', 'description' => 'Pollo tierno en salsa de curry suave con arroz', 'price' => 7.00, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 12, 'name' => 'Croquetas de Jamón', 'description' => 'Ración de 6 croquetas caseras', 'price' => 5.50, 'image' => NULL, 'created_at' => now(), 'updated_at' => now()],
+        ]);
 
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (1, 'Pastel', 'Es un pastel', 2.00, NULL, '2026-01-12 13:04:19', '2026-01-12 13:04:19')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (2, 'Pastel de patata', 'Es un pastel con patatas', 5.00, NULL, '2026-01-12 13:04:19', '2026-01-12 13:04:19')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (3, 'Pavlova de Frutos Rojos', 'Algo muy raro', 4.00, NULL, '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (4, 'Solomillo de Cerdo Stroganoff', 'No se', 4.00, NULL, '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (5, 'Albondigas de Pollo', 'No se', 4.00, 'img/albondigasPollo.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (6, 'Ensalada de Patata', 'No se', 4.00, 'img/ensaladaPatata.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-        DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (7, 'Flan Parisien', 'No se', 4.00, 'img/flanParisien.png', '2026-01-12 13:06:39', '2026-01-12 13:06:39')");
-
-        // DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (5, 'Menu Noviembre 11', 'Un menu con muchas cosas', 123.00, '/storage/img/menu11Nov2025.png', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
-
-        // DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (6, 'Menu Noviembre 25', 'Un menu con muchas cosas', 32.43, '/storage/img/menu25Nov2025.png', '2026-01-12 13:18:34', '2026-01-12 13:18:34')");
-
-        // DB::insert("INSERT INTO products(id, name, description, price, image, created_at, updated_at) VALUES (7, 'Menu Enero 20', 'Un menu con muchas cosas', 3.12, '/storage/img/20Enero.png','2026-01-12 13:18:34', '2026-01-12 13:18:34')");
+        // Ajustar secuencia si es PostgreSQL
+        // DB::statement("SELECT setval('products_id_seq', (SELECT MAX(id) FROM products));"); 
     }
 }

@@ -3,20 +3,33 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class OfferSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::insert("INSERT INTO offers (id, date_delivery, time_delivery, created_at, updated_at) VALUES (1, '2026-01-22', '11:30 a 02:23', '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offers (id, date_delivery, time_delivery, created_at, updated_at) VALUES (2, '2026-02-21', '11:30 a 02:23', '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offers (id, date_delivery, time_delivery, created_at, updated_at) VALUES (3, '2026-03-22', '11:30 a 02:23', '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::insert("INSERT INTO offers (id, date_delivery, time_delivery, created_at, updated_at) VALUES (4, '2026-01-27', '11:30 a 02:23', '2026-01-22 00:00:00', '2026-01-22 00:00:00')");
-        DB::statement("SELECT setval('offers_id_seq', (SELECT MAX(id) FROM offers));");
+        $now = Carbon::now();
+
+        // Ofertas Pasadas
+        DB::table('offers')->insert([
+            ['id' => 1, 'date_delivery' => $now->copy()->subWeeks(2)->format('Y-m-d'), 'time_delivery' => '13:00 a 14:00', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 2, 'date_delivery' => $now->copy()->subWeek()->format('Y-m-d'), 'time_delivery' => '13:00 a 14:00', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        // Oferta Actual/Cercana
+        DB::table('offers')->insert([
+            ['id' => 3, 'date_delivery' => $now->copy()->addDays(2)->format('Y-m-d'), 'time_delivery' => '12:30 a 13:30', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 4, 'date_delivery' => $now->copy()->addDays(5)->format('Y-m-d'), 'time_delivery' => '14:00 a 15:00', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        // Ofertas Futuras
+        DB::table('offers')->insert([
+            ['id' => 5, 'date_delivery' => $now->copy()->addWeeks(2)->format('Y-m-d'), 'time_delivery' => '13:00 a 14:00', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 6, 'date_delivery' => $now->copy()->addWeeks(3)->format('Y-m-d'), 'time_delivery' => '13:00 a 14:00', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+         // DB::statement("SELECT setval('offers_id_seq', (SELECT MAX(id) FROM offers));");
     }
 }
