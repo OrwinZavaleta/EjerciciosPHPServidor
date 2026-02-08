@@ -1,6 +1,6 @@
 @extends('partials.layout')
 
-@section('title', 'Mis Reservas - Prieto Eats')
+@section('title', 'Historial de Reservas - Prieto Eats')
 
 @section('content')
     <div class="container py-5">
@@ -33,16 +33,24 @@
                     @admin
                         <div class="col">
                             <a href="{{ route('admin.offers.show', $o->id) }}"
-                                class="card h-100 border-0 shadow rounded-4 overflow-hidden hover-shadow transition-all text-decoration-none">
-                                <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-                                    <span
-                                        class="text-success fs-5 mb-2 px-3 py-2 rounded-pill fw-bold">
-                                        Reservas de la Oferta del
-                                        {{ \Carbon\Carbon::parse($o->date_delivery)->translatedFormat('l, j \d\e F') }}
-                                    </span>
-                                </div>
-                                <div class="card-body">
-
+                                class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-shadow transition-all text-decoration-none card-hover-effect">
+                                <div class="card-body p-4 d-flex flex-column align-items-center text-center">
+                                    <div class="mb-3">
+                                        <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+                                             <i class="bi bi-calendar-event-fill text-success fs-3"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold text-dark mb-2">
+                                        Oferta del {{ \Carbon\Carbon::parse($o->date_delivery)->translatedFormat('l, j \d\e F') }}
+                                    </h5>
+                                    <p class="card-text text-muted small mb-4">
+                                        Gestionar los pedidos y reservas para esta fecha.
+                                    </p>
+                                    <div class="mt-auto">
+                                        <span class="btn btn-success rounded-pill px-4 fw-bold">
+                                            Ver Reservas
+                                        </span>
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -51,6 +59,16 @@
             </div>
         @endif
     </div>
+    
+    <style>
+        .hover-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+    </style>
 @endsection
 
 @push('scripts')

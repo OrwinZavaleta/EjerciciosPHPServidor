@@ -13,13 +13,13 @@ class AdminOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() // TODO: mostrar las reservas por ofertas y por cuantas platos se han pedido de cada uno
+    public function index()
     {
-        // $orders = Order::with("products.productOffer.product")->get()->reverse(); // TODO: hacer que solo se muestren los de esta semana
-        $orders = Order::with("products.productOffer")->get()->reverse(); // TODO: hacer que solo se muestren los de esta semana
+        // $orders = Order::with("products.productOffer.product")->get()->reverse();
+        // $orders = Order::with("products.productOffer")->get()->reverse();
         $offerProducts = ProductOffer::with("product")->get()->keyBy("id");
 
-        $offers = Offer::all();
+        $offers = Offer::where("date_delivery", ">", now())->orderBy("date_delivery")->get() ?? [];
 
         return view("admin.orders", compact("offers", "offerProducts"));
     }
