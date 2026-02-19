@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Respuesta GET</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <main class="card">
+            <h1 class="card-title" onclick="this.classList.toggle('active')">
+                ¡Hola Mundo!
+            </h1>
+
+            <p class="card-text">
+                Respuesta enviada con éxito vía
+                <span class="badge-get">GET</span>
+            </p>
+
+            <div class="image-container">
+                <img
+                    src="./portrait-of-brown-puppy-with-bokeh-background.webp"
+                    alt="Perrito"
+                    class="card-img"
+                />
+            </div>
+
+            <button class="btn-main" onclick="alert('Explorando más cosas...')">
+                Ver más detalles
+            </button>
+        </main>
+    </body>
+</html>
