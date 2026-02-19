@@ -1,0 +1,37 @@
+[
+    {
+        "nombre": "Televisor LED",
+        "descripcion": "Televisor de 32 pulgadas con resolución HD",
+        "precio": 299.99,
+        "disponible": true,
+        "departamento": "Electrónica"
+    },
+    {
+        "nombre": "Bicicleta Montaña",
+        "descripcion": "Bicicleta de montaña resistente con 21 velocidades",
+        "precio": 199.99,
+        "disponible": true,
+        "departamento": "Deportes"
+    },
+    {
+        "nombre": "Auriculares Bluetooth",
+        "descripcion": "Auriculares inalámbricos con cancelación de ruido activa",
+        "precio": 89.50,
+        "disponible": true,
+        "departamento": "Electrónica"
+    },
+    {
+        "nombre": "Cafetera Express",
+        "descripcion": "Cafetera automática con vaporizador de leche integrado",
+        "precio": 125.00,
+        "disponible": false,
+        "departamento": "Hogar"
+    },
+    {
+        "nombre": "Zapatillas Running",
+        "descripcion": "Calzado deportivo ligero con amortiguación de gel",
+        "precio": 75.99,
+        "disponible": true,
+        "departamento": "Deportes"
+    }
+]
