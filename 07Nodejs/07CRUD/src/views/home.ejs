@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+
+<body>
+    <h1>Empleados</h1>
+    
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Ubicacion</th>
+        </tr>
+        <% for( let i = 0; i < depart.length; i++ ) { %>
+            <tr>
+                <td>
+                    <%= depart[i].depart_no %>
+                </td>
+                <td>
+                    <%= depart[i].dnombre %>
+                </td>
+                <td>
+                    <%= depart[i].loc %>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+<a href="/depart/createForm">Crear un departamento</a>
+</body>
+
+</html>

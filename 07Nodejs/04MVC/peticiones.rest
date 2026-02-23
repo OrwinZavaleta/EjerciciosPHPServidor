@@ -1,0 +1,13 @@
+GET http://localhost:3000/api/users
+
+###
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "id": 6,
+    "name": "usuario2"
+}
+###
+GET http://localhost:3000/api/users/2
+Content-Type: application/json
