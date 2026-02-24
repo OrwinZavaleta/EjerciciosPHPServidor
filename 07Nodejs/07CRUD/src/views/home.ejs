@@ -28,6 +28,12 @@
                 <td>
                     <%= depart[i].loc %>
                 </td>
+                <td>
+                    <a href="/depart/updateForm/<%= depart[i].depart_no %>">Editar</a>
+                </td>
+                <td>
+                    <a href="/depart/delete/<%= depart[i].depart_no %>">Eliminar</a>
+                </td>
             </tr>
         <% } %>
     </table>

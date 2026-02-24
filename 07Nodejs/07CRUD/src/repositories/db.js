@@ -33,7 +33,7 @@ async function getEmple() {
         return null
     }
 }
-async function getDepart() {
+async function getDeparts() {
     try {
         const [rows] = await pool.execute("SELECT * FROM depart");
         return rows;
@@ -43,11 +43,44 @@ async function getDepart() {
     }
 }
 async function addDepart(dnombre, loc) {
+    console.log(dnombre);
+    console.log(loc);
+
     try {
         const [rows1] = await pool.execute("SELECT depart_no FROM depart ORDER BY depart_no DESC LIMIT 1");
-console.log(rows1);
+        console.log(rows1);
 
-        const [rows] = await pool.execute("INSERT INTO depart VALUES (?,?,?)", [rows1]);
+        const [rows] = await pool.execute("INSERT INTO depart(depart_no, dnombre, loc) VALUES (?,?,?)", [rows1[0].depart_no + 10, dnombre, loc]);
+        console.log(rows);
+
+        return rows;
+    } catch (error) {
+        console.error("error en la consulta " + error)
+        return null
+    }
+}
+
+async function getDepart(depart_no) {
+    try {
+        const [rows] = await pool.execute("SELECT * FROM depart WHERE depart_no = ? ", [depart_no]);
+        return rows;
+    } catch (error) {
+        console.error("error en la consulta " + error)
+        return null
+    }
+}
+async function editDepart(depart_no, dnombre, loc) {
+    try {
+        const [rows] = await pool.execute("UPDATE depart SET dnombre = ? , loc = ? WHERE depart_no = ? ", [dnombre, loc, depart_no]);
+        return rows;
+    } catch (error) {
+        console.error("error en la consulta " + error)
+        return null
+    }
+}
+async function deleteDepart(depart_no) {
+    try {
+        const [rows] = await pool.execute("DELETE FROM depart WHERE depart_no = ? ", [depart_no]);
         return rows;
     } catch (error) {
         console.error("error en la consulta " + error)
@@ -57,5 +90,5 @@ console.log(rows1);
 
 
 module.exports = {
-    conect, getEmple, getDepart
+    conect, getEmple, getDeparts, addDepart, getDepart, editDepart, deleteDepart
 };
