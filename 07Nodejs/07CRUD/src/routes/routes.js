@@ -1,9 +1,10 @@
 const pageController = require('../controllers/controller');
 
 function pageRoutes(req, res) {
-    const [baseURL, id] = optenerDinamica(req, "depart")
-    console.log("===========================");
-    console.log(baseURL);
+    // const [baseURL, id] = optenerDinamica(req, "depart")
+
+    const [baseURL, id] = optenerDinamica(req)
+    console.log(baseURL + " ==> " + id);
 
 
     if (req.method === 'GET' && req.url === '/') {
@@ -15,36 +16,37 @@ function pageRoutes(req, res) {
     if (req.method === 'POST' && req.url === '/depart/insert') {
         return pageController.insert(req, res);
     }
-    if (req.method === 'POST' && baseURL === '/depart/updateForm') {
+    if (req.method === 'GET' && baseURL === '/depart/updateForm' && id) {
         return pageController.updateForm(req, res, id);
     }
-    if (req.method === 'POST' && baseURL === '/depart/update') {
+    if (req.method === 'POST' && baseURL === '/depart/update' && id) {
         return pageController.update(req, res, id);
     }
-    if (req.method === 'POST' && baseURL === '/depart/delete') {
-        return pageController.delete(req, res, id);
+    if (req.method === 'GET' && baseURL === '/depart/delete' && id) {
+        return pageController.deleteDepart(req, res, id);
     }
 
     res.writeHead(404);
     res.end('Not found');
 }
 
-function optenerDinamica(req, base) {
+function optenerDinamica(req) {
     const partes = req.url.split("/")
-    let baseURL = ""
-    for (let i = 1; i < partes.length - 1; i++) {
-        baseURL = baseURL + "/" + partes[i]
+    let baseurl = ""
+    const id = partes.pop()
+    if (!id || isNaN(Number(id))) {
+
+        for (let i = 1; i < partes.length; i++) {
+            baseurl = baseurl + "/" + partes[i]
+        }
+        return [baseurl + "/" + id, null]
     }
 
-    if (partes[partes.length - 1]) {
-        const id = partes[partes.length - 1]
-        console.log(id);
-        console.log(baseURL);
-        return [baseURL, id]
-    } else {
-        console.log(baseURL);
-        return [baseURL, null]
+    for (let i = 1; i < partes.length; i++) {
+        baseurl = baseurl + "/" + partes[i]
     }
+
+    return [baseurl, Number(id)]
 }
 module.exports = pageRoutes;
 
