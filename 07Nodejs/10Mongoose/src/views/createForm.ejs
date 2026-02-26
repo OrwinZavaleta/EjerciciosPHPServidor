@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/public/css/styles.css" />
+    </head>
+
+    <body>
+        <h1>Crear Empleados</h1>
+
+        <form action="/depart/insert" method="post">
+            <label for="dnombre">Nombre</label>
+            <input type="text" name="dnombre" id="dnombre" />
+            <label for="loc">Ubicacion</label>
+            <input type="text" name="loc" id="loc" />
+            <button type="submit">Enviar</button>
+        </form>
+    </body>
+</html>
