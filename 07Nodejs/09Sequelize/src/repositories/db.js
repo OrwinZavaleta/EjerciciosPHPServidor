@@ -47,6 +47,8 @@ async function addDepart(dnombre, loc) {
 async function getDepart(depart_no) {
     try {
         const depart = await Depart.findOne({ where: { depart_no: depart_no } })
+        console.log(depart.depart_no);
+        
         return depart
     } catch (error) {
         console.error("error en la consulta " + error)

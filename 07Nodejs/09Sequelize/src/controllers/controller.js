@@ -43,9 +43,8 @@ async function updateForm(req, res, id) {
     const filePath = path.join(__dirname, '../views/updateForm.ejs');
 
     depart = await service.getDepart(id)
-    console.log(depart);
 
-    ejs.renderFile(filePath, { title: "Update depart", depart: depart[0] }, (err, html) => {
+    ejs.renderFile(filePath, { title: "Update depart", depart: depart }, (err, html) => {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);
     });
