@@ -29,15 +29,15 @@ async function getDeparts() {
         return null
     }
 }
-async function addDepart(dnombre, loc) { // TODO:
+async function addDepart(dnombre, loc) {
     try {
         // const [rows1] = await pool.execute("SELECT depart_no FROM depart ORDER BY depart_no DESC LIMIT 1");
-        // const lastId = Depart.findOne({ order:  })
+        const lastId = await Depart.findOne({ order: [["depart_no", "DESC"]], attributes: ["depart_no"] })
 
-        const [rows] = await pool.execute("INSERT INTO depart(depart_no, dnombre, loc) VALUES (?,?,?)", [rows1[0].depart_no + 10, dnombre, loc]);
-        console.log(rows);
+        console.log(lastId.depart_no);
 
-        return rows;
+        await Depart.create({ depart_no: lastId.depart_no + 10, dnombre: dnombre, loc: loc })
+
     } catch (error) {
         console.error("error en la consulta " + error)
         return null
