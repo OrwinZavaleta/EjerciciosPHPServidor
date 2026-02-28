@@ -32,11 +32,12 @@ async function getDeparts() {
 async function addDepart(dnombre, loc) {
     try {
         // const [rows1] = await pool.execute("SELECT depart_no FROM depart ORDER BY depart_no DESC LIMIT 1");
-        const lastId = await Depart.findOne({ order: [["depart_no", "DESC"]], attributes: ["depart_no"] })
+        // const lastId = await Depart.findOne({ order: [["depart_no", "DESC"]], attributes: ["depart_no"] })
+        const lastId = await Depart.max("depart_no")
 
         console.log(lastId.depart_no);
 
-        await Depart.create({ depart_no: lastId.depart_no + 10, dnombre: dnombre, loc: loc })
+        await Depart.create({ depart_no: lastId + 10, dnombre: dnombre, loc: loc })
 
     } catch (error) {
         console.error("error en la consulta " + error)
@@ -48,7 +49,7 @@ async function getDepart(depart_no) {
     try {
         const depart = await Depart.findOne({ where: { depart_no: depart_no } })
         console.log(depart.depart_no);
-        
+
         return depart
     } catch (error) {
         console.error("error en la consulta " + error)
