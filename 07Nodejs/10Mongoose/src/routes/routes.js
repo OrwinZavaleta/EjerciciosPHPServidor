@@ -3,7 +3,14 @@ const pageController = require('../controllers/controller');
 function pageRoutes(req, res) {
     // const [baseURL, id] = optenerDinamica(req, "depart")
 
+    console.log('--- Raw Request Debug ---');
+    console.log('Method:', req.method);
+    console.log('URL:', req.url);
+    console.log('Headers:', req.headers);
+    console.log('-------------------------');
+
     const [baseURL, id] = optenerDinamica(req)
+
     console.log(baseURL + " ==> " + id);
 
 

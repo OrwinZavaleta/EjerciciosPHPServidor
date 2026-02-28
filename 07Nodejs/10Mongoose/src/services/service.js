@@ -3,7 +3,7 @@ const path = require('path');
 const db = require("../repositories/db");
 
 // const dataPath = path.join(__dirname, '../data/users.json');
-db.conect()
+// db.conect()
 
 async function getDeparts() {
     return await db.getDeparts();
