@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
         })
 
         const sendEvent = () => {
+            // const eventData = `data:<h1 onClick="()=>confirm("You've been pawn")">Click me!</h1>\ndata:${new Date().toLocaleDateString()}\ndata:${new Date().toLocaleTimeString()}\n\n`
             const eventData = `data: ${Math.floor(Math.random() * 101)}\ndata:${new Date().toLocaleDateString()}\ndata:${new Date().toLocaleTimeString()}\n\n`
 
             res.write(eventData)
